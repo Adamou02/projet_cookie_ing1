@@ -3,7 +3,7 @@
 //Verifie la touche pressée
 int KeyAvailable(int key)
 {
-    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == SAVE || key == MAJ_SAVE || key == LEAVE_WITHOUT_SAVE || key == MAJ_LEAVE_WITHOUT_SAVE) {
+    if (key == UP || key == DOWN || key == LEFT || key == RIGHT || key == UP_LEFT || key == UP_RIGHT || key == DOWN_LEFT || key == DOWN_RIGHT || key == STEP_BACK || key == SAVE) {
         return 1;
     }
     else {
@@ -21,32 +21,16 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
     case LEFT:
         *y=*y-1;
         break;
-    case MAJ_LEFT:
-        *y=*y-1;
-        break;
     case RIGHT:
-        *y=*y+1;
-        break;
-    case MAJ_RIGHT:
         *y=*y+1;
         break;
     case UP:
         *x=*x-1;
         break;
-    case MAJ_UP:
-        *x=*x-1;
-        break;
     case DOWN:
         *x=*x+1;
         break;
-    case MAJ_DOWN:
-        *x=*x+1;
-        break;
     case UP_LEFT:
-        *x=*x-1;
-        *y=*y-1;
-        break;
-    case MAJ_UP_LEFT:
         *x=*x-1;
         *y=*y-1;
         break;
@@ -54,23 +38,11 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
         *x=*x+1;
         *y=*y-1;
         break;
-    case MAJ_DOWN_LEFT:
-        *x=*x+1;
-        *y=*y-1;
-        break;
     case UP_RIGHT:
         *x=*x-1;
         *y=*y+1;
         break;
-    case MAJ_UP_RIGHT:
-        *x=*x-1;
-        *y=*y+1;
-        break;
     case DOWN_RIGHT:
-        *x=*x+1;
-        *y=*y+1;
-        break;
-    case MAJ_DOWN_RIGHT:
         *x=*x+1;
         *y=*y+1;
         break;
@@ -80,29 +52,19 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
 }
 
 //Affiche les touches pour les coups dispos (et leur coup en distance)
-void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
+void ShowKeyAvailable()
 {
     printf("\nListe des touches :\n\n");
-    printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][0]);
-    printf("\t\t");
-    printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][2]);
-    printf("\t\t");
-    printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][1]);
-    printf("\t\t");
-    printf("%s : p ", SAVE_ICON);
-    printf("\n\n");
-    printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][7]);
-    printf("\t\t");
-    printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][3]);
-    printf("\t\t");
-    printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][5]);
-    printf("\n\n");
-    printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][6]);
-    printf("\t\t");
-    printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][4]);
-    printf("\t\t");
-    printf("%s : r ", STEP_BACK_ICON);
-    printf("\t\t\n");
+    printf("%s : e\t\t", UP_RIGHT_ARROW);
+    printf("%s : a\t\t", UP_LEFT_ARROW);
+    printf("%s : z\t\t", UP_ARROW);
+    printf("%s : p\n", SAVE_ICON);
+    printf("%s : d\t\t", RIGHT_ARROW);
+    printf("%s : q\t\t", LEFT_ARROW);
+    printf("%s : x\n", DOWN_ARROW);
+    printf("%s : c\t\t", DOWN_RIGHT_ARROW);
+    printf("%s : w\t\t", DOWN_LEFT_ARROW);
+    printf("%s : r\t\t\n", STEP_BACK_ICON);
 }
 
 //Permet de lire la touche pressé. Le programme est en pause tant que utilisateur appuie touche
@@ -114,6 +76,7 @@ int ListenKeyboard()
     current.c_lflag &= ~ICANON; //desactive input/output du terminal
     current.c_lflag &= ~ECHO; //Active le mode silencieux (pas de sortie texte du terminal)
     tcsetattr(0, TCSANOW, &current); //Applique ces modifications sur le terminal
+    ShowKeyAvailable();
     int ch;
 
     do
