@@ -16,7 +16,7 @@
 
     void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
-    void DebugInfoPlayer(PlayerInfo s_playerInfo_player);
+    void DebugInfoPlayer(PlayerInfo s_playerInfo);
 
     void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
 

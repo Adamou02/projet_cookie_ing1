@@ -9,24 +9,29 @@
     #include <time.h>   
 
     typedef struct coordonnees coordonnees;
-    struct coordonnees{ // Structure contenant les coordonnées du joueur 
-        int int_x;
-        int int_y;
+    struct coordonnees{ // Structure contenant des coordonnées 
+        int x;
+        int y;
     };
 
-    typedef struct Node{ // enregistre les coordonnées dans une pile
-        coordonnees coordonnees_player;
+    typedef struct Node{ // enregistre les coordonnées dans une list 
+        coordonnees coordonnees;
         struct Node *next;
-    }List, Node;
+    } Node;
+
+    typedef struct List{
+        Node* firstnode;
+    } List;
+    
 
     typedef struct PlayerInfo PlayerInfo; 
     struct PlayerInfo{ // Structure contennant les informations du joueur
-        coordonnees coordonnees_player;
-        int int_energy;
-        int int_distance;
-        int int_gain_energy;
-        int int_lost_energy;
-        int int_backward;
+        coordonnees coordonnees;
+        int energy;
+        int distance;
+        int gain_energy;
+        int lost_energy;
+        int backward;
     };
 
     int RNG(int min, int max);
@@ -39,20 +44,16 @@
 
     void InitRNG();
     
-    Node *createNode(coordonnees coordonnees_player);
+    Node* CreateNode(coordonnees coord);
 
-    List *emptyList(void);
+    List* InitList();
 
-    int isEmpty(List *List_L);
+    void AddNode(List* p_list, coordonnees coord);
 
-    long lengthList(List *List_L);
+    void RemoveNode(List* p_list);
 
-    List *addnode(List *List_L, coordonnees coordonnees_player);
+    void PrintList(List* p_list);
 
-    List *freeLastCoord(List *List_L);
-
-    List *freeList(List *List_L);
-
-    void printList(List *List_L);
+    void FreeList(List* p_list);
 
 #endif

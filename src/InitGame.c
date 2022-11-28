@@ -2,58 +2,87 @@
 
 PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
 {
-    PlayerInfo playerInfo_player;
-    playerInfo_player.coordonnees_player.int_x = 0;
-    playerInfo_player.coordonnees_player.int_y = 0;
-    playerInfo_player.int_energy=BASE_ENERGY;
-    playerInfo_player.int_distance=0;
-    playerInfo_player.int_gain_energy=0;
-    playerInfo_player.int_lost_energy=0;
-    playerInfo_player.int_backward=6;
-    return playerInfo_player;
+    PlayerInfo playerInfo;
+    playerInfo.coordonnees.x = 0;
+    playerInfo.coordonnees.y = 0;
+    playerInfo.energy=BASE_ENERGY;
+    playerInfo.distance=0;
+    playerInfo.gain_energy=0;
+    playerInfo.lost_energy=0;
+    playerInfo.backward=6;
+    return playerInfo;
+}
+
+int ValidChoose(char myScan) //Verifie que les touches préssées soit valides
+{
+    if (myScan == '1' || myScan == '2' || myScan == '3') return 1;
+    else return 0;
 }
 
 float ChooseDifficulty()
 {
-    int int_scanDiff;
+    char int_scanDiff;
     printf("Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
-    scanf("%d", &int_scanDiff);
+    do 
+    {
+        scanf("%c", &int_scanDiff);
+        if (!ValidChoose(int_scanDiff)) {
+            system("clear");
+            printf("Wrong key pressed ! Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
+        }
+    } while (!ValidChoose(int_scanDiff));
+
     switch (int_scanDiff) 
     {
-    case 1:
+    case '1':
         return (TAUX_DIFF_EZ);
         break;
-    case 3:
+    case '2':
+        return (TAUX_DIFF_NORMAL);
+        break;
+    case '3':
         return (TAUX_DIFF_HARD);
         break;
     default:
-        return (TAUX_DIFF_NORMAL);
-        break;
+        printf("Erreur selection difficulte");
+        exit(1);
     }
+    
 }
 
 int ChooseMapSize()
 {
-    int int_scanMapS;
-    printf("Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
-    scanf("%d", &int_scanMapS);
+    char int_scanMapS;
+    printf("\nChoose the map size :\n1: Little\n2: Average\n3: Big\n>");
+    do 
+    {
+        scanf("%c", &int_scanMapS);
+        if (!ValidChoose(int_scanMapS)) {
+            system("clear");
+            printf("Wrong key pressed ! Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
+        }
+    } while (!ValidChoose(int_scanMapS));
+
     switch (int_scanMapS)
     {
-    case 1:
+    case '1':
         return (TAILLE_LIL_MAP);
         break;
-    case 3:
+    case '2':
+        return (TAILLE_AVE_MAP);
+        break;
+    case '3':
         return (TAILLE_BIG_MAP);
         break;
     default:
-        return (TAILLE_AVE_MAP);
-        break;
+        printf("Erreur selection taille map");
+        exit(1);
     }
 }
 
-int InitEnergy(int int_mapSize) // Initialise l'énergie de base du joueur en fonction de la taille de la carte
+void InitEnergy(PlayerInfo *p_playerInfo, int int_mapSize) // Initialise l'énergie de base du joueur en fonction de la taille de la carte
 {
-    return( BASE_ENERGY * int_mapSize);
+    p_playerInfo->energy = BASE_ENERGY * int_mapSize;
 }
 
 void UnallocMatriceMap(int** matrice_Map, int int_mapSize)
@@ -100,13 +129,13 @@ void UnallocMatriceDistance(int*** matrice_Distance, int int_mapSize)
 
 int*** AllocMatriceDistance(int int_mapSize) 
 {
-    int*** matrice_Distance = malloc(8 * int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       
+    int*** matrice_Distance = malloc(8 * int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       //allocation mémoire a la matrice
     if(matrice_Distance == NULL){
         exit(EXIT_FAILURE);
     } 
     for(int i=0 ; i < int_mapSize ; i++)
     {
-        matrice_Distance[i] = malloc(8 * int_mapSize * sizeof(**matrice_Distance) );      
+        matrice_Distance[i] = malloc(8 * int_mapSize * sizeof(**matrice_Distance) );         //allocation mémoire a la matrice (chaques lignes)
         if(matrice_Distance[i] == NULL){  
             for(i = i-1 ; i >= 0 ; i--) {   
               free(matrice_Distance[i]);
@@ -116,7 +145,7 @@ int*** AllocMatriceDistance(int int_mapSize)
         }       
         for(int j = 0 ; j < int_mapSize; j++)
         { 
-            matrice_Distance[i][j] = malloc(8 * sizeof(***matrice_Distance) );
+            matrice_Distance[i][j] = malloc(8 * sizeof(***matrice_Distance) );       //allocation mémoire a la matrice (chaques cases)
             if(matrice_Distance[i][j] == NULL) 
             {
                 for(i = i-1 ; i >= 0 ; i--) 
@@ -129,7 +158,12 @@ int*** AllocMatriceDistance(int int_mapSize)
                  }
                 free(matrice_Distance);
                 exit(EXIT_FAILURE);
-            } 
+            }else{
+                 for(int int_compteur = 0 ; int_compteur< 8; int_compteur++)      //Boucles initialisation matrices a 0 partout
+                {
+                matrice_Distance[i][j][int_compteur] = 0;
+                }
+            }
         }
     }
     return (matrice_Distance);
@@ -137,7 +171,6 @@ int*** AllocMatriceDistance(int int_mapSize)
 
 int** InitMatriceMap(int** matrice_Map, int int_mapSize)
 {
-    
     for(int i=0; i<int_mapSize ; i++){
         for(int j=0; j<int_mapSize ; j++){
             matrice_Map[i][j] = REP_DEFAULT;
@@ -186,7 +219,7 @@ int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSiz
     return (matrice_Map);
 }
 
-int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, PlayerInfo *s_playerInfo_player) //Work In Progress
+int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, PlayerInfo *p_playerInfo) //Work In Progress
 {
     float int_nbObstacles = int_mapSize * float_diffRate ;
     float int_nbBonus = ( ( int_mapSize / (12 * float_diffRate) ) * ( 2 - float_diffRate ) ) + (RNG(0,12)/(5*float_diffRate));
@@ -200,20 +233,20 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
     {
     case 2:
         matrice_Map[int_maxCoord][0]= REP_CHARACTER;
-        s_playerInfo_player->coordonnees_player.int_x = int_maxCoord;//on donne les informations du placement du personnage dans le récapitulatif des informations du joueur
+        p_playerInfo->coordonnees.x = int_maxCoord;//on donne les informations du placement du personnage dans le récapitulatif des informations du joueur
         int_rdmRow = RNG( 0, int_qrtCoord );
         int_rdmCol = RNG( int_maxCoord - int_qrtCoord + int_rdmRow - int_qrtCoord, int_maxCoord);
         break;
     case 3:
         matrice_Map[0][int_maxCoord]= REP_CHARACTER;
-        s_playerInfo_player->coordonnees_player.int_y = int_maxCoord;
+        p_playerInfo->coordonnees.y = int_maxCoord;
         int_rdmRow = RNG( int_maxCoord - int_qrtCoord, int_maxCoord );
         int_rdmCol = RNG( 0, int_rdmRow - int_maxCoord + int_qrtCoord );
         break;
     case 4:
         matrice_Map[int_maxCoord][int_maxCoord]= REP_CHARACTER;
-        s_playerInfo_player->coordonnees_player.int_x = int_maxCoord;
-        s_playerInfo_player->coordonnees_player.int_y = int_maxCoord;
+        p_playerInfo->coordonnees.x = int_maxCoord;
+        p_playerInfo->coordonnees.y = int_maxCoord;
         int_rdmRow = RNG( 0, int_qrtCoord );
         int_rdmCol = RNG( 0, int_qrtCoord - int_rdmRow );
         break;
@@ -271,54 +304,99 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
 
 int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
 {
-    for ( int i = 0; i < int_mapSize; i++)
+    for ( int i = 0; i < int_mapSize; i++)  // boucle vérification des lignes 
     {
-        for(int j = 0;j<int_mapSize;j++)
+        for(int j = 0;j<int_mapSize;j++)    // Boucle vérification des colonnes 
         {   
         if (i == 0){
-            matrice_Distance[i][j][1] = RNG(1,10);
+            matrice_Distance[i][j][1] = 0;
+            matrice_Distance[i][j][0] = 0;
+            matrice_Distance[i][j][2] = 0;
         }else{
             if (matrice_Distance[i-1][j][5] == 0){
                 matrice_Distance[i][j][1] = RNG(1,10);
             }else{
                 matrice_Distance[i][j][1] = matrice_Distance[i-1][j][5];
+            } 
+            if (j == 0)
+            {
+                matrice_Distance[i][j][0] = 0;
+                matrice_Distance[i][j][6] = 0;
+            }else{
+                if (matrice_Distance[i-1][j-1][4] == 0)
+                {
+                    matrice_Distance[i][j][0] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][0] = matrice_Distance[i-1][j-1][4];
+                }
+            }        
+            if(j == int_mapSize-1)
+            {
+                matrice_Distance[i][j][2] = 0;
+                matrice_Distance[i][j][4] = 0;
+            }else{
+                if (matrice_Distance[i-1][j+1][6] ==0)
+                {
+                    matrice_Distance[i][j][2] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][2] = matrice_Distance[i-1][j+1][6];
+                }
             }
         }
         if (i == (int_mapSize-1)){
-            matrice_Distance[i][j][5] = RNG(1,10);
-        }else{
+            matrice_Distance[i][j][5] = 0;
+            matrice_Distance[i][j][4] = 0;
+            matrice_Distance[i][j][6] = 0;
+        }else{       
             if (matrice_Distance[i+1][j][1] == 0){
                matrice_Distance[i][j][5] = RNG(1,10);
             }else{
                 matrice_Distance[i][j][5] = matrice_Distance[i+1][j][1];
             }
+            if (j == 0)
+            {
+                matrice_Distance[i][j][6] = 0;
+            }else{
+                if (matrice_Distance[i+1][j-1][2] == 0)
+                {
+                    matrice_Distance[i][j][6] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][6] = matrice_Distance[i+1][j-1][2];
+                }
+            }
+            if(j == int_mapSize-1)
+            {
+                matrice_Distance[i][j][4] = 0;
+            }else{
+                if (matrice_Distance[i+1][j+1][0] == 0)
+                {
+                    matrice_Distance[i][j][4] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][4] = matrice_Distance[i+1][j+1][0];
+                }
+            }
         }    
         if (j == 0){
-            matrice_Distance[i][j][7] = RNG(1,10);
+            matrice_Distance[i][j][7] = 0;
         }else{
             if (matrice_Distance[i][j-1][3] == 0){
                 matrice_Distance[i][j][7] = RNG(1,10);
             }else{
-                matrice_Distance[i][j][7] = matrice_Distance[i][j-1][3];
+               matrice_Distance[i][j][7] = matrice_Distance[i][j-1][3];
             }
         }
         if (j == (int_mapSize-1)){
-            matrice_Distance[i][j][3] = RNG(1,10);
+            matrice_Distance[i][j][3] = 0;
         }else{
             if (matrice_Distance[i][j+1][3] == 0){
                 matrice_Distance[i][j][3] = RNG(1,10);
             }else{
                 matrice_Distance[i][j][3] = matrice_Distance[i][j+1][7];
             }
-        }
-        matrice_Distance[i][j][0] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][7]));
-        matrice_Distance[i][j][2] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][3]));
-        matrice_Distance[i][j][4] = sqrt(square(matrice_Distance[i][j][3]) + square(matrice_Distance[i][j][5]));
-        matrice_Distance[i][j][6] = sqrt(square(matrice_Distance[i][j][5]) + square(matrice_Distance[i][j][7]));
+            }
         }
     }
    return (matrice_Distance);
-
 }
 
 int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_ActEnergy, int* p_intEnergyNeeded) //verifie si la matrice map generer possede un chemin faisable recursivement; 
@@ -327,7 +405,7 @@ int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoor
     if( !IsBetween(int_Coordx, 0, int_maxCoord) || !IsBetween(int_Coordy, 0, int_maxCoord)){ //si le chemin arrive a une bordure
         return 0;
     } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){ //chemin trouvé
-        *p_intEnergyNeeded = int_ActEnergy;
+        *p_intEnergyNeeded = int_ActEnergy; //energy requis pour finir la map dans le chemin trouver
         return 1;
     } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE2)){ //la case actuelle du chemin est un obstacle
         return 0;
@@ -337,92 +415,32 @@ int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoor
         }
         switch(int_Start)
         {
-            case UP: //le chemin proviens du BAS de la case actuel
+            case 1: //le joueur à demarrer en 0,0
                 return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
-            case UP_LEFT: 
+            case 2: //le joueur à demarrer en 0,mapSize
                 return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
-            case UP_RIGHT: 
+            case 3: //le joueur à demarrer en mapSize,0
                 return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
-            case LEFT: 
+            case 4: //le joueur à demarrer en mapSize, mapSize
                 return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case RIGHT: 
-                return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case DOWN: 
-                return (
-                    CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case DOWN_LEFT: 
-                return (
-                   CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy -1, int_maxCoord, UP_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case DOWN_RIGHT: 
-                return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, UP, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, UP_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, DOWN, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, DOWN_LEFT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, DOWN_RIGHT, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
         }
@@ -434,22 +452,22 @@ int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlaye
     int int_maxCoord = int_mapSize - 1;
     if(int_CoordPlayer_x == 0){
         if(int_CoordPlayer_y == 0){
-            return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1, UP_LEFT, p_intEnergyNeeded);
+            return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1, 0, p_intEnergyNeeded);
         }
         else {
-            return CheckPath(matrice_Map, 0, int_maxCoord, int_maxCoord, 2, DOWN_LEFT, p_intEnergyNeeded);
+            return CheckPath(matrice_Map, 0, int_maxCoord, int_maxCoord, 2, 0, p_intEnergyNeeded);
         }
     } else {
         if(int_CoordPlayer_y == 0){
-            return CheckPath(matrice_Map, int_maxCoord, 0, int_maxCoord, 3, UP_RIGHT, p_intEnergyNeeded);
+            return CheckPath(matrice_Map, int_maxCoord, 0, int_maxCoord, 3, 0, p_intEnergyNeeded);
         }
         else {
-            return CheckPath(matrice_Map, int_maxCoord, int_maxCoord, int_maxCoord, 4, DOWN_RIGHT, p_intEnergyNeeded);
+            return CheckPath(matrice_Map, int_maxCoord, int_maxCoord, int_maxCoord, 4, 0, p_intEnergyNeeded);
         }
     }
 }
 
-int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_player)
+int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo)
 {
     int** matrice_Map = AllocMatriceMap(int_mapSize); // Allocation de la Matrice Map
     int int_EnergyNeeded=-1;
@@ -457,20 +475,15 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_pl
     int bool_mapDoable = 0;
     while(!bool_mapDoable || (abs(int_EnergyNeeded - (BASE_ENERGY * int_mapSize) )) <= ((BASE_ENERGY * int_mapSize)/10) )  //Generation d'une Map Faisable avec une difference d'energie pas trop grande par rapport à BASE ENRGIE x mapSize
     {
-        
-        printf("doable:%d\n", bool_mapDoable);
-        printf("neededEn:%d\n", int_EnergyNeeded);
-        printf("abs:%d\n", (abs(int_EnergyNeeded - (BASE_ENERGY * int_mapSize) )));
         matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
-        matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo_player);
-        DisplayMap(matrice_Map,int_mapSize);
+        matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo);
+        // DisplayMap(matrice_Map,int_mapSize);
         bool_mapDoable = CheckMapDoable(matrice_Map,
-                                        p_playerInfo_player->coordonnees_player.int_x,
-                                        p_playerInfo_player->coordonnees_player.int_y,
+                                        p_playerInfo->coordonnees.x,
+                                        p_playerInfo->coordonnees.y,
                                         int_mapSize, 
                                         &int_EnergyNeeded);
     }
-    p_playerInfo_player->int_energy = int_EnergyNeeded;
     return (matrice_Map);
 }
 
@@ -480,3 +493,49 @@ int*** InitDistance(int int_mapSize)
     matrice_Distance = GenerateMatriceDistance(int_mapSize, matrice_Distance);
     return (matrice_Distance);
 }
+
+// int MinDistance(int distance[], int sptSet[], int int_mapSize)
+// {
+//     int min = INF;
+//     int min_index;
+
+//     for (int i = 0; i < int_mapSize ; i++){
+//         if (sptSet[i] == 0 && distance[i] <= min){
+//             min = distance[i];
+//             min_index = i;
+//         }
+//     }
+//     return (min_index);
+// }
+
+// void Dijkstra(int** matrice_Map, int int_mapSize, int src)
+// {
+//     int distance[int_mapSize]; //output
+//     int sptSet[int_mapSize];
+
+//     for (int i = 0; i < int_mapSize; i++){
+//         distance[i] = INF;
+//         sptSet[i] = 0;
+//     }
+
+//     distance[src]=0;
+
+//     for (int count = 0; count < int_mapSize - 1; count++) {
+//         int u = MinDistance(distance,sptSet, int_mapSize);
+//         sptSet[u] = 1;
+//         for (int v = 0; v < int_mapSize; v++){
+//             if (!sptSet[v] && matrice_Map[u][v]
+//                 && distance[u] != INF
+//                 && distance[u] + matrice_Map[u][v] < distance[v])
+//                 {
+//                     distance[v] = distance[u] + matrice_Map[u][v];
+//                 }
+//         }
+//     }
+
+//     for(int y = 0; y<= int_mapSize; y++){
+//         printf("|%d", distance[y]);
+//     }
+//     printf("\n");
+        
+// }

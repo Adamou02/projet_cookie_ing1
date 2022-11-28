@@ -30,75 +30,92 @@ void InitRNG()
 }
 
 
-Node *createNode(coordonnees coordonnees_player)
+////////////////////////////////////////
+// FONCTIONS POUR LES LISTES CHAINEES //
+////////////////////////////////////////
+
+Node* CreateNode(coordonnees coord)
 {
-    Node *node = malloc(sizeof(Node));
+    Node *node = malloc(sizeof(*node));
     if(!node){
-        return NULL;
+        free(node);
+        exit(EXIT_FAILURE);
     }
-    node->coordonnees_player = coordonnees_player;
+    node->coordonnees = coord;
     node->next = NULL;
     return node;
 }
 
-
-List *emptyList(void)
+List* InitList()
 {
-    return NULL;
-}
-
-int isEmpty(List *List_L)
-{
-    return List_L == NULL;
-}
-
-long lengthList(List *List_L)
-{
-    long long_taille = 0;
-    while(List_L){
-        long_taille++;
-        List_L = List_L->next;
+    List *list_new = malloc(sizeof(*list_new));
+    Node *node_new = malloc(sizeof(*node_new));
+    if(list_new == NULL || node_new == NULL){
+        free(list_new);
+        free(node_new);
+        puts("Error in InitList");
+        exit(EXIT_FAILURE);
     }
-    return long_taille;
+    node_new->next = NULL;
+    node_new->coordonnees.x=-1;
+    node_new->coordonnees.y=-1;
+    list_new->firstnode = node_new;
+    return(list_new);
 }
 
-List *addnode(List *List_L, coordonnees coordonnees_player)
+
+void AddNode(List* p_list, coordonnees coord)
 {       
-    Node *node = createNode(coordonnees_player);
-    if(isEmpty(List_L)){
-        return node;
+    /*creation de la nouvel node*/
+    Node *node_new = CreateNode(coord);
+    if(p_list == NULL){
+        puts("Error in AddNode");
+        exit(EXIT_FAILURE);
     }
-    node->next = List_L;
-    return node;
+    /*insert new node in the list*/
+    node_new->next = p_list->firstnode;
+    p_list->firstnode = node_new;
 }
 
-List *freeLastCoord(List *List_L)
+void RemoveNode(List* p_list)
 {
-    List *tmp = List_L;
-    if(isEmpty(List_L)){
-        return NULL;
+    if(p_list == NULL){
+        puts("Error in RemoveNode");
+        exit(EXIT_FAILURE);
     }
-    List_L = List_L->next;
-    free (tmp);
-    return List_L;
+    if(p_list->firstnode != NULL){
+        Node* node_toRemove =  p_list->firstnode;
+        p_list->firstnode = p_list->firstnode->next;
+        free(node_toRemove);
+    }
 }
 
-List *freeList(List *List_L)
+void PrintList(List* p_list)
 {
-    List *tmp = NULL;
-    while(List_L){
-        tmp = List_L->next;
-        free(List_L);
-        List_L = tmp;
+    if(p_list == NULL){
+        exit(EXIT_FAILURE);
     }
-    return List_L;
-}
-
-void printList(List *List_L) // affiche les coordonées contenues dans la pile, les premières coordonnées sont affichées en bout de ligne
-{
-    while(!isEmpty(List_L)){
-        printf(" x = %d, y = %d ", List_L->coordonnees_player.int_x, List_L->coordonnees_player.int_y);
-        List_L = List_L->next;
+    Node* node_current = p_list->firstnode;
+    printf("List: |");
+    while(node_current != NULL)
+    {
+        printf("x=%d, y=%d |", node_current->coordonnees.x, node_current->coordonnees.y);
+        node_current = node_current->next;
     }
     printf("\n");
 }
+
+void FreeList(List* p_list)
+{
+    if(p_list == NULL){
+        free(p_list);
+        return;
+    }
+    Node* node_current = p_list->firstnode;
+    while(node_current != NULL){
+        free(node_current);
+        node_current = node_current->next;
+    }
+    free(node_current);
+}
+

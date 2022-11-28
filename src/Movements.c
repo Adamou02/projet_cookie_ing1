@@ -3,7 +3,7 @@
 //Verifie la touche pressée
 int KeyAvailable(int key)
 {
-    if (key == UP || key == DOWN || key == LEFT || key == RIGHT || key == UP_LEFT || key == UP_RIGHT || key == DOWN_LEFT || key == DOWN_RIGHT || key == STEP_BACK || key == SAVE) {
+    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == SAVE || key == MAJ_SAVE || key == LEAVE_WITHOUT_SAVE || key == MAJ_LEAVE_WITHOUT_SAVE) {
         return 1;
     }
     else {
@@ -12,25 +12,41 @@ int KeyAvailable(int key)
 }
 
 //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
-void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player) 
+void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo) 
 {
-    *x=s_playerInfo_player->coordonnees_player.int_x;
-    *y=s_playerInfo_player->coordonnees_player.int_y;
+    *x=p_playerInfo->coordonnees.x;
+    *y=p_playerInfo->coordonnees.y;
     switch (key)
     {
     case LEFT:
         *y=*y-1;
         break;
+    case MAJ_LEFT:
+        *y=*y-1;
+        break;
     case RIGHT:
+        *y=*y+1;
+        break;
+    case MAJ_RIGHT:
         *y=*y+1;
         break;
     case UP:
         *x=*x-1;
         break;
+    case MAJ_UP:
+        *x=*x-1;
+        break;
     case DOWN:
         *x=*x+1;
         break;
+    case MAJ_DOWN:
+        *x=*x+1;
+        break;
     case UP_LEFT:
+        *x=*x-1;
+        *y=*y-1;
+        break;
+    case MAJ_UP_LEFT:
         *x=*x-1;
         *y=*y-1;
         break;
@@ -38,11 +54,23 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
         *x=*x+1;
         *y=*y-1;
         break;
+    case MAJ_DOWN_LEFT:
+        *x=*x+1;
+        *y=*y-1;
+        break;
     case UP_RIGHT:
         *x=*x-1;
         *y=*y+1;
         break;
+    case MAJ_UP_RIGHT:
+        *x=*x-1;
+        *y=*y+1;
+        break;
     case DOWN_RIGHT:
+        *x=*x+1;
+        *y=*y+1;
+        break;
+    case MAJ_DOWN_RIGHT:
         *x=*x+1;
         *y=*y+1;
         break;
@@ -52,19 +80,29 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
 }
 
 //Affiche les touches pour les coups dispos (et leur coup en distance)
-void ShowKeyAvailable()
+void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
 {
     printf("\nListe des touches :\n\n");
-    printf("%s : e\t\t", UP_RIGHT_ARROW);
-    printf("%s : a\t\t", UP_LEFT_ARROW);
-    printf("%s : z\t\t", UP_ARROW);
-    printf("%s : p\n", SAVE_ICON);
-    printf("%s : d\t\t", RIGHT_ARROW);
-    printf("%s : q\t\t", LEFT_ARROW);
-    printf("%s : x\n", DOWN_ARROW);
-    printf("%s : c\t\t", DOWN_RIGHT_ARROW);
-    printf("%s : w\t\t", DOWN_LEFT_ARROW);
-    printf("%s : r\t\t\n", STEP_BACK_ICON);
+    printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][0]);
+    printf("\t\t");
+    printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][2]);
+    printf("\t\t");
+    printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][1]);
+    printf("\t\t");
+    printf("%s : p ", SAVE_ICON);
+    printf("\n\n");
+    printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][7]);
+    printf("\t\t");
+    printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][3]);
+    printf("\t\t");
+    printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][5]);
+    printf("\n\n");
+    printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][6]);
+    printf("\t\t");
+    printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][4]);
+    printf("\t\t");
+    printf("%s : r ", STEP_BACK_ICON);
+    printf("\t\t\n");
 }
 
 //Permet de lire la touche pressé. Le programme est en pause tant que utilisateur appuie touche
@@ -76,7 +114,6 @@ int ListenKeyboard()
     current.c_lflag &= ~ICANON; //desactive input/output du terminal
     current.c_lflag &= ~ECHO; //Active le mode silencieux (pas de sortie texte du terminal)
     tcsetattr(0, TCSANOW, &current); //Applique ces modifications sur le terminal
-    ShowKeyAvailable();
     int ch;
 
     do
@@ -91,71 +128,71 @@ int ListenKeyboard()
 
 
 
-int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player) // Met à jour les informations de la map en fonction du déplacement
+int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo) // Met à jour les informations de la map en fonction du déplacement
 {   
-    matrice_map[s_playerInfo_player->coordonnees_player.int_x][s_playerInfo_player->coordonnees_player.int_y] = REP_VOID;
+    matrice_map[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y] = REP_VOID;
     matrice_map[int_wanted_x][int_wanted_y] = REP_CHARACTER;
     return (matrice_map);
 }
 
-void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player)//Met à jour les infos du joueur en fonction du déplacement
+void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo)//Met à jour les infos du joueur en fonction du déplacement
 {
-    s_playerInfo_player->coordonnees_player.int_x = int_wanted_x;
-    s_playerInfo_player->coordonnees_player.int_y = int_wanted_y;
-    s_playerInfo_player->int_energy = (s_playerInfo_player->int_energy) - LOST_ENERGY;
-    s_playerInfo_player->int_distance = s_playerInfo_player->int_distance + 1;
+    p_playerInfo->coordonnees.x = int_wanted_x;
+    p_playerInfo->coordonnees.y = int_wanted_y;
+    p_playerInfo->energy = (p_playerInfo->energy) - LOST_ENERGY;
+    p_playerInfo->distance = p_playerInfo->distance + 1;
 }
 
-void PlayerOnBonus(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
+void PlayerOnBonus(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
 {
-    s_playerInfo_player->int_energy = (s_playerInfo_player->int_energy) + GAIN_ENERGY;
-    s_playerInfo_player->int_gain_energy = (s_playerInfo_player->int_energy) + GAIN_ENERGY;
+    p_playerInfo->energy = (p_playerInfo->energy) + GAIN_ENERGY;
+    p_playerInfo->gain_energy = (p_playerInfo->energy) + GAIN_ENERGY;
 }
 
-void PlayerOnObstacle(PlayerInfo *s_playerInfo_player) //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
+void PlayerOnObstacle(PlayerInfo *p_playerInfo) //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
 {
-    s_playerInfo_player->int_energy = (s_playerInfo_player->int_energy) - LOST_ENERGY;
-    s_playerInfo_player->int_lost_energy = (s_playerInfo_player->int_energy) - LOST_ENERGY;
+    p_playerInfo->energy = (p_playerInfo->energy) - LOST_ENERGY;
+    p_playerInfo->lost_energy = (p_playerInfo->energy) - LOST_ENERGY;
 }
 
-int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player, int int_mapSize, int *int_victory)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 {
     if(int_wanted_x>=0 && int_wanted_x<int_mapSize && int_wanted_y>=0 && int_wanted_y<int_mapSize){
       switch(matrice_map[int_wanted_x][int_wanted_y])
         {
         case REP_OBSTACLE1 :
-            PlayerOnObstacle(s_playerInfo_player);
+            PlayerOnObstacle(p_playerInfo);
             // printf("Test obstacle");
             break;
 
         case REP_OBSTACLE2 :
-            PlayerOnObstacle(s_playerInfo_player);
+            PlayerOnObstacle(p_playerInfo);
             // printf("Test obstacle");
             break;
         
         case REP_BONUS1 :
-            PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, s_playerInfo_player);
-            matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, s_playerInfo_player);
-            UpdatePlayerInfo(int_wanted_x, int_wanted_y, s_playerInfo_player);
+            PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+            matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
             printf("Test bonus");
             break;
 
         case REP_BONUS2 :
-        PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, s_playerInfo_player);
-        matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, s_playerInfo_player);
-        UpdatePlayerInfo(int_wanted_x, int_wanted_y, s_playerInfo_player);
+        PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+        matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+        UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
         // printf("Test bonus");
         break;
     
         case REP_END :
-            matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, s_playerInfo_player);
-            UpdatePlayerInfo(int_wanted_x, int_wanted_y, s_playerInfo_player);
+            matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
             *int_victory = 1;
             break;
         
         default :
-            matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, s_playerInfo_player);
-            UpdatePlayerInfo(int_wanted_x, int_wanted_y, s_playerInfo_player);
+            matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
             break;
        }
      
