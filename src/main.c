@@ -28,7 +28,7 @@
         ShowKeyAvailable(&s_playerInfo, matrice_Distance);
 
         
-        bool_victory = Game(int_mapSize, matrice_Map, matrice_Distance,&s_playerInfo);
+        bool_victory = Game(int_mapSize, matrice_Map, matrice_Distance,&s_playerInfo, p_listpath);
         // DebugDisplayMap(matrice_Map, int_mapSize);  
 
 
