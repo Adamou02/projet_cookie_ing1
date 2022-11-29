@@ -143,9 +143,9 @@ void StockCurrentTurn(char* MapString, char* DistanceString, PlayerInfo * s_play
         printf("\nErreur de chemin d'accès au fichier\n\n");
     }
     //Ajout de toutes les donnees au fichier
-    fprintf(Current_Game_CSV, "%d,%d,%d,%d,%d,%d,%d,%s,%s\n", s_playerInfo_player->coordonnees_player.int_x, s_playerInfo_player->coordonnees_player.int_y, 
-        s_playerInfo_player->int_energy, s_playerInfo_player->int_distance, s_playerInfo_player->int_gain_energy, 
-        s_playerInfo_player->int_lost_energy, s_playerInfo_player->int_backward, MapString, DistanceString);
+    fprintf(Current_Game_CSV, "%d,%d,%d,%d,%d,%d,%d,%s,%s\n", s_playerInfo_player->coordonnees.x, s_playerInfo_player->coordonnees.y, 
+        s_playerInfo_player->energy, s_playerInfo_player->distance, s_playerInfo_player->gain_energy, 
+        s_playerInfo_player->lost_energy, s_playerInfo_player->backward, MapString, DistanceString);
     fclose(Current_Game_CSV);
 }
 
@@ -156,13 +156,13 @@ void GetAllInfo(char* MapString, char* DistanceString, PlayerInfo * s_playerInfo
     fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);
 
     //Separation et implementation des donnees aux variables de jeu
-    s_playerInfo_player->coordonnees_player.int_x = atoi(strtok(CSV_String, ",;"));
-    s_playerInfo_player->coordonnees_player.int_y = atoi(strtok(NULL, ",;"));
-    s_playerInfo_player->int_energy = atoi(strtok(NULL, ",;"));
-    s_playerInfo_player->int_distance = atoi(strtok(NULL, ",;"));
-    s_playerInfo_player->int_gain_energy = atoi(strtok(NULL, ",;"));
-    s_playerInfo_player->int_lost_energy = atoi(strtok(NULL, ",;"));
-    s_playerInfo_player->int_backward = atoi(strtok(NULL, ",;"));
+    s_playerInfo_player->coordonnees.x = atoi(strtok(CSV_String, ",;"));
+    s_playerInfo_player->coordonnees.y = atoi(strtok(NULL, ",;"));
+    s_playerInfo_player->energy = atoi(strtok(NULL, ",;"));
+    s_playerInfo_player->distance = atoi(strtok(NULL, ",;"));
+    s_playerInfo_player->gain_energy = atoi(strtok(NULL, ",;"));
+    s_playerInfo_player->lost_energy = atoi(strtok(NULL, ",;"));
+    s_playerInfo_player->backward = atoi(strtok(NULL, ",;"));
     strcpy(MapString,strtok(NULL, ",;"));
     strcpy(DistanceString,strtok(NULL, ",;"));
     
