@@ -7,6 +7,7 @@
     #include "Constant.h"
     #include "Miscellanous.h"
     #include "Display.h"
+    #include "Movements.h"
     
     PlayerInfo SetupPlayer();
 
@@ -42,6 +43,10 @@
 
     int*** InitDistance(int int_mapSize); //Alloue, et genere la matrice Distance
 
+    void turnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y);
+
+    int game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player);
+    
     int MinDistance(int distance[], int sptSet[], int int_mapSize);
 
     void Dijkstra(int** matrice_Map, int int_mapSize, int src);
