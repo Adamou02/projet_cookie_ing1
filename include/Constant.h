@@ -78,6 +78,8 @@
     #define MAJ_LEAVE_WITHOUT_SAVE 76
 
     #define MAX_DISTANCE 9
+    
+    #define MAX_ITERATION_CHMAP 130000
 
     #define CURRENT_GAME_CSV "data/CurrentGame.csv"
 
