@@ -52,6 +52,10 @@
 
     void RemoveNode(List* p_list);
 
+    long LengthList(List *p_list);
+
+    void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y);
+    
     void PrintList(List* p_list);
 
     void FreeList(List* p_list);
