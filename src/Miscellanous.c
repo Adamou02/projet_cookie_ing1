@@ -30,6 +30,33 @@ void InitRNG()
 }
 
 
+int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize) //fonction retournant un int entre 1  et 4 copris en fonction du placement de depart du personnage
+{
+    int int_maxCoord = int_mapSize - 1;
+    if(p_playerInfo->coordonnees.x == 0){
+        if(p_playerInfo->coordonnees.y == 0){
+            return (1);
+        } else if(p_playerInfo->coordonnees.y == int_maxCoord){
+            return(3);
+        } else {
+            return (-1);
+        }
+
+    } else if(p_playerInfo->coordonnees.x == int_maxCoord){
+        if(p_playerInfo->coordonnees.y == 0){
+            return (2);
+        } else if(p_playerInfo->coordonnees.y == int_maxCoord){
+            return(4);
+        } else {
+            return (-1);
+        }
+
+    } else {
+        return (-1);
+    }    
+}
+
+
 ////////////////////////////////////////
 // FONCTIONS POUR LES LISTES CHAINEES //
 ////////////////////////////////////////
@@ -46,7 +73,7 @@ Node* CreateNode(coordonnees coord) // Créer une nouvelle node à ajouter dans 
     return node;
 }
 
-List* InitList()  // Initialise la liste chainée
+List* InitList(coordonnees coord) //initialise une liste chaine de coord avec des coord en param
 {
     List *list_new = malloc(sizeof(*list_new));
     Node *node_new = malloc(sizeof(*node_new));
@@ -57,25 +84,30 @@ List* InitList()  // Initialise la liste chainée
         exit(EXIT_FAILURE);
     }
     node_new->next = NULL;
-    node_new->coordonnees.x=-1;
-    node_new->coordonnees.y=-1;
+    node_new->coordonnees.x=coord.x;
+    node_new->coordonnees.y=coord.y;
     list_new->firstnode = node_new;
     return(list_new);
 }
 
 
-void AddNode(List* p_list, coordonnees coord) // Ajoute une node en début de liste (fonctionne comme une pile)
+void AddNode(List* p_list, coordonnees coord) // Ajoute une node en début de liste 
 {       
     /*creation de la nouvel node*/
-    Node *node_new = CreateNode(coord);
     if(p_list == NULL){
-        puts("Error in AddNode");
-        exit(EXIT_FAILURE);
+        p_list = InitList(coord);
+    } else {
+        Node *node_new = CreateNode(coord);
+        if(p_list == NULL){
+            puts("Error in AddNode");
+            exit(EXIT_FAILURE);
+        }
+        /*insert new node in the list*/
+        node_new->next = p_list->firstnode;
+        p_list->firstnode = node_new;
     }
-    /*insert new node in the list*/
-    node_new->next = p_list->firstnode;
-    p_list->firstnode = node_new;
 }
+
 
 void RemoveNode(List* p_list) // retire la dernière node de la liste
 {
@@ -127,17 +159,38 @@ void PrintList(List* p_list) // Permet d'afficher la liste chainée
     printf("\n");
 }
 
-void FreeList(List* p_list) // Libère la mémoire alloué à la liste
+void FreeList(List* p_list)// Libère la mémoire alloué à la liste
 {
     if(p_list == NULL){
         free(p_list);
         return;
     }
     Node* node_current = p_list->firstnode;
+    Node** node_tmp;
     while(node_current != NULL){
-        free(node_current);
+        node_tmp = &node_current;
         node_current = node_current->next;
+        free(*node_tmp);
     }
     free(node_current);
 }
+
+int IsInList(List* p_list, coordonnees coord) //verifie si des coordonnees appartienne à une liste passer en parametre
+{
+    if(p_list == NULL ){
+        return 0;
+    } else if(p_list->firstnode == NULL){
+        return 0;
+    } else {
+         Node* node_current = p_list->firstnode;
+        int bool_isIn = 0;
+        while(node_current != NULL && !bool_isIn ){
+            bool_isIn = (node_current->coordonnees.x == coord.x) && (node_current->coordonnees.y == coord.y);
+            node_current = node_current->next;
+        }   
+        return (bool_isIn);
+    }
+}
+
+
 
