@@ -82,11 +82,7 @@ cleanSaves :
 run : 
 	@if [ -x $(PROG) ]; then\
 		./$(PROG);\
-	fi\
-	if [ ! -x $(PROG) ]; then\
-		echo "$(PROG) found, make before make run"\
 	fi
-
 
 #Help menu
 help :
