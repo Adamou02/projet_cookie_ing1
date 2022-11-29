@@ -20,4 +20,8 @@
 
     void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
 
+    void PrintList(List* p_list);
+
+    void PrintFirstList(List* p_list);
+
 #endif
