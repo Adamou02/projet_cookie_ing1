@@ -35,9 +35,9 @@
 
     int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
-    int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_ActEnergy ,int* p_intEnergyNeeded); //verifie si la matrice map generer possede un chemin faisable recursivement; 
+    int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_ActEnergy, int int_Start, int* pi_totalChecked);
 
-    int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize, int* p_intEnergyNeeded); //cherche si un chemin est faisable en fonction du placement du player au debut
+    int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_ActEnergy, int int_Start, int* pi_totalChecked); //verifie si la matrice map generer possede un chemin faisable recursivement; 
 
     int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo); //Alloue, init et genere la map
 
@@ -46,9 +46,6 @@
     void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y, List* p_list, int int_error, int int_stepback);
 
     int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player, List *p_list);
-    
-    int MinDistance(int distance[], int sptSet[], int int_mapSize);
 
-    void Dijkstra(int** matrice_Map, int int_mapSize, int src);
 #endif
 
