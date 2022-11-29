@@ -494,10 +494,10 @@ int*** InitDistance(int int_mapSize)
 }
 
 
-void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y, List* p_list)
+void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y, List* p_list, int int_error, int int_stepback)
 {
     
-    while(bool_victory == 0 && p_playerInfo.energy > 0){
+    while(bool_victory == 0 && p_playerInfo->energy > 0){
         key_pressed = ListenKeyboard();
         ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo); 
         if(int_stepback == 1){
@@ -508,9 +508,9 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
                 int_error = 2;
             }
             else{
-                StepBack(p_listpath, matrice_Map, p_playerInfo);
+                StepBack(p_list, matrice_Map, p_playerInfo);
                 DisplayMap(matrice_Map, int_mapSize); 
-                printf("Votre energie : %d\n",p_playerInfo.energy);
+                printf("Votre energie : %d\n",p_playerInfo->energy);
                 ShowKeyAvailable(p_playerInfo, matrice_Distance);
             }
             if(int_error == 1){
@@ -541,9 +541,9 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     int int_stepback = 0;
     int int_error = 0;
     RemoveNode(p_list);
-    AddNode(p_list,  p_playerInfo_player.coordonnees);
+    AddNode(p_list,  p_playerInfo_player->coordonnees);
     
-    TurnPlayer(int_mapSize,matrice_Map, matrice_Distance, p_playerInfo_player, bool_victory,key_pressed, int_wanted_x, int_wanted_y, p_list);
+    TurnPlayer(int_mapSize,matrice_Map, matrice_Distance, p_playerInfo_player, bool_victory,key_pressed, int_wanted_x, int_wanted_y, p_list, int_error, int_stepback);
     return bool_victory;
 }
 
