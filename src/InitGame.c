@@ -313,7 +313,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             matrice_Distance[i][j][2] = 0;
         }else{
             if (matrice_Distance[i-1][j][5] == 0){
-                matrice_Distance[i][j][1] = RNG(1,10);
+                matrice_Distance[i][j][1] = RNG(1,MAX_DISTANCE);
             }else{
                 matrice_Distance[i][j][1] = matrice_Distance[i-1][j][5];
             } 
@@ -324,7 +324,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             }else{
                 if (matrice_Distance[i-1][j-1][4] == 0)
                 {
-                    matrice_Distance[i][j][0] = RNG(1,10);
+                    matrice_Distance[i][j][0] = RNG(1,MAX_DISTANCE);
                 }else{
                     matrice_Distance[i][j][0] = matrice_Distance[i-1][j-1][4];
                 }
@@ -336,7 +336,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             }else{
                 if (matrice_Distance[i-1][j+1][6] ==0)
                 {
-                    matrice_Distance[i][j][2] = RNG(1,10);
+                    matrice_Distance[i][j][2] = RNG(1,MAX_DISTANCE);
                 }else{
                     matrice_Distance[i][j][2] = matrice_Distance[i-1][j+1][6];
                 }
@@ -348,7 +348,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             matrice_Distance[i][j][6] = 0;
         }else{       
             if (matrice_Distance[i+1][j][1] == 0){
-               matrice_Distance[i][j][5] = RNG(1,10);
+               matrice_Distance[i][j][5] = RNG(1,MAX_DISTANCE);
             }else{
                 matrice_Distance[i][j][5] = matrice_Distance[i+1][j][1];
             }
@@ -358,7 +358,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             }else{
                 if (matrice_Distance[i+1][j-1][2] == 0)
                 {
-                    matrice_Distance[i][j][6] = RNG(1,10);
+                    matrice_Distance[i][j][6] = RNG(1,MAX_DISTANCE);
                 }else{
                     matrice_Distance[i][j][6] = matrice_Distance[i+1][j-1][2];
                 }
@@ -369,7 +369,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             }else{
                 if (matrice_Distance[i+1][j+1][0] == 0)
                 {
-                    matrice_Distance[i][j][4] = RNG(1,10);
+                    matrice_Distance[i][j][4] = RNG(1,MAX_DISTANCE);
                 }else{
                     matrice_Distance[i][j][4] = matrice_Distance[i+1][j+1][0];
                 }
@@ -379,7 +379,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             matrice_Distance[i][j][7] = 0;
         }else{
             if (matrice_Distance[i][j-1][3] == 0){
-                matrice_Distance[i][j][7] = RNG(1,10);
+                matrice_Distance[i][j][7] = RNG(1,MAX_DISTANCE);
             }else{
                matrice_Distance[i][j][7] = matrice_Distance[i][j-1][3];
             }
@@ -388,7 +388,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             matrice_Distance[i][j][3] = 0;
         }else{
             if (matrice_Distance[i][j+1][3] == 0){
-                matrice_Distance[i][j][3] = RNG(1,10);
+                matrice_Distance[i][j][3] = RNG(1,MAX_DISTANCE);
             }else{
                 matrice_Distance[i][j][3] = matrice_Distance[i][j+1][7];
             }
