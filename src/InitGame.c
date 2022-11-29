@@ -398,6 +398,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
         }
     }
    return (matrice_Distance);
+}
 
 int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_ActEnergy, int int_Start, int* pi_totalChecked)
 {
