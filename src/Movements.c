@@ -3,11 +3,39 @@
 //Verifie la touche pressée
 int KeyAvailable(int key)
 {
-    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == SAVE || key == MAJ_SAVE || key == LEAVE_WITHOUT_SAVE || key == MAJ_LEAVE_WITHOUT_SAVE) {
+    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == LEAVE || key == MAJ_LEAVE || key == 10) { //10 = entrer à mettre dans constant.h
         return 1;
     }
     else {
         return 0;
+    }
+}
+
+//Menu lors de la fermeture de la partie
+int printSaveMenu () {
+    FILE* flux = stdin;
+    int input;
+    int position = 0; //0 = position haute
+    system("clear");
+    printf("\n>Quit Game without saving?\nSave Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if (input == UP && position!=0)
+        {
+            system("clear");
+            printf("\n>Quit Game without saving?\nSave Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
+            position++;
+        }
+        else if (input == DOWN && position !=1)
+        {
+            system("clear");
+            printf("\nQuit Game without saving?\n>Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
+            position--;
+        }
+        else if (input == 10) {
+            return position;
+        }
     }
 }
 
@@ -76,6 +104,11 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_in
         break;
     case STEP_BACK:
         *p_int_stepback=1;
+        break;
+    case LEAVE:
+        choice = printSaveMenu();
+        if (choice == 0) exit(0); //l'utilisateur a choisi de partir sans sauvegarder.
+        else printf("Partie sauvegardée"); /*fonction Fabien sauvegarde*/; 
         break;
     default:
         break;
