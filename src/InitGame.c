@@ -14,12 +14,6 @@ PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
     return playerInfo;
 }
 
-int ValidChoose(char myScan) //Verifie que les touches préssées soit valides
-{
-    if (myScan == '1' || myScan == '2' || myScan == '3') return 1;
-    else return 0;
-}
-
 float ChooseDifficulty()
 {
     char char_scanDiff[5];
