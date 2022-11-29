@@ -26,7 +26,7 @@ float ChooseDifficulty()
     printf("Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
     do 
     {
-        scanf("%c", &int_scanDiff);
+        scanf("%s", &int_scanDiff);
         if (!ValidChoose(int_scanDiff)) {
             system("clear");
             printf("Wrong key pressed ! Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
@@ -57,7 +57,7 @@ int ChooseMapSize()
     printf("\nChoose the map size :\n1: Little\n2: Average\n3: Big\n>");
     do 
     {
-        scanf("%c", &int_scanMapS);
+        scanf("%s", &int_scanMapS);
         if (!ValidChoose(int_scanMapS)) {
             system("clear");
             printf("Wrong key pressed ! Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
