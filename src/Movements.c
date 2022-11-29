@@ -12,7 +12,7 @@ int KeyAvailable(int key)
 }
 
 //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
-void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo) 
+void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_int_stepback)
 {
     *x=p_playerInfo->coordonnees.x;
     *y=p_playerInfo->coordonnees.y;
@@ -73,6 +73,9 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo)
     case MAJ_DOWN_RIGHT:
         *x=*x+1;
         *y=*y+1;
+        break;
+    case STEP_BACK:
+        *p_int_stepback=1;
         break;
     default:
         break;
@@ -196,7 +199,27 @@ void PlayerOnObstacle(PlayerInfo *p_playerInfo) //retire de l'énergie au joueur
     p_playerInfo->lost_energy = (p_playerInfo->energy) - LOST_ENERGY;
 }
 
-int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+void UpdateListe(PlayerInfo *p_playerInfo, List* p_list) // met à jour la dernière position du joueur dans la lise chainée
+{
+    AddNode(p_list, p_playerInfo->coordonnees);
+}
+
+void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo) // Permet de faire un retour en arrière supprimant les infos dans la liste et en mettant à jour la map et le joueur
+{
+    int last_x ;
+    int last_y;
+    RemoveNode(p_list);
+    GetfirstNode(p_list, &last_x, &last_y);
+    matrice_map = UpdatePosition(matrice_map, last_x, last_y, p_playerInfo); // attention à changer parce que soucis si c'était un bonus
+    p_playerInfo-> backward = p_playerInfo-> backward - 1;
+    p_playerInfo->coordonnees.x = last_x;
+    p_playerInfo->coordonnees.y = last_y;
+    p_playerInfo->energy = (p_playerInfo->energy) + LOST_ENERGY;
+    p_playerInfo->distance = p_playerInfo->distance - 1;
+}
+
+
+int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory, List* p_list)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 {
     if(int_wanted_x>=0 && int_wanted_x<int_mapSize && int_wanted_y>=0 && int_wanted_y<int_mapSize){
       switch(matrice_map[int_wanted_x][int_wanted_y])
