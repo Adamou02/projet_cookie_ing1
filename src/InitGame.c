@@ -499,8 +499,9 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
     
     while(bool_victory == 0 && p_playerInfo->energy > 0){
         key_pressed = ListenKeyboard();
-        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo); 
+        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo, &int_stepback); 
         if(int_stepback == 1){
+            printf("ici\n");
             if(p_playerInfo->backward <= 0){
                 int_error = 1;
             } 
@@ -508,6 +509,7 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
                 int_error = 2;
             }
             else{
+                printf("ici\n");
                 StepBack(p_list, matrice_Map, p_playerInfo);
                 DisplayMap(matrice_Map, int_mapSize); 
                 printf("Votre energie : %d\n",p_playerInfo->energy);
@@ -516,11 +518,12 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
             if(int_error == 1){
                 printf("\nVous n'avez plus de retour en arrière possible.\n");
             }else if(int_error == 2){
+                PrintList(p_list);
                 printf("\nVous ne pouvez pas revenir plus en arrière.\n");
         }
         }else{
             
-            matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory);
+            matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list);
             printf("\n"); 
             DisplayMap(matrice_Map, int_mapSize); 
             printf("Votre energie : %d\n",p_playerInfo->energy);

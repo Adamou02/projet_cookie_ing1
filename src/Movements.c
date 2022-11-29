@@ -238,25 +238,29 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
-            printf("Test bonus");
+            UpdateListe(p_playerInfo, p_list);
+            // printf("Test bonus");
             break;
 
         case REP_BONUS2 :
         PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
         matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
         UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+        UpdateListe(p_playerInfo, p_list);
         // printf("Test bonus");
         break;
     
         case REP_END :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdateListe(p_playerInfo, p_list);
             *int_victory = 1;
             break;
         
         default :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdateListe(p_playerInfo, p_list);
             break;
        }
      
