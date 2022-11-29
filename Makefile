@@ -44,7 +44,7 @@ $(PROG) : $(OBJ)
 $(Dir_OBJ)/%.o : $(Dir_SRC)/%.c 
 	@echo "Compiling $^ ..."
 	@$(MKDIR_P) $(Dir_OBJ)
-	@$(CC) -I include $(Dir_INCL) -c $< -o $@
+	@$(CC) -I include $(Dir_INCL) $(CFLAGS) -c $< -o $@
 
 .PHONY : clean
 
@@ -82,8 +82,8 @@ cleanSaves :
 run : 
 	@if [ -x $(PROG) ]; then\
 		./$(PROG);\
-	fi
-	@if [ ! -x $(PROG) ]; then\
+	fi\
+	if [ ! -x $(PROG) ]; then\
 		echo "$(PROG) found, make before make run"\
 	fi
 
