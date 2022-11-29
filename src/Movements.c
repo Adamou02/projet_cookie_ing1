@@ -79,7 +79,7 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo)
     }
 }
 
-//saute une ligne à chaque fois qu'on affiche 3 blocs touche sur le terminal
+//Saute une ligne à chaque fois qu'on affiche 3 blocs touche sur le terminal
 void SkipLine(int line_count, int *p_line_count) {
     if (line_count == 3) {
         printf("\n\n");
