@@ -77,4 +77,6 @@
     #define MAJ_SAVE 80
     #define MAJ_LEAVE_WITHOUT_SAVE 76
 
+    #define MAX_DISTANCE 9
+
 #endif
