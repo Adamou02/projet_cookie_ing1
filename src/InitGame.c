@@ -227,6 +227,8 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
     int int_qrtCoord = int_mapSize/ 4 ;
     int int_rdmRow;
     int int_rdmCol = int_mapSize;
+    p_playerInfo->coordonnees.x = 0;
+    p_playerInfo->coordonnees.y = 0;
          
     switch ( RNG(1,4) ) //Placement du personnages aleatoirement dans un des 4 coins de la map, et placement du drapeau en consequence semi-aléatoirement
     {
@@ -276,7 +278,7 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
     while( int_nbBonus > 0 ) { //Placement des Bonus
         int_rdmRow = RNG(0,int_maxCoord);
         int_rdmCol = RNG(0,int_maxCoord);
-        printf("%d,%d\n", int_rdmRow, int_rdmCol);
+        //printf("%d,%d\n", int_rdmRow, int_rdmCol);
         if( CoordCompare(matrice_Map, int_rdmRow, int_rdmCol, REP_DEFAULT) ) {
             int_nbBonus--;
             switch (RNG(1,2))
@@ -396,93 +398,123 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
         }
     }
    return (matrice_Distance);
+
+int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_ActEnergy, int int_Start, int* pi_totalChecked)
+{
+     if(*pi_totalChecked >= MAX_ITERATION_CHMAP || int_ActEnergy >= BASE_ENERGY*(int_maxCoord+1)){ //kill les chemins necessitant plus d'energy que le joueur n'en à, et kill si la map a necessiter plus de n check
+        free(pl_CurrentPath->firstnode);
+        free(pl_CurrentPath);
+        return 0;
+    }
+    *pi_totalChecked = *pi_totalChecked + 1;
+    int bool_PathFound = 0;
+    int TabModifCoordCheck[16];
+    switch(int_Start){ //tableau pour guider la verification en fonction du pt de depart du joueur pour accelerer la verif (ça accelere bcp)
+        case 1: ;// 0:0
+            int Tab1[16] = { 0, 1, 1, 1, 1, 0, -1, 1, 1, -1, -1, 0, 0, -1, -1, -1 };
+            for(int i=0; i<16; i++){
+                TabModifCoordCheck[i] = Tab1[i];
+            } break;
+        case 2: ;//0:MAXCOORD
+            int Tab2[16] = { 1, 0, 1, -1, 0, -1, 1, 1, -1, -1, 0, 1, -1, 0, -1, 1 };
+            for(int i=0; i<16; i++){
+                TabModifCoordCheck[i] = Tab2[i];
+            } break;
+        case 3: ;//MAXCOORD:0
+            int Tab3[16] = { -1, 0, -1, 1, 0, 1, 1, 1, 1, 0, -1, -1, -1, 0, 1, -1 };
+            for(int i=0; i<16; i++){
+                TabModifCoordCheck[i] = Tab3[i];
+            } break;
+        case 4: ;//MAXCOORD:MAXCOORD
+            int Tab4[16] = { -1, 0, -1, -1 ,-0 ,-1 ,-1 ,1 ,1 ,-1 ,0 ,1 ,1 ,0 ,1 ,1 };
+            for(int i=0; i<16; i++){
+                TabModifCoordCheck[i] = Tab4[i];
+            } break;
+        default:
+            exit(EXIT_FAILURE);
+            break;
+    }
+    for(int i=0; i<16; i=i+2){
+        bool_PathFound = CheckPath(
+                                    matrice_Map,
+                                    ModifCoord(coord_curr, coord_curr.x + TabModifCoordCheck[i], coord_curr.y + TabModifCoordCheck[i+1]),
+                                    int_maxCoord,
+                                    pl_CurrentPath,
+                                    int_ActEnergy + LOST_ENERGY,
+                                    int_Start,
+                                    pi_totalChecked
+                                  );
+        if(bool_PathFound){
+            free(pl_CurrentPath->firstnode);
+            free(pl_CurrentPath);
+            return 1;
+        }
+    }
+    if(!bool_PathFound){
+        free(pl_CurrentPath->firstnode);
+        free(pl_CurrentPath);
+        return 0;
+    }
+    return 0;
 }
 
-int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_ActEnergy, int* p_intEnergyNeeded) //verifie si la matrice map generer possede un chemin faisable recursivement; 
+int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_ActEnergy, int int_Start, int* pi_totalChecked) //verifie si la matrice map generer possede un chemin faisable recursivement;
 {
-    // printf("%d\n",int_ActEnergy);
-    if( !IsBetween(int_Coordx, 0, int_maxCoord) || !IsBetween(int_Coordy, 0, int_maxCoord)){ //si le chemin arrive a une bordure
+    int bool_PathFound;
+    if( !IsBetween(coord_curr.x, 0, int_maxCoord) || !IsBetween(coord_curr.y, 0, int_maxCoord)){ //si le chemin arrive a une bordure
         return 0;
-    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){ //chemin trouvé
-        *p_intEnergyNeeded = int_ActEnergy; //energy requis pour finir la map dans le chemin trouver
+    } else if(CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_END)){ //chemin trouvé
         return 1;
-    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE2)){ //la case actuelle du chemin est un obstacle
+    } else if(CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_OBSTACLE1) || CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_OBSTACLE2)){ //la case actuelle du chemin est un obstacle
         return 0;
-    } else {
-        if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS2)){
-            int_ActEnergy -= GAIN_ENERGY; 
+    } else  {
+        if(CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_BONUS1) || CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_BONUS2)){
+            int_ActEnergy -= GAIN_ENERGY;
         }
-        switch(int_Start)
+        if(IsInList(pl_CheckedPath, coord_curr))
         {
-            case 1: //le joueur à demarrer en 0,0
-                return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case 2: //le joueur à demarrer en 0,mapSize
-                return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case 3: //le joueur à demarrer en mapSize,0
-                return (
-                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
-            case 4: //le joueur à demarrer en mapSize, mapSize
-                return (
-                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
-                );
-                break;
+            return 0;
+        } else {
+            List* pl_CurrentPath = InitList(coord_curr);
+            if(pl_CheckedPath != NULL && pl_CheckedPath->firstnode != NULL){
+                pl_CurrentPath->firstnode->next=pl_CheckedPath->firstnode;
+            }
+            bool_PathFound = CheckEachDirection(matrice_Map, coord_curr, int_maxCoord, pl_CurrentPath, int_ActEnergy, int_Start, pi_totalChecked);
+            return(bool_PathFound);
         }
+
     }
 }
 
-int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize, int* p_intEnergyNeeded) //cherche si un chemin est faisable en fonction du placement du player au debut
-{
-    int int_maxCoord = int_mapSize - 1;
-    if(int_CoordPlayer_x == 0){
-        if(int_CoordPlayer_y == 0){
-            return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1, 0, p_intEnergyNeeded);
-        }
-        else {
-            return CheckPath(matrice_Map, 0, int_maxCoord, int_maxCoord, 2, 0, p_intEnergyNeeded);
-        }
-    } else {
-        if(int_CoordPlayer_y == 0){
-            return CheckPath(matrice_Map, int_maxCoord, 0, int_maxCoord, 3, 0, p_intEnergyNeeded);
-        }
-        else {
-            return CheckPath(matrice_Map, int_maxCoord, int_maxCoord, int_maxCoord, 4, 0, p_intEnergyNeeded);
-        }
-    }
-}
 
-int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo)
+int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo) //fonction qui init la map (alloc, gener, check si faisable)
 {
+    DebugInfoPlayer(*p_playerInfo);
     int** matrice_Map = AllocMatriceMap(int_mapSize); // Allocation de la Matrice Map
-    int int_EnergyNeeded=-1;
-    
+    int int_totalChecked = -1;
+
+    system("clear");
+    printf("Generating a Doable Map...\n");
     int bool_mapDoable = 0;
-    while(!bool_mapDoable || (abs(int_EnergyNeeded - (BASE_ENERGY * int_mapSize) )) <= ((BASE_ENERGY * int_mapSize)/10) )  //Generation d'une Map Faisable avec une difference d'energie pas trop grande par rapport à BASE ENRGIE x mapSize
+    while(!bool_mapDoable)  //Generation d'une Map Faisable avec une difference d'energie pas trop grande par rapport à BASE ENRGIE x mapSize
     {
+
         matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
         matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo);
-        // DisplayMap(matrice_Map,int_mapSize);
-        bool_mapDoable = CheckMapDoable(matrice_Map,
-                                        p_playerInfo->coordonnees.x,
-                                        p_playerInfo->coordonnees.y,
-                                        int_mapSize, 
-                                        &int_EnergyNeeded);
+    
+        int_totalChecked = 0;
+        bool_mapDoable = CheckPath(
+                                    matrice_Map,
+                                    p_playerInfo->coordonnees,
+                                    int_mapSize - 1,
+                                    NULL,
+                                    0,
+                                    DefineStartPlayer(p_playerInfo, int_mapSize),
+                                    &int_totalChecked
+                                  );
+
     }
+    system("clear");
     return (matrice_Map);
 }
 
@@ -550,49 +582,3 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     return bool_victory;
 }
 
-
-// int MinDistance(int distance[], int sptSet[], int int_mapSize)
-// {
-//     int min = INF;
-//     int min_index;
-
-//     for (int i = 0; i < int_mapSize ; i++){
-//         if (sptSet[i] == 0 && distance[i] <= min){
-//             min = distance[i];
-//             min_index = i;
-//         }
-//     }
-//     return (min_index);
-// }
-
-// void Dijkstra(int** matrice_Map, int int_mapSize, int src)
-// {
-//     int distance[int_mapSize]; //output
-//     int sptSet[int_mapSize];
-
-//     for (int i = 0; i < int_mapSize; i++){
-//         distance[i] = INF;
-//         sptSet[i] = 0;
-//     }
-
-//     distance[src]=0;
-
-//     for (int count = 0; count < int_mapSize - 1; count++) {
-//         int u = MinDistance(distance,sptSet, int_mapSize);
-//         sptSet[u] = 1;
-//         for (int v = 0; v < int_mapSize; v++){
-//             if (!sptSet[v] && matrice_Map[u][v]
-//                 && distance[u] != INF
-//                 && distance[u] + matrice_Map[u][v] < distance[v])
-//                 {
-//                     distance[v] = distance[u] + matrice_Map[u][v];
-//                 }
-//         }
-//     }
-
-//     for(int y = 0; y<= int_mapSize; y++){
-//         printf("|%d", distance[y]);
-//     }
-//     printf("\n");
-        
-// }
