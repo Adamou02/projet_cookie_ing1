@@ -43,10 +43,12 @@
     void printf_center(const char* str);
 
     void InitRNG();
+
+    coordonnees ModifCoord(coordonnees coord, int int_x, int int_y);
     
     Node* CreateNode(coordonnees coord);
 
-    List* InitList();
+    List* InitList(coordonnees coord);
 
     void AddNode(List* p_list, coordonnees coord);
 
@@ -56,8 +58,10 @@
 
     void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y);
     
-    void PrintList(List* p_list);
-
     void FreeList(List* p_list);
+
+    int IsInList(List* p_list, coordonnees coord);
+
+    int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize);
 
 #endif
