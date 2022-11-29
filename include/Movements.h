@@ -31,6 +31,10 @@
 
 
     void PlayerOnObstacle(PlayerInfo *p_playerInfo); //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
+ 
+    void UpdateListe(PlayerInfo *p_playerInfo, List* p_list);
+  
+    void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo);
 
     int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 
