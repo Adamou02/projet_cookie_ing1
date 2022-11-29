@@ -14,6 +14,9 @@
     //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
     void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo);
 
+    //Fait un retour à la ligne quand la fonction est appelée (permet de bien afficher les différentes touches disponibles sur plusieurs lignes)
+    void SkipLine(int line_count, int* p_line_count);
+
     //Affiche les touches pour les coups dispos (et leur coup en distance)
     void ShowKeyAvailable();
 
