@@ -40,7 +40,7 @@ int SupprFile(char char_NameFile[])
 //*******************************************************************
 
 char* AllocMapString(int int_mapSize){
-    char* MapString = (char *)malloc(int_mapSize*int_mapSize*200+1);
+    char* MapString = malloc((int_mapSize*(int_mapSize*2+1))*sizeof(*MapString));
     //MapString = "";
     return(MapString);
 }
