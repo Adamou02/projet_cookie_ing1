@@ -496,7 +496,7 @@ int*** InitDistance(int int_mapSize)
 }
 
 
-void turnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y)
+void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y)
 {
     
     while(bool_victory == 0 && p_playerInfo->energy > 0){
@@ -511,14 +511,14 @@ void turnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
 
 }
 
-int game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player)
+int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player)
 {
     int key_pressed;
     int int_wanted_x;
     int int_wanted_y;
     int bool_victory = 0;
     
-    turnPlayer(int_mapSize,matrice_Map, matrice_Distance, p_playerInfo_player, bool_victory,key_pressed, int_wanted_x, int_wanted_y);
+    TurnPlayer(int_mapSize,matrice_Map, matrice_Distance, p_playerInfo_player, bool_victory,key_pressed, int_wanted_x, int_wanted_y);
     return bool_victory;
 }
 
