@@ -34,7 +34,7 @@ void InitRNG()
 // FONCTIONS POUR LES LISTES CHAINEES //
 ////////////////////////////////////////
 
-Node* CreateNode(coordonnees coord)
+Node* CreateNode(coordonnees coord) // Créer une nouvelle node à ajouter dans la liste
 {
     Node *node = malloc(sizeof(*node));
     if(!node){
@@ -46,7 +46,7 @@ Node* CreateNode(coordonnees coord)
     return node;
 }
 
-List* InitList()
+List* InitList()  // Initialise la liste chainée
 {
     List *list_new = malloc(sizeof(*list_new));
     Node *node_new = malloc(sizeof(*node_new));
@@ -64,7 +64,7 @@ List* InitList()
 }
 
 
-void AddNode(List* p_list, coordonnees coord)
+void AddNode(List* p_list, coordonnees coord) // Ajoute une node en début de liste (fonctionne comme une pile)
 {       
     /*creation de la nouvel node*/
     Node *node_new = CreateNode(coord);
@@ -77,7 +77,7 @@ void AddNode(List* p_list, coordonnees coord)
     p_list->firstnode = node_new;
 }
 
-void RemoveNode(List* p_list)
+void RemoveNode(List* p_list) // retire la dernière node de la liste
 {
     if(p_list == NULL){
         puts("Error in RemoveNode");
@@ -90,7 +90,29 @@ void RemoveNode(List* p_list)
     }
 }
 
-void PrintList(List* p_list)
+long LengthList(List *p_list) // Permet d'obtenir la taille de la liste
+{
+    long long_taille = 0;
+    Node* node_current = p_list->firstnode;
+    while(node_current != NULL)
+    {
+        long_taille = long_taille + 1;
+        node_current = node_current->next;
+    }
+    return long_taille;
+}
+
+void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y) // renvoit les coordonnées de la dernière node ajoutée
+{   
+    if(p_list == NULL){
+        exit(EXIT_FAILURE);
+    }
+    Node* node_current = p_list->firstnode;
+    *p_last_x = node_current->coordonnees.x;
+    *p_last_y = node_current->coordonnees.y;
+}
+
+void PrintList(List* p_list) // Permet d'afficher la liste chainée
 {
     if(p_list == NULL){
         exit(EXIT_FAILURE);
@@ -105,7 +127,7 @@ void PrintList(List* p_list)
     printf("\n");
 }
 
-void FreeList(List* p_list)
+void FreeList(List* p_list) // Libère la mémoire alloué à la liste
 {
     if(p_list == NULL){
         free(p_list);
