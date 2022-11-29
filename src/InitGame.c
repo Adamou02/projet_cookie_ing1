@@ -501,7 +501,7 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
         key_pressed = ListenKeyboard();
         ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo); 
         if(int_stepback == 1){
-            if(p_playerInfo.backward <= 0){
+            if(p_playerInfo->backward <= 0){
                 int_error = 1;
             } 
             else if(LengthList(p_list) <= 1){
