@@ -43,9 +43,9 @@
 
     int*** InitDistance(int int_mapSize); //Alloue, et genere la matrice Distance
 
-    void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y);
+    void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y, List *p_list);
 
-    int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player);
+    int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player, List *p_list);
     
     int MinDistance(int distance[], int sptSet[], int int_mapSize);
 
