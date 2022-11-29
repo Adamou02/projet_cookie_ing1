@@ -22,26 +22,28 @@ int ValidChoose(char myScan) //Verifie que les touches préssées soit valides
 
 float ChooseDifficulty()
 {
-    char int_scanDiff;
+    char char_scanDiff[5];
+    int int_scanDiff = 0;
     printf("Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
     do 
     {
-        scanf("%s", &int_scanDiff);
-        if (!ValidChoose(int_scanDiff)) {
+        scanf("%s", char_scanDiff);
+        int_scanDiff = atoi(char_scanDiff);
+        if (int_scanDiff == 0) {
             system("clear");
             printf("Wrong key pressed ! Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
         }
-    } while (!ValidChoose(int_scanDiff));
+    } while (int_scanDiff == 0);
 
     switch (int_scanDiff) 
     {
-    case '1':
+    case 1:
         return (TAUX_DIFF_EZ);
         break;
-    case '2':
+    case 2:
         return (TAUX_DIFF_NORMAL);
         break;
-    case '3':
+    case 3:
         return (TAUX_DIFF_HARD);
         break;
     default:
@@ -53,26 +55,28 @@ float ChooseDifficulty()
 
 int ChooseMapSize()
 {
-    char int_scanMapS;
+    char char_scanMapS[5];
+    int int_scanMapS = 0;
     printf("\nChoose the map size :\n1: Little\n2: Average\n3: Big\n>");
     do 
     {
-        scanf("%s", &int_scanMapS);
-        if (!ValidChoose(int_scanMapS)) {
+        scanf("%s", char_scanMapS);
+        int_scanMapS = atoi(char_scanMapS);
+        if (int_scanMapS == 0) {
             system("clear");
             printf("Wrong key pressed ! Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
         }
-    } while (!ValidChoose(int_scanMapS));
+    } while (int_scanMapS == 0);
 
     switch (int_scanMapS)
     {
-    case '1':
+    case 1:
         return (TAILLE_LIL_MAP);
         break;
-    case '2':
+    case 2:
         return (TAILLE_AVE_MAP);
         break;
-    case '3':
+    case 3:
         return (TAILLE_BIG_MAP);
         break;
     default:
