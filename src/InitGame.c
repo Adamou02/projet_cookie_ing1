@@ -1,5 +1,6 @@
 #include "InitGame.h"
 
+
 PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
 {
     PlayerInfo playerInfo;
@@ -493,6 +494,34 @@ int*** InitDistance(int int_mapSize)
     matrice_Distance = GenerateMatriceDistance(int_mapSize, matrice_Distance);
     return (matrice_Distance);
 }
+
+
+void turnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y)
+{
+    
+    while(bool_victory == 0 && p_playerInfo->energy > 0){
+        key_pressed = ListenKeyboard();
+        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo); 
+        matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory);
+        printf("\n"); 
+        DisplayMap(matrice_Map, int_mapSize); 
+        printf("Votre energie : %d\n",p_playerInfo->energy);
+        ShowKeyAvailable(p_playerInfo, matrice_Distance);
+    }
+
+}
+
+int game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player)
+{
+    int key_pressed;
+    int int_wanted_x;
+    int int_wanted_y;
+    int bool_victory = 0;
+    
+    turnPlayer(int_mapSize,matrice_Map, matrice_Distance, p_playerInfo_player, bool_victory,key_pressed, int_wanted_x, int_wanted_y);
+    return bool_victory;
+}
+
 
 // int MinDistance(int distance[], int sptSet[], int int_mapSize)
 // {
