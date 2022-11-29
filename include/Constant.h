@@ -79,4 +79,6 @@
 
     #define MAX_DISTANCE 9
 
+    #define CURRENT_GAME_CSV "data/CurrentGame.csv"
+
 #endif
