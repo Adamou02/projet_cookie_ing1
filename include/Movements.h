@@ -12,7 +12,7 @@
     int KeyAvailable(int key);
 
     //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
-    void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo);
+    void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_int_stepback);
 
     //Fait un retour à la ligne quand la fonction est appelée (permet de bien afficher les différentes touches disponibles sur plusieurs lignes)
     void SkipLine(int line_count, int* p_line_count);
@@ -36,6 +36,6 @@
   
     void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo);
 
-    int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+    int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 
 #endif
