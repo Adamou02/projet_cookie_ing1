@@ -3,7 +3,7 @@
 //Verifie la touche pressée
 int KeyAvailable(int key)
 {
-    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == LEAVE || key == MAJ_LEAVE || key == 10) { //10 = entrer à mettre dans constant.h
+    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == LEAVE || key == MAJ_LEAVE || key == ENTER) { 
         return 1;
     }
     else {
@@ -32,7 +32,7 @@ int printSaveMenu () {
             printf("\n Quit Game without saving?\n>Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
             position--;
         }
-        else if (input == 10) {
+        else if (input == ENTER) {
             return position;
         }
     }
