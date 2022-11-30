@@ -29,6 +29,12 @@ void InitRNG()
     srand(time(NULL)); //init RNG
 }
 
+coordonnees ModifCoord(coordonnees coord, int int_x, int int_y)
+{
+    coord.x= int_x;
+    coord.y= int_y;
+    return coord;  
+}
 
 int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize) //fonction retournant un int entre 1  et 4 copris en fonction du placement de depart du personnage
 {
