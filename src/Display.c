@@ -62,6 +62,24 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     printf("\n");
 }
 
+void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
+{
+    int** matric_tmp = AllocMatriceMap(int_mapSize);
+    for(int i=0; i<int_mapSize; i++){
+        for(int j=0; j<int_mapSize; j++){
+            matric_tmp[i][j] = matric_Map[i][j];
+        }
+    }
+    Node* node_current = p_list->firstnode;
+    while(node_current != NULL)
+    {
+        matric_tmp[node_current->coordonnees.x][node_current->coordonnees.y]='.';
+        node_current = node_current->next;
+    }    
+    DisplayMap(matric_tmp, int_mapSize) 
+    UnallocMatriceMap(matric_tmp,int_mapSize);
+}
+
 
 //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
 
@@ -158,20 +176,3 @@ void PrintFirstList(List* p_list)
 }
 
 
-void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
-{
-    int** matric_tmp = AllocMatriceMap(int_mapSize);
-    for(int i=0; i<int_mapSize; i++){
-        for(int j=0; j<int_mapSize; j++){
-            matric_tmp[i][j] = matric_Map[i][j];
-        }
-    }
-    Node* node_current = p_list->firstnode;
-    while(node_current != NULL)
-    {
-        matric_tmp[node_current->coordonnees.x][node_current->coordonnees.y]='.';
-        node_current = node_current->next;
-    }    
-    DisplayMap(matric_tmp, int_mapSize) 
-    UnallocMatriceMap(matric_tmp,int_mapSize);
-}
