@@ -13,7 +13,6 @@ int KeyAvailable(int key)
 
 //Menu lors de la fermeture de la partie
 int printSaveMenu () {
-    FILE* flux = stdin;
     int input;
     int position = 0; //0 = position haute
     system("clear");
