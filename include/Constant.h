@@ -74,7 +74,7 @@
     #define MAJ_DOWN_LEFT 87
     #define MAJ_DOWN_RIGHT 67
     #define MAJ_STEP_BACK 82
-    #define MAJ_SAVE 80
+    #define MAJ_LEAVE 80
     #define MAJ_LEAVE_WITHOUT_SAVE 76
 
     #define MAX_DISTANCE 9
