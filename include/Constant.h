@@ -51,6 +51,7 @@
     #define DOWN_RIGHT_ARROW "\U00002198"
     #define STEP_BACK_ICON "\U000027f2"
     #define SAVE_ICON "\U0001F6AA"
+    #define ENTER_ICON "\U00002386"
 
 
     #define UP 122
