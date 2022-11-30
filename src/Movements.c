@@ -16,20 +16,20 @@ int printSaveMenu () {
     int input;
     int position = 0; //0 = position haute
     system("clear");
-    printf("\n>Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
+    printf("\n>Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
         if (input == UP && position!=0)
         {
             system("clear");
-            printf("\n>Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
+            printf("\n>Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
             position++;
         }
         else if (input == DOWN && position !=1)
         {
             system("clear");
-            printf("\n Quit Game without saving?\n>Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, SAVE_ICON);
+            printf("\n Quit Game without saving?\n>Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
             position--;
         }
         else if (input == ENTER) {
