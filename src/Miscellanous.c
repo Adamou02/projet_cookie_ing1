@@ -155,21 +155,6 @@ void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y) // renvoit les coo
     *p_last_y = node_current->coordonnees.y;
 }
 
-void PrintList(List* p_list) // Permet d'afficher la liste chainée
-{
-    if(p_list == NULL){
-        exit(EXIT_FAILURE);
-    }
-    Node* node_current = p_list->firstnode;
-    printf("List: |");
-    while(node_current != NULL)
-    {
-        printf("x=%d, y=%d |", node_current->coordonnees.x, node_current->coordonnees.y);
-        node_current = node_current->next;
-    }
-    printf("\n");
-}
-
 void FreeList(List* p_list)// Libère la mémoire alloué à la liste
 {
     if(p_list == NULL){
