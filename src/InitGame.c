@@ -583,3 +583,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     return bool_victory;
 }
 
+void ExitWithoutSave() {
+    system("clear");
+    exit(EXIT_SUCCESS);
+}
