@@ -62,7 +62,7 @@
     #define DOWN_LEFT 119
     #define DOWN_RIGHT 99
     #define STEP_BACK 114
-    #define SAVE 112
+    #define LEAVE 112
     #define LEAVE_WITHOUT_SAVE 108
 
     #define MAJ_UP 90
