@@ -158,17 +158,12 @@ void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y) // renvoit les coo
 void FreeList(List* p_list)// Libère la mémoire alloué à la liste
 {
     if(p_list == NULL){
-        free(p_list);
         return;
     }
-    Node* node_current = p_list->firstnode;
-    Node** node_tmp;
-    while(node_current != NULL){
-        node_tmp = &node_current;
-        node_current = node_current->next;
-        free(*node_tmp);
+    while(p_list->firstnode != NULL){
+        RemoveNode(p_list);
     }
-    free(node_current);
+    free(p_list);
 }
 
 int IsInList(List* p_list, coordonnees coord) //verifie si des coordonnees appartienne à une liste passer en parametre
