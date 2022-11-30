@@ -10,6 +10,8 @@
     */
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
+    void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
+
     //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
 
     void DebugDisplayMap(int** matrice_Map, int int_mapSize);
