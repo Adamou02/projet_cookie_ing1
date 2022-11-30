@@ -64,6 +64,7 @@
     #define STEP_BACK 114
     #define LEAVE 112
     #define LEAVE_WITHOUT_SAVE 108
+    #define ENTER 10
 
     #define MAJ_UP 90
     #define MAJ_DOWN 88
