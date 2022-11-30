@@ -10,6 +10,11 @@ int CoordCompare(int** matrice_map, int int_x, int int_y, char constant_rep)
     return (matrice_map[int_x][int_y] == constant_rep);
 }
 
+int CoordCompare2(int** matrice_map, coordonnees coord, char constant_rep)
+{
+    return(CoordCompare(matrice_map, coord.x, coord.y, constant_rep));
+}
+
 int IsBetween(int int_Comp, int int_min, int int_max){
     return (int_Comp >= int_min && int_Comp <= int_max);
 }
