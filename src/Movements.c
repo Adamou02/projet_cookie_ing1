@@ -42,6 +42,7 @@ int printSaveMenu () {
 //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
 void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_int_stepback)
 {
+    int choice;
     *x=p_playerInfo->coordonnees.x;
     *y=p_playerInfo->coordonnees.y;
     switch (key)
