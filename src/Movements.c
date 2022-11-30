@@ -290,10 +290,15 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             *int_victory = 1;
             break;
         
-        default :
+        case REP_VOID :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
             UpdateListe(p_playerInfo, p_list);
+            break;
+        
+        default :
+            // exit(EXIT_FAILURE);
+            return (matrice_map);
             break;
        }
      
