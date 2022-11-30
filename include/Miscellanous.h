@@ -38,6 +38,8 @@
 
     int CoordCompare(int** matrice_map, int int_x, int int_y, char constant_rep);
 
+    int CoordCompare2(int** matrice_map, coordonnees coord, char constant_rep);
+
     int IsBetween(int int_Comp, int int_min, int int_max);
 
     void printf_center(const char* str);
