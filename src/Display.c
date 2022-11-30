@@ -172,4 +172,6 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
         matric_tmp[node_current->coordonnees.x][node_current->coordonnees.y]='.';
         node_current = node_current->next;
     }    
-    DisplayMap(matric_tmp, int_m
+    DisplayMap(matric_tmp, int_mapSize) 
+    UnallocMatriceMap(matric_tmp,int_mapSize);
+}
