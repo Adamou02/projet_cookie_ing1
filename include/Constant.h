@@ -50,7 +50,7 @@
     #define DOWN_LEFT_ARROW "\U00002199"
     #define DOWN_RIGHT_ARROW "\U00002198"
     #define STEP_BACK_ICON "\U000027f2"
-    #define SAVE_ICON "\U0001f4be"
+    #define SAVE_ICON "\U0001F6AA"
 
 
     #define UP 122
