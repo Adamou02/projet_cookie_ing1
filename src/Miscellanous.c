@@ -72,7 +72,7 @@ int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize) //fonction reto
 // FONCTIONS POUR LES LISTES CHAINEES //
 ////////////////////////////////////////
 
-Node* CreateNode(coordonnees coord) // Créer une nouvelle node à ajouter dans la liste
+Node* CreateNode(coordonnees coord, int is_bonus) // Créer une nouvelle node à ajouter dans la liste
 {
     Node *node = malloc(sizeof(*node));
     if(!node){
@@ -80,6 +80,7 @@ Node* CreateNode(coordonnees coord) // Créer une nouvelle node à ajouter dans 
         exit(EXIT_FAILURE);
     }
     node->coordonnees = coord;
+    node->is_bonus = is_bonus;
     node->next = NULL;
     return node;
 }
@@ -97,18 +98,18 @@ List* InitList(coordonnees coord) //initialise une liste chaine de coord avec de
     node_new->next = NULL;
     node_new->coordonnees.x=coord.x;
     node_new->coordonnees.y=coord.y;
+    node_new->is_bonus=0;
     list_new->firstnode = node_new;
     return(list_new);
 }
 
-
-void AddNode(List* p_list, coordonnees coord) // Ajoute une node en début de liste 
+void AddNode(List* p_list, coordonnees coord, int is_bonus) // Ajoute une node en début de liste 
 {       
     /*creation de la nouvel node*/
     if(p_list == NULL){
         p_list = InitList(coord);
     } else {
-        Node *node_new = CreateNode(coord);
+        Node *node_new = CreateNode(coord, is_bonus);
         if(p_list == NULL){
             puts("Error in AddNode");
             exit(EXIT_FAILURE);
@@ -145,15 +146,17 @@ long LengthList(List *p_list) // Permet d'obtenir la taille de la liste
     return long_taille;
 }
 
-void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y) // renvoit les coordonnées de la dernière node ajoutée
+void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y, int* is_bonus) // renvoit les coordonnées de la dernière node ajoutée
 {   
     if(p_list == NULL){
         exit(EXIT_FAILURE);
     }
     Node* node_current = p_list->firstnode;
+    printf("%d %d\n", node_current->coordonnees.x, node_current->coordonnees.y);
     *p_last_x = node_current->coordonnees.x;
     *p_last_y = node_current->coordonnees.y;
-}
+    *is_bonus = node_current->is_bonus;
+}  
 
 void FreeList(List* p_list)// Libère la mémoire alloué à la liste
 {
