@@ -1,17 +1,18 @@
 #ifndef CONSTANT_H
 #define CONSTANT_H
 
-    #define LARGEUR_CONSOLE 80
-    #define MALLOC(x)((x * ) malloc(sizeof(x)))
     #define INF 9999999
 
-    #define TAILLE_BIG_MAP 60
-    #define TAILLE_AVE_MAP 40
+    #define TAILLE_BIG_MAP 40
+    #define TAILLE_AVE_MAP 30
     #define TAILLE_LIL_MAP 20
 
-    #define TAUX_DIFF_EZ 0.7
-    #define TAUX_DIFF_NORMAL 1.15
-    #define TAUX_DIFF_HARD 1.9
+    #define TAUX_DIFF_EZ 1.6
+    #define TAUX_DIFF_NORMAL 1.9
+    #define TAUX_DIFF_HARD 2.3
+
+    #define TAUX_BONUS 2
+    #define TAUX_OBSTACLE 2.3
 
     #define BASE_ENERGY 20
     #define GAIN_ENERGY 10
