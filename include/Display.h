@@ -1,7 +1,8 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
-    #include <stdio.h>
     #include <stdlib.h>
+    #include <unistd.h>
+    #include "InitGame.h"
     #include "Constant.h"
     #include "Miscellanous.h"
     
