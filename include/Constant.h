@@ -5,9 +5,9 @@
     #define MALLOC(x)((x * ) malloc(sizeof(x)))
     #define INF 9999999
 
-    #define TAILLE_BIG_MAP 30
-    #define TAILLE_AVE_MAP 20
-    #define TAILLE_LIL_MAP 10
+    #define TAILLE_BIG_MAP 60
+    #define TAILLE_AVE_MAP 40
+    #define TAILLE_LIL_MAP 20
 
     #define TAUX_DIFF_EZ 0.7
     #define TAUX_DIFF_NORMAL 1.15
