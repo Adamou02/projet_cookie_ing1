@@ -16,6 +16,7 @@
 
     typedef struct Node{ // enregistre les coordonnées dans une list 
         coordonnees coordonnees;
+        int is_bonus;
         struct Node *next;
     } Node;
 
