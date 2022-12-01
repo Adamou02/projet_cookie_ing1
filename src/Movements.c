@@ -302,7 +302,7 @@ int AlreadyBeen2(int loop)
         return 0;
     }else{
         printf("You've pressed a wrong key, choose again.\n");
-        AlreadyBeen2(1);
+        return (AlreadyBeen2(1));
     }
  }
 
