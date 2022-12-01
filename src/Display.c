@@ -6,7 +6,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     int int_curseur = 0;
     char* constant_caseDisplay = ERROR;
     int bool_isArrowC = 0;
-    system("clear");
+    ClearTerm();    
     printf(" ");
     for(int i=0; i<int_mapSize+1; i++)
     {
