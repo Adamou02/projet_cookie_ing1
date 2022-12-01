@@ -67,4 +67,6 @@
 
     int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize);
 
+    void ClearTerm();
+
 #endif
