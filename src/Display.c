@@ -1,11 +1,11 @@
 #include "Display.h"
 
 
-
 void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
     char* constant_caseDisplay = ERROR;
+    int bool_isArrowC = 0;
     system("clear");
     printf(" ");
     for(int i=0; i<int_mapSize+1; i++)
@@ -18,6 +18,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
         printf(" %s", SIDEBAR);
         while ( (int_curseur+1)%(int_mapSize+1) != 0 )
         {
+            bool_isArrowC = 0;
             switch (matrice_Map[int_curseurBis][int_curseur])
             {
                 case REP_CHARACTER :
@@ -46,33 +47,45 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
                     break;
                  case REP_UP :
                     constant_caseDisplay = UP_ARROW;
+                    bool_isArrowC = 1;
                     break;
                 case REP_DOWN :
                     constant_caseDisplay = DOWN_ARROW;
+                    bool_isArrowC = 1;
                     break;    
                 case REP_LEFT :
                     constant_caseDisplay = LEFT_ARROW;
+                    bool_isArrowC = 1;
                     break;                
                 case REP_RIGHT :
                     constant_caseDisplay = RIGHT_ARROW;
+                    bool_isArrowC = 1;
                     break;                
                 case REP_UPLEFT :
                     constant_caseDisplay = UP_LEFT_ARROW;
+                    bool_isArrowC = 1;
                     break;                
                 case REP_UPRIGHT :
                     constant_caseDisplay = UP_RIGHT_ARROW;
+                    bool_isArrowC = 1;
                     break;                
                 case REP_DOWNLEFT :
                     constant_caseDisplay = DOWN_LEFT_ARROW;
+                    bool_isArrowC = 1;
                     break;
                 case REP_DOWNRIGHT :
                     constant_caseDisplay = DOWN_RIGHT_ARROW;
+                    bool_isArrowC = 1;
                     break;                
                 default :
                     constant_caseDisplay = ERROR;
                     break;       
             }
+            if(bool_isArrowC){
+                printf(" ");
+            } 
             printf("%s", constant_caseDisplay);
+            
             int_curseur++;
         }
         printf("%s\n", SIDEBAR);
@@ -95,9 +108,49 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
         }
     }
     Node* node_current = p_list->firstnode;
-    while(node_current != NULL)
+    while(node_current != NULL && node_current->next != NULL)
     {
-        matric_tmp[node_current->coordonnees.x][node_current->coordonnees.y]='.';
+        if(
+            node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UP;
+        } else if (
+            node_current->next->coordonnees.x == node_current->coordonnees.x &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y + 1
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_LEFT;
+        } else if (
+            node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y + 1
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPLEFT;
+        } else if(
+            node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWN;
+        } else if (
+            node_current->next->coordonnees.x == node_current->coordonnees.x &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y - 1
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_RIGHT;
+        } else if (
+            node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y - 1
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWNRIGHT;
+        } else if (
+            node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y + 1
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWNLEFT;
+        } else if (
+            node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
+            node_current->next->coordonnees.y == node_current->coordonnees.y - 1
+        ){
+                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPRIGHT;
+        }
         node_current = node_current->next;
     }    
     DisplayMap(matric_tmp, int_mapSize);
