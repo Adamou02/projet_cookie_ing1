@@ -30,10 +30,32 @@
         printf("Votre energie : %d\n",s_playerInfo.energy);
         ShowKeyAvailable(&s_playerInfo, matrice_Distance);
 
+
+//TESTS DE SAUVEGARDE
+    MatriceMapToString(matrice_Map, int_mapSize, MapString);
+    
+    //printf("\n\nMap_string 1 = %s\n\n\n", MapString);
+
+    MatriceDistanceToString(matrice_Distance, int_mapSize, DistanceString);
+    StockCurrentTurn(MapString, DistanceString, &s_playerInfo);
+
+    //printf("\n\nMap_string 2 = %s\n\n\n", MapString);
+
+    GetAllInfo(MapString, DistanceString, &s_playerInfo, int_mapSize);
+        
+//TESTS DE RECUPERATION DE SAUVEGARDE
+    StringToMatriceMap(MapString, int_mapSize, matrice_Map);
+    StringToMatriceDistance(DistanceString, int_mapSize, matrice_Distance);
+
+//FIN DES TESTS
+        
+        
         int bool_victory = Game(int_mapSize, matrice_Map, matrice_Distance,&s_playerInfo, p_listpath);
         // DebugDisplayMap(matrice_Map, int_mapSize);  
 
-
+        SupprFile(CURRENT_GAME_CSV);
+        free(MapString);
+        free(DistanceString);
         PrintList(p_listpath);
         FreeList(p_listpath);
         UnallocMatriceMap(matrice_Map, int_mapSize);
