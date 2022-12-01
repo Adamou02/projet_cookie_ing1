@@ -12,7 +12,8 @@ int KeyAvailable(int key)
 }
 
 //Menu lors de la fermeture de la partie
-int printSaveMenu () {
+int printSaveMenu () 
+{
     int input;
     int position = 0; //0 = position haute
     system("clear");
@@ -116,7 +117,8 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_in
 }
 
 //Saute une ligne à chaque fois qu'on affiche 3 blocs touche sur le terminal
-void SkipLine(int line_count, int *p_line_count) {
+void SkipLine(int line_count, int *p_line_count) 
+{
     if (line_count == 3) {
         printf("\n\n");
         *p_line_count=0;
