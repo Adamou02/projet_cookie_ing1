@@ -645,7 +645,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     int int_stepback = 0;
     int int_error = 0;
     RemoveNode(p_list);
-    AddNode(p_list,  p_playerInfo_player->coordonnees);
+    AddNode(p_list,  p_playerInfo_player->coordonnees, 0);
     
     TurnPlayer(int_mapSize,matrice_Map, matrice_Distance, p_playerInfo_player, bool_victory,key_pressed, int_wanted_x, int_wanted_y, p_list, int_error, int_stepback);
     return bool_victory;
