@@ -110,46 +110,48 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
     Node* node_current = p_list->firstnode;
     while(node_current != NULL && node_current->next != NULL)
     {
-        if(
-            node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UP;
-        } else if (
-            node_current->next->coordonnees.x == node_current->coordonnees.x &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y + 1
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_LEFT;
-        } else if (
-            node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y + 1
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPLEFT;
-        } else if(
-            node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWN;
-        } else if (
-            node_current->next->coordonnees.x == node_current->coordonnees.x &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y - 1
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_RIGHT;
-        } else if (
-            node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y - 1
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWNRIGHT;
-        } else if (
-            node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y + 1
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWNLEFT;
-        } else if (
-            node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
-            node_current->next->coordonnees.y == node_current->coordonnees.y - 1
-        ){
-                 matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPRIGHT;
+        if(!CoordCompare2(matric_Map, node_current->next->coordonnees, REP_CHARACTER)){
+            if(
+                node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UP;
+            } else if (
+                node_current->next->coordonnees.x == node_current->coordonnees.x &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y + 1
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_LEFT;
+            } else if (
+                node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y + 1
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPLEFT;
+            } else if(
+                node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWN;
+            } else if (
+                node_current->next->coordonnees.x == node_current->coordonnees.x &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y - 1
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_RIGHT;
+            } else if (
+                node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y - 1
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWNRIGHT;
+            } else if (
+                node_current->next->coordonnees.x == node_current->coordonnees.x - 1 &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y + 1
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOWNLEFT;
+            } else if (
+                node_current->next->coordonnees.x == node_current->coordonnees.x + 1 &&
+                node_current->next->coordonnees.y == node_current->coordonnees.y - 1
+            ){
+                     matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPRIGHT;
+            }
         }
         node_current = node_current->next;
     }    
