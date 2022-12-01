@@ -84,5 +84,7 @@
     #define MAX_ITERATION_CHMAP 130000
 
     #define CURRENT_GAME_CSV "data/CurrentGame.csv"
+    #define HISTORY_CSV "data/History.csv"
+    #define SAVE_CSV "data/Save.csv"
 
 #endif
