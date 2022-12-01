@@ -586,7 +586,8 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
             else{
                 printf("ici\n");
                 StepBack(p_list, matrice_Map, p_playerInfo);
-                DisplayMap(matrice_Map, int_mapSize); 
+                DisplayPathInMap(matrice_Map, int_mapSize, p_list);
+                //DisplayMap(matrice_Map, int_mapSize); 
                 printf("Votre energie : %d\n",p_playerInfo->energy);
                 ShowKeyAvailable(p_playerInfo, matrice_Distance);
             }
@@ -600,7 +601,8 @@ void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, Play
             
             matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list);
             printf("\n"); 
-            DisplayMap(matrice_Map, int_mapSize); 
+            DisplayPathInMap(matrice_Map, int_mapSize, p_list);
+            //DisplayMap(matrice_Map, int_mapSize); 
             printf("Votre energie : %d\n",p_playerInfo->energy);
             ShowKeyAvailable(p_playerInfo, matrice_Distance);
         }
