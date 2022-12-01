@@ -25,14 +25,14 @@
     #define REP_VOID '0'
     #define REP_END 'D'
     #define REP_DEFAULT 'X'
-    #define REP_UP '↑'
-    #define REP_DOWN '↓'
-    #define REP_LEFT '←'
-    #define REP_RIGHT '→'
-    #define REP_UPLEFT '↖'
-    #define REP_UPRIGHT '↗'
-    #define REP_DOWNLEFT '↘'
-    #define REP_DOWNRIGHT '↙'
+    #define REP_UP '1'
+    #define REP_DOWN '2'
+    #define REP_LEFT '3'
+    #define REP_RIGHT '4'
+    #define REP_UPLEFT '5'
+    #define REP_UPRIGHT '6'
+    #define REP_DOWNLEFT '7'
+    #define REP_DOWNRIGHT '8'
 
 
     #define BONUS_COOKIE "\U0001f36a"
