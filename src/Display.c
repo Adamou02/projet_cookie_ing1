@@ -43,7 +43,31 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
                     break;
                 case REP_DEFAULT :
                     constant_caseDisplay = ERROR;
-                    break;           
+                    break;
+                 case REP_UP :
+                    constant_caseDisplay = UP_ARROW;
+                    break;
+                case REP_DOWN :
+                    constant_caseDisplay = DOWN_ARROW;
+                    break;    
+                case REP_LEFT :
+                    constant_caseDisplay = LEFT_ARROW;
+                    break;                
+                case REP_RIGHT :
+                    constant_caseDisplay = RIGHT_ARROW;
+                    break;                
+                case REP_UPLEFT :
+                    constant_caseDisplay = UP_LEFT_ARROW;
+                    break;                
+                case REP_UPRIGHT :
+                    constant_caseDisplay = UP_RIGHT_ARROW;
+                    break;                
+                case REP_DOWNLEFT :
+                    constant_caseDisplay = DOWN_LEFT_ARROW;
+                    break;
+                case REP_DOWNRIGHT :
+                    constant_caseDisplay = DOWN_RIGHT_ARROW;
+                    break;                
                 default :
                     constant_caseDisplay = ERROR;
                     break;       
