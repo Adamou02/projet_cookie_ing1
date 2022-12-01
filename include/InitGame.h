@@ -11,9 +11,11 @@
     
     PlayerInfo SetupPlayer();
 
-    int ValidChoose(char myScan);
+    int MenuDifficulty();
 
     float ChooseDifficulty();
+
+    int MenuMapSize();
 
     int ChooseMapSize();
 
