@@ -132,13 +132,11 @@ char* MatriceMapToString(int** matrice_Map, int int_mapSize, char* MapString)
                 int_nbchar++;
             }
             int_curseur++;
-            printf("%d\n", int_nbchar);
         }
         //Ajout d'un separateur different en fin de ligne
         *(MapString + int_nbchar) = c_sep2;
         int_nbchar++;
         int_curseur = 0;
-        printf("%d\n", int_nbchar);
         
     }
     *(MapString + int_nbchar) = '\0';
