@@ -8,6 +8,7 @@
     {
         EditTerminal();
         InitRNG();
+        SupprFile(CURRENT_GAME_CSV);
         
         float float_diffRate = ChooseDifficulty();
         int int_mapSize = ChooseMapSize();
@@ -29,15 +30,15 @@
         printf("Votre energie : %d\n",s_playerInfo.energy);
         ShowKeyAvailable(&s_playerInfo, matrice_Distance);
 
-
+        
         
         
         int bool_victory = Game(int_mapSize, matrice_Map, matrice_Distance,&s_playerInfo, p_listpath);
         // DebugDisplayMap(matrice_Map, int_mapSize);  
 
-        SupprFile(CURRENT_GAME_CSV);
         
-        PrintList(p_listpath);
+     
+        DisplayPathInMap(matrice_Map, int_mapSize, p_listpath);
         FreeList(p_listpath);
         UnallocMatriceMap(matrice_Map, int_mapSize);
         UnallocMatriceDistance(matrice_Distance, int_mapSize);
