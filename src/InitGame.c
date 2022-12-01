@@ -51,19 +51,7 @@ int MenuDifficulty()
 
 float ChooseDifficulty()
 {
-    char char_scanDiff[5];
-    int int_scanDiff = 0;
-    printf("Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
-    do 
-    {
-        scanf("%s", char_scanDiff);
-        int_scanDiff = atoi(char_scanDiff);
-        if (int_scanDiff == 0) {
-            system("clear");
-            printf("Wrong key pressed ! Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
-        }
-    } while (int_scanDiff == 0);
-
+    int int_scanDiff = MenuDifficulty();
     switch (int_scanDiff) 
     {
     case 1:
@@ -119,19 +107,7 @@ int MenuMapSize()
 
 int ChooseMapSize()
 {
-    char char_scanMapS[5];
-    int int_scanMapS = 0;
-    printf("\nChoose the map size :\n1: Little\n2: Average\n3: Big\n>");
-    do 
-    {
-        scanf("%s", char_scanMapS);
-        int_scanMapS = atoi(char_scanMapS);
-        if (int_scanMapS == 0) {
-            system("clear");
-            printf("Wrong key pressed ! Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
-        }
-    } while (int_scanMapS == 0);
-
+    int int_scanMapS = MenuMapSize();
     switch (int_scanMapS)
     {
     case 1:  
