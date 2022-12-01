@@ -40,14 +40,12 @@ int SupprFile(char char_NameFile[])
 //*******************************************************************
 
 char* AllocMapString(int int_mapSize){
-    char* MapString = malloc((int_mapSize*(int_mapSize*2+1))*sizeof(*MapString));
-    //MapString = "";
+    char* MapString = malloc((2*int_mapSize*int_mapSize+1)*sizeof(*MapString));
     return(MapString);
 }
 
 char* AllocDistanceString(int int_mapSize){
-    char* DistanceString = (char *)malloc(int_mapSize*int_mapSize*6400+1);
-    //DistanceString = "";
+    char* DistanceString = malloc((16*int_mapSize*int_mapSize+1)*sizeof(*DistanceString));
     return(DistanceString);
 }
 
@@ -115,8 +113,8 @@ int** StringToMatriceMap(char* MapString, int int_mapSize, int** matrice_Map){
             current_Char = strtok(NULL, ".*");
         }
     }
-    //Reinitialisation du string (cause un warning a la compilation mais pas d'erreur)
-    *MapString = NULL;
+    //Reinitialisation du string
+    strcpy(MapString, "");
     return (matrice_Map);
 }
 
@@ -131,8 +129,8 @@ int*** StringToMatriceDistance(char* DistanceString, int int_mapSize, int*** mat
             }
         }
     }
-    //Reinitialisation du string (cause un warning a la compilation mais pas d'erreur)
-    *DistanceString = NULL;
+    //Reinitialisation du string
+    strcpy(DistanceString, "");
     return (matrice_Distance);
 }
 
