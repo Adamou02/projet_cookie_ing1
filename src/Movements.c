@@ -251,9 +251,42 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo) // Perm
     p_playerInfo->distance = p_playerInfo->distance - 1;
 }
 
+int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list)
+{
+    coordonnees coord_wanted;
+    coord_wanted.x = int_wanted_x;
+    coord_wanted.y = int_wanted_y;
+    return IsInList(p_list, coord_wanted);
+}
+
+int AlreadyBeen2(int loop)
+ {  
+    int key_pressed;
+    if(loop == 0){
+        printf("\nYou've already been there, do you want to go back ?\n");
+        printf("a : yes\t");
+        printf("e : no\n");
+    }
+    key_pressed = ListenKeyboard();
+    if(key_pressed == UP_LEFT){
+        return 1;
+    }else if(key_pressed == UP_RIGHT){
+        return 0;
+    }else{
+        printf("You've pressed a wrong key, choose again.\n");
+        AlreadyBeen2(1);
+    }
+ }
 
 int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory, List* p_list)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 {
+    if(AlreadyBeen(int_wanted_x, int_wanted_y, p_list) == 1 && p_playerInfo->distance>0){
+        int Bool_choice = 0;
+        Bool_choice = AlreadyBeen2(0);
+        if(Bool_choice == 0){
+            return (matrice_map);
+        }
+    }
     if(int_wanted_x>=0 && int_wanted_x<int_mapSize && int_wanted_y>=0 && int_wanted_y<int_mapSize){
       switch(matrice_map[int_wanted_x][int_wanted_y])
         {
