@@ -232,7 +232,7 @@ void PlayerOnObstacle(PlayerInfo *p_playerInfo) //retire de l'énergie au joueur
     p_playerInfo->lost_energy = (p_playerInfo->energy) - LOST_ENERGY;
 }
 
-void UpdateListe(PlayerInfo *p_playerInfo, List* p_list, int is_bonus) // met à jour la dernière position du joueur dans la lise chainée
+void UpdatePathList(PlayerInfo *p_playerInfo, List* p_list, int is_bonus) // met à jour la dernière position du joueur dans la lise chainée
 {
     AddNode(p_list, p_playerInfo->coordonnees, is_bonus);
 }
@@ -330,7 +330,7 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
-            UpdateListe(p_playerInfo, p_list, 1);
+            UpdatePathList(p_playerInfo, p_list, 1);
             // printf("Test bonus");
             break;
 
@@ -338,21 +338,21 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
         PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
         matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
         UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
-        UpdateListe(p_playerInfo, p_list, 2);
+        UpdatePathList(p_playerInfo, p_list, 2);
         // printf("Test bonus");
         break;
     
         case REP_END :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
-            UpdateListe(p_playerInfo, p_list, 0);
+            UpdatePathList(p_playerInfo, p_list, 0);
             *int_victory = 1;
             break;
         
         case REP_VOID :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
-            UpdateListe(p_playerInfo, p_list, 0);
+            UpdatePathList(p_playerInfo, p_list, 0);
             break;
         
         default :
