@@ -19,7 +19,7 @@ int MenuDifficulty()
     int input;
     int position = 1; //1 = position haute
     ClearTerm();
-    printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
@@ -36,15 +36,15 @@ int MenuDifficulty()
         }
         if (position == 1) {
             ClearTerm();
-            printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
             ClearTerm();
-            printf("\nChoose a Difficulty :\n 1: Easy\n>2: Normal\n 3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose a Difficulty :\n 1: Easy\n>2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
             ClearTerm();
-            printf("\nChoose a Difficulty :\n 1: Easy\n 2: Normal\n>3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose a Difficulty :\n 1: Easy\n 2: Normal\n>3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
@@ -75,7 +75,7 @@ int MenuMapSize()
     int input;
     int position = 1; //1 = position haute
     ClearTerm();
-    printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
@@ -92,15 +92,15 @@ int MenuMapSize()
         }
         if (position == 1) {
             ClearTerm();
-            printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
             ClearTerm();
-            printf("\nChoose the map size :\n 1: Little\n>2: Average\n 3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose the map size :\n 1: Little\n>2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
             ClearTerm();
-            printf("\nChoose the map size :\n 1: Little\n 2: Average\n>3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose the map size :\n 1: Little\n 2: Average\n>3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
@@ -266,8 +266,8 @@ int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSiz
 
 int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, PlayerInfo *p_playerInfo) //Work In Progress
 {
-    float int_nbObstacles = int_mapSize * float_diffRate ;
-    float int_nbBonus = ( ( int_mapSize / (12 * float_diffRate) ) * ( 2 - float_diffRate ) ) + (RNG(0,12)/(5*float_diffRate));
+    float int_nbObstacles = int_mapSize * float_diffRate * TAUX_OBSTACLE;
+    float int_nbBonus = int_mapSize/5 * (1/float_diffRate) * TAUX_BONUS;
 
     int int_maxCoord = int_mapSize - 1 ;
     int int_qrtCoord = int_mapSize/ 4 ;
