@@ -134,9 +134,7 @@ int ChooseMapSize()
 
     switch (int_scanMapS)
     {
-    case 1:  int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_Start, int* pi_totalChecked);
-
-    int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_Start, int* pi_totalChecked); //verifie si la matrice map generer possede un chemin faisable recursivement; 
+    case 1:  
         return (TAILLE_LIL_MAP);
         break;
     case 2:
