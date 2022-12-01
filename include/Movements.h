@@ -36,6 +36,10 @@
   
     void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo);
 
+    int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list);
+
+    int AlreadyBeen2(int loop);
+
     int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 
 #endif
