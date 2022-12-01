@@ -53,6 +53,8 @@ char* MatriceMapToString(int** matrice_Map, int int_mapSize, char* MapString){
     int int_curseur = 0;
     char Current_Char;
     char Current_Str[2];
+    strcpy(Current_Str, "");
+    strcpy(MapString, "");
     for(int int_curseurBis = 0; int_curseurBis < int_mapSize; int_curseurBis++)
     {
         while ( (int_curseur+1)%(int_mapSize+1) != 0 )
@@ -77,6 +79,7 @@ char* MatriceMapToString(int** matrice_Map, int int_mapSize, char* MapString){
 
 char* MatriceDistanceToString(int*** matrice_Distance, int int_mapSize, char* DistanceString){
     char Current_Str[2];
+    strcpy(DistanceString, "");
     for (int i = 0; i < int_mapSize; i++)
     {
         for (int j = 0; j < int_mapSize; j++)
