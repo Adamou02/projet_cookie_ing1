@@ -18,7 +18,7 @@ int MenuDifficulty()
 {
     int input;
     int position = 1; //1 = position haute
-    system("clear");
+    ClearTerm();
     printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
@@ -35,15 +35,15 @@ int MenuDifficulty()
             return position;
         }
         if (position == 1) {
-            system("clear");
+            ClearTerm();
             printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
-            system("clear");
+            ClearTerm();
             printf("\nChoose a Difficulty :\n 1: Easy\n>2: Normal\n 3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
-            system("clear");
+            ClearTerm();
             printf("\nChoose a Difficulty :\n 1: Easy\n 2: Normal\n>3: Hard\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
@@ -74,7 +74,7 @@ int MenuMapSize()
 {
     int input;
     int position = 1; //1 = position haute
-    system("clear");
+    ClearTerm();
     printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
@@ -91,15 +91,15 @@ int MenuMapSize()
             return position;
         }
         if (position == 1) {
-            system("clear");
+            ClearTerm();
             printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
-            system("clear");
+            ClearTerm();
             printf("\nChoose the map size :\n 1: Little\n>2: Average\n 3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
-            system("clear");
+            ClearTerm();
             printf("\nChoose the map size :\n 1: Little\n 2: Average\n>3: Big\n\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
@@ -537,7 +537,7 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo) /
     int** matrice_Map = AllocMatriceMap(int_mapSize); // Allocation de la Matrice Map
     int int_totalChecked = -1;
 
-    system("clear");
+    ClearTerm();
     printf("Generating a Doable Map...\n");
     int bool_mapDoable = 0;
     while(!bool_mapDoable)  //Generation d'une Map Faisable avec une difference d'energie pas trop grande par rapport à BASE ENRGIE x mapSize
@@ -557,7 +557,7 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo) /
                                   );
 
     }
-    system("clear");
+    ClearTerm();
     return (matrice_Map);
 }
 
@@ -628,6 +628,6 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
 }
 
 void ExitWithoutSave() {
-    system("clear");
+    ClearTerm();
     exit(EXIT_SUCCESS);
 }
