@@ -64,7 +64,9 @@ int ChooseMapSize()
 
     switch (int_scanMapS)
     {
-    case 1:
+    case 1:  int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_Start, int* pi_totalChecked);
+
+    int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_Start, int* pi_totalChecked); //verifie si la matrice map generer possede un chemin faisable recursivement; 
         return (TAILLE_LIL_MAP);
         break;
     case 2:
@@ -400,9 +402,9 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
    return (matrice_Distance);
 }
 
-int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_ActEnergy, int int_Start, int* pi_totalChecked)
+int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_Start, int* pi_totalChecked)
 {
-     if(*pi_totalChecked >= MAX_ITERATION_CHMAP || int_ActEnergy >= BASE_ENERGY*(int_maxCoord+1)){ //kill les chemins necessitant plus d'energy que le joueur n'en à, et kill si la map a necessiter plus de n check
+     if(*pi_totalChecked >= MAX_ITERATION_CHMAP ){ // kill la recherche si la map a necessiter plus de n check
         free(pl_CurrentPath->firstnode);
         free(pl_CurrentPath);
         return 0;
@@ -410,24 +412,24 @@ int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoo
     *pi_totalChecked = *pi_totalChecked + 1;
     int bool_PathFound = 0;
     int TabModifCoordCheck[16];
-    switch(int_Start){ //tableau pour guider la verification en fonction du pt de depart du joueur pour accelerer la verif (ça accelere bcp)
+    switch(int_Start){ //tableau pour guider la verification en fonction du pt de depart du joueur pour accelerer la verif (ça accelere pas mal)
         case 1: ;// 0:0
-            int Tab1[16] = { 0, 1, 1, 1, 1, 0, -1, 1, 1, -1, -1, 0, 0, -1, -1, -1 };
+            int Tab1[16] = { 1, 1, 0, 1, 1, 0, -1, 1, 1, -1, -1, 0, 0, -1, -1, -1 };
             for(int i=0; i<16; i++){
                 TabModifCoordCheck[i] = Tab1[i];
             } break;
         case 2: ;//0:MAXCOORD
-            int Tab2[16] = { 1, 0, 1, -1, 0, -1, 1, 1, -1, -1, 0, 1, -1, 0, -1, 1 };
+            int Tab2[16] = { 1, -1, 1, 0, 0, -1, 1, 1, -1, -1, 0, 1, -1, 0, -1, 1 };
             for(int i=0; i<16; i++){
                 TabModifCoordCheck[i] = Tab2[i];
             } break;
         case 3: ;//MAXCOORD:0
-            int Tab3[16] = { -1, 0, -1, 1, 0, 1, 1, 1, 1, 0, -1, -1, -1, 0, 1, -1 };
+            int Tab3[16] = { -1, 1, -1, 0, 0, 1, 1, 1, 1, 0, -1, -1, -1, 0, 1, -1 };
             for(int i=0; i<16; i++){
                 TabModifCoordCheck[i] = Tab3[i];
             } break;
         case 4: ;//MAXCOORD:MAXCOORD
-            int Tab4[16] = { -1, 0, -1, -1 ,-0 ,-1 ,-1 ,1 ,1 ,-1 ,0 ,1 ,1 ,0 ,1 ,1 };
+            int Tab4[16] = { -1, -1, -1, 0 ,0 ,-1 ,-1 ,1 ,1 ,-1 ,0 ,1 ,1 ,0 ,1 ,1 };
             for(int i=0; i<16; i++){
                 TabModifCoordCheck[i] = Tab4[i];
             } break;
@@ -441,7 +443,6 @@ int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoo
                                     ModifCoord(coord_curr, coord_curr.x + TabModifCoordCheck[i], coord_curr.y + TabModifCoordCheck[i+1]),
                                     int_maxCoord,
                                     pl_CurrentPath,
-                                    int_ActEnergy + LOST_ENERGY,
                                     int_Start,
                                     pi_totalChecked
                                   );
@@ -459,7 +460,7 @@ int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoo
     return 0;
 }
 
-int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_ActEnergy, int int_Start, int* pi_totalChecked) //verifie si la matrice map generer possede un chemin faisable recursivement;
+int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_Start, int* pi_totalChecked) //verifie si la matrice map generer possede un chemin faisable recursivement;
 {
     int bool_PathFound;
     if( !IsBetween(coord_curr.x, 0, int_maxCoord) || !IsBetween(coord_curr.y, 0, int_maxCoord)){ //si le chemin arrive a une bordure
@@ -469,9 +470,6 @@ int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List*
     } else if(CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_OBSTACLE1) || CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_OBSTACLE2)){ //la case actuelle du chemin est un obstacle
         return 0;
     } else  {
-        if(CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_BONUS1) || CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_BONUS2)){
-            int_ActEnergy -= GAIN_ENERGY;
-        }
         if(IsInList(pl_CheckedPath, coord_curr))
         {
             return 0;
@@ -480,7 +478,8 @@ int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List*
             if(pl_CheckedPath != NULL && pl_CheckedPath->firstnode != NULL){
                 pl_CurrentPath->firstnode->next=pl_CheckedPath->firstnode;
             }
-            bool_PathFound = CheckEachDirection(matrice_Map, coord_curr, int_maxCoord, pl_CurrentPath, int_ActEnergy, int_Start, pi_totalChecked);
+            // DisplayPathInMap(matrice_Map,int_maxCoord+1, pl_CurrentPath);
+            bool_PathFound = CheckEachDirection(matrice_Map, coord_curr, int_maxCoord, pl_CurrentPath, int_Start, pi_totalChecked);
             return(bool_PathFound);
         }
 
@@ -509,7 +508,6 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo) /
                                     p_playerInfo->coordonnees,
                                     int_mapSize - 1,
                                     NULL,
-                                    0,
                                     DefineStartPlayer(p_playerInfo, int_mapSize),
                                     &int_totalChecked
                                   );
