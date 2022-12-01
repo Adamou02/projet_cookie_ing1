@@ -22,6 +22,8 @@
                                     &s_playerInfo);
         int*** matrice_Distance = InitDistance(int_mapSize);
         
+        char * MapString = AllocMapString(int_mapSize);
+        char * DistanceString = AllocDistanceString(int_mapSize);
         
         DisplayMap(matrice_Map, int_mapSize);
         //DebugDisplayMatriceDistance(int_mapSize, matrice_Distance);
