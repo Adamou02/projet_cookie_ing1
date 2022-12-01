@@ -48,17 +48,17 @@
 
     coordonnees ModifCoord(coordonnees coord, int int_x, int int_y);
     
-    Node* CreateNode(coordonnees coord);
+     Node* CreateNode(coordonnees coord, int bonus);
 
     List* InitList(coordonnees coord);
 
-    void AddNode(List* p_list, coordonnees coord);
+    void AddNode(List* p_list, coordonnees coord, int bonus);
 
     void RemoveNode(List* p_list);
 
     long LengthList(List *p_list);
 
-    void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y);
+    void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y, int* is_bonus);
     
     void FreeList(List* p_list);
 
