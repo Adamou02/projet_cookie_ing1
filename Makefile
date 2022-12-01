@@ -15,7 +15,7 @@ Dir_INCL = include
 CC = gcc
 
 #Compiler flags
-CFLAGS = -g -Wall -fsanitize=address 
+CFLAGS = -g -W -Wall -fsanitize=address -Wno-unused-variable -Wno-uninitialized
 
 #Library flags
 LDLIBS = -lm 
@@ -36,7 +36,7 @@ all : $(PROG)
 
 #Compiling target
 $(PROG) : $(OBJ) 
-	@echo "Generating executable file ..."
+	@echo "Generating $(PROG) ..."
 	@$(MKDIR_P) $(Dir_PROG)
 	@$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
 	@echo "Done !"
@@ -44,7 +44,7 @@ $(PROG) : $(OBJ)
 $(Dir_OBJ)/%.o : $(Dir_SRC)/%.c 
 	@echo "Compiling $^ ..."
 	@$(MKDIR_P) $(Dir_OBJ)
-	@$(CC) -I include $(Dir_INCL) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I include $(Dir_INCL) -c $< -o $@ 
 
 .PHONY : clean
 
@@ -84,14 +84,21 @@ run :
 		./$(PROG);\
 	fi
 
+#hardClean make and run at the same time
+super :
+	@make hardClean
+	@make
+	@make run
+
 #Help menu
 help :
 	@echo "Welcome to my Makefile."
 	@echo "Here are the option you can use :"
 	@echo "\t make : compil your project,"
-	@echo "\t make clean : clean repertoy Bin and Obj. Move their files to trash,"
-	@echo "\t make hardClean : remove Bin and Obj repertories"
-	@echo "\t make save : Create Save directory and save Src files"
-	@echo "\t make saveClean : Clean save "
-	@echo "\t make run : run the target"
+	@echo "\t make clean : clean repertoy $(Dir_PROG) and $(Dir_OBJ). Move their files to trash"
+	@echo "\t make hardClean : remove $(Dir_PROG) and $(Dir_OBJ) repertories"
+	@echo "\t make save : Create $(Dir_SAVE) directory and save $(Dir_SRC) files"
+	@echo "\t make saveClean : Clean $(Dir_SAVE) directory "
+	@echo "\t make run : run the target: $(PROG)"
+	@echo "\t\t      ┌ make hardClean\n\t make super : ┤ make\n\t\t      └ make run"
 
