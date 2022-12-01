@@ -32,7 +32,7 @@
 
     void PlayerOnObstacle(PlayerInfo *p_playerInfo); //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
  
-    void UpdateListe(PlayerInfo *p_playerInfo, List* p_list, int is_bonus);
+    void UpdatePathList(PlayerInfo *p_playerInfo, List* p_list, int is_bonus);
 
     int** WasABonus(int** matrice_map, int last_x, int last_y, PlayerInfo *p_playerInfo, char CST);
   
