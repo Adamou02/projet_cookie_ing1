@@ -49,7 +49,5 @@
 
     int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player, List *p_list);
 
-    void ExitWithoutSave();
-
 #endif
 
