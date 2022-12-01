@@ -232,18 +232,44 @@ void PlayerOnObstacle(PlayerInfo *p_playerInfo) //retire de l'énergie au joueur
     p_playerInfo->lost_energy = (p_playerInfo->energy) - LOST_ENERGY;
 }
 
-void UpdateListe(PlayerInfo *p_playerInfo, List* p_list) // met à jour la dernière position du joueur dans la lise chainée
+void UpdateListe(PlayerInfo *p_playerInfo, List* p_list, int is_bonus) // met à jour la dernière position du joueur dans la lise chainée
 {
-    AddNode(p_list, p_playerInfo->coordonnees);
+    AddNode(p_list, p_playerInfo->coordonnees, is_bonus);
+}
+
+int** WasABonus(int** matrice_map, int last_x, int last_y, PlayerInfo *p_playerInfo, char CST)
+{
+
+    matrice_map[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y] = CST;
+    matrice_map[last_x][last_y] = REP_CHARACTER;
+    return (matrice_map);
 }
 
 void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo) // Permet de faire un retour en arrière supprimant les infos dans la liste et en mettant à jour la map et le joueur
 {
-    int last_x ;
+    int last_x;
     int last_y;
-    RemoveNode(p_list);
-    GetfirstNode(p_list, &last_x, &last_y);
-    matrice_map = UpdatePosition(matrice_map, last_x, last_y, p_playerInfo); // attention à changer parce que soucis si c'était un bonus
+    int was_bonus;
+    GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
+    printf("dernière coord %d %d\n", last_x, last_y);
+    if(was_bonus == 1){
+        RemoveNode(p_list);
+        GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
+        matrice_map = WasABonus(matrice_map, last_x, last_y, p_playerInfo, REP_BONUS1);
+        p_playerInfo->energy = (p_playerInfo->energy) - GAIN_ENERGY;
+        p_playerInfo->gain_energy = (p_playerInfo->energy) - GAIN_ENERGY;
+    }else if(was_bonus == 2){
+        RemoveNode(p_list);
+        GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
+        matrice_map = WasABonus(matrice_map, last_x, last_y, p_playerInfo, REP_BONUS2);
+        p_playerInfo->energy = (p_playerInfo->energy) - GAIN_ENERGY;
+        p_playerInfo->gain_energy = (p_playerInfo->energy) - GAIN_ENERGY;
+    }else {
+        RemoveNode(p_list);
+        GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
+        matrice_map = UpdatePosition(matrice_map, last_x, last_y, p_playerInfo); // attention à changer parce que soucis si c'était un bonus
+        printf("nouvelles coord %d %d\n", last_x, last_y);
+    }
     p_playerInfo-> backward = p_playerInfo-> backward - 1;
     p_playerInfo->coordonnees.x = last_x;
     p_playerInfo->coordonnees.y = last_y;
