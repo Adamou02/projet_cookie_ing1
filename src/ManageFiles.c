@@ -32,12 +32,30 @@ int SupprFile(char char_NameFile[])
 //******FONTIONS DE SAUVEGARDE/RECUPERATION PARTIE*******************
 //*******************************************************************
 
-void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player)
+int SavedTurnsCount(int int_mapSize)
+{
+    FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
+    char* CSV_String = malloc((int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String));
+    int turn_count = 0;
+
+    while(fgets(CSV_String, (int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String) ,Current_Game_CSV))
+    {
+        turn_count++;
+    }
+    return(turn_count);
+}
+
+void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_turn)
 {
     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
-    //Recuperation de toutes les donnees
-    fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);
+    
+    //Acces au tour souhaité
+    for(int i=0; i<num_turn; i++)
+    {
+        //Recuperation de toutes les donnees
+        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);        
+    }
 
     //Separation et implementation des donnees aux variables de jeu
     s_playerInfo_player->coordonnees.x = atoi(strtok(CSV_String, ",;"));
@@ -53,12 +71,17 @@ void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player)
     return;
 }
 
-char* GetMapString(char* MapString, int int_mapSize)
+char* GetMapString(char* MapString, int int_mapSize, int num_turn)
 {
     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
-    //Recuperation de toutes les donnees
-    fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);
+    
+    //Acces au tour souhaité
+    for(int i=0; i<num_turn; i++)
+    {
+        //Recuperation de toutes les donnees
+        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);        
+    }
 
     //Separation et implementation des donnees aux variables de jeu
     strtok(CSV_String, ",;");
@@ -75,12 +98,17 @@ char* GetMapString(char* MapString, int int_mapSize)
     return(MapString);
 }
 
-char* GetDistanceString(char* DistanceString, int int_mapSize)
+char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn)
 {
     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
-    //Recuperation de toutes les donnees
-    fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);
+    
+    //Acces au tour souhaité
+    for(int i=0; i<num_turn; i++)
+    {
+        //Recuperation de toutes les donnees
+        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);        
+    }
 
     //Separation et implementation des donnees aux variables de jeu
     strtok(CSV_String, ",;");
@@ -106,6 +134,12 @@ char* AllocMapString(int int_mapSize){
 char* AllocDistanceString(int int_mapSize){
     char* DistanceString = malloc((16*int_mapSize*int_mapSize+1)*sizeof(*DistanceString));
     return(DistanceString);
+}
+
+char* AllocListString(int int_mapSize)
+{
+    char* ListString = malloc((2*BASE_ENERGY*int_mapSize)*sizeof(*ListString));
+    return(ListString);
 }
 
 char* MatriceMapToString(int** matrice_Map, int int_mapSize, char* MapString)
@@ -179,6 +213,27 @@ char* MatriceDistanceToString(int*** matrice_Distance, int int_mapSize, char* Di
     return(DistanceString);
 }
 
+char* ListToString(List* p_list, char* ListString)
+{
+    Node* node_current = p_list->firstnode;
+    char Current_Val[3];
+    strcpy(ListString, "");
+    while(node_current != NULL)
+    {
+        sprintf(Current_Val, "%d", node_current->coordonnees.x);
+        strcat(ListString, Current_Val);
+        strcat(ListString, ".");
+        sprintf(Current_Val, "%d", node_current->coordonnees.y);
+        strcat(ListString, Current_Val);
+        strcat(ListString, ".");
+        sprintf(Current_Val, "%d", node_current->is_bonus);
+        strcat(ListString, Current_Val);
+        strcat(ListString, "*");
+        node_current = node_current->next;
+    }
+    return(ListString);
+}
+
 int** StringToMatriceMap(char* MapString, int int_mapSize, int** matrice_Map){
     char* current_Char = strtok(MapString, ".*");
     for(int i=0; i<int_mapSize ; i++){
@@ -216,10 +271,10 @@ char* SaveMap(int** matrice_Map, int int_mapSize)
     return(MapString);
 }
 
-int** RestoreMap(int** matrice_Map, int int_mapSize)
+int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn)
 {
     char* MapString = AllocMapString(int_mapSize);
-    MapString = GetMapString(MapString, int_mapSize);
+    MapString = GetMapString(MapString, int_mapSize, num_turn);
     StringToMatriceMap(MapString, int_mapSize, matrice_Map);
     free(MapString);
     return(matrice_Map);
@@ -232,37 +287,23 @@ char* SaveDistance(int*** matrice_Distance, int int_mapSize)
     return(DistanceString);
 }
 
-int*** RestoreDistance(int*** matrice_Distance, int int_mapSize)
+int*** RestoreDistance(int*** matrice_Distance, int int_mapSize, int num_turn)
 {
     char* DistanceString = AllocDistanceString(int_mapSize);
-    DistanceString = GetDistanceString(DistanceString, int_mapSize);
+    DistanceString = GetDistanceString(DistanceString, int_mapSize, num_turn);
     StringToMatriceDistance(DistanceString, int_mapSize, matrice_Distance);
     free(DistanceString);
     return(matrice_Distance);
 }
 
-// void GetAllInfo(char* MapString, char* DistanceString, PlayerInfo * s_playerInfo_player, int int_mapSize){
-//     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
-//     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
-//     //Recuperation de toutes les donnees
-//     fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);
+char* SaveList(List* p_list, int int_mapSize)
+{
+    char* ListString = AllocListString(int_mapSize);
+    ListString = ListToString(p_list, ListString);
+    return(ListString);
+}
 
-//     //Separation et implementation des donnees aux variables de jeu
-//     s_playerInfo_player->coordonnees.x = atoi(strtok(CSV_String, ",;"));
-//     s_playerInfo_player->coordonnees.y = atoi(strtok(NULL, ",;"));
-//     s_playerInfo_player->energy = atoi(strtok(NULL, ",;"));
-//     s_playerInfo_player->distance = atoi(strtok(NULL, ",;"));
-//     s_playerInfo_player->gain_energy = atoi(strtok(NULL, ",;"));
-//     s_playerInfo_player->lost_energy = atoi(strtok(NULL, ",;"));
-//     s_playerInfo_player->backward = atoi(strtok(NULL, ",;"));
-//     strcpy(MapString,strtok(NULL, ",;"));
-//     strcpy(DistanceString,strtok(NULL, ",;"));
-    
-//     fclose(Current_Game_CSV);
-//     free(CSV_String);
-// }
-
-void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, int int_mapSize, PlayerInfo * s_playerInfo_player)
+void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, List* p_list, int int_mapSize, PlayerInfo * s_playerInfo_player)
 {
     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "a");
     //Verification de l'ouverture du fichier
@@ -271,12 +312,21 @@ void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, int int_mapSiz
     }
     char* MapString = SaveMap(matrice_Map, int_mapSize);
     char* DistanceString = SaveDistance(matrice_Distance, int_mapSize);
+    char* ListString = SaveList(p_list, int_mapSize);
     //Ajout de toutes les donnees au fichier
-    fprintf(Current_Game_CSV, "%d,%d,%d,%d,%d,%d,%d,%s,%s\n", s_playerInfo_player->coordonnees.x, s_playerInfo_player->coordonnees.y, 
+    fprintf(Current_Game_CSV, "%d,%d,%d,%d,%d,%d,%d,%s,%s,%s\n", s_playerInfo_player->coordonnees.x, s_playerInfo_player->coordonnees.y, 
         s_playerInfo_player->energy, s_playerInfo_player->distance, s_playerInfo_player->gain_energy, 
-        s_playerInfo_player->lost_energy, s_playerInfo_player->backward, MapString, DistanceString);
+        s_playerInfo_player->lost_energy, s_playerInfo_player->backward, MapString, DistanceString, ListString);
     fclose(Current_Game_CSV);
     free(MapString);
     free(DistanceString);
+    free(ListString);
     return;
+}
+
+void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
+{
+    *matrice_Map = RestoreMap(*matrice_Map, int_mapSize, num_turn);
+    *matrice_Distance = RestoreDistance(*matrice_Distance, int_mapSize, num_turn);
+    GetPlayerInfo(int_mapSize, s_playerInfo, num_turn);
 }
