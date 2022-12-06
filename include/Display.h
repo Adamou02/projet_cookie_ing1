@@ -6,10 +6,13 @@
     #include "Constant.h"
     #include "Miscellanous.h"
     
+    /// @brief Menu lorsqu'on lance le programme
     int MenuStartGame();
 
+    /// @brief Menu pour choisir la difficulté 
     int MenuDifficulty();
 
+    /// @brief Menu pour choisir la taille de la carte
     int MenuMapSize();
 
     //    \brief Fonction d'affichage de la Map dans le terminal    
