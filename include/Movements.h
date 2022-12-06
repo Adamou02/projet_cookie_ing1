@@ -30,7 +30,7 @@
 
     void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo);//Met à jour les infos du joueur en fonction du déplacement
 
-    void PlayerOnBonus(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo);//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
+    void PlayerOnBonus(PlayerInfo *p_playerInfo);//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
 
 
     void PlayerOnObstacle(PlayerInfo *p_playerInfo); //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
