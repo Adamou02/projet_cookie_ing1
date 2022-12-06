@@ -45,9 +45,5 @@
 
     int*** InitDistance(int int_mapSize); //Alloue, et genere la matrice Distance
 
-    void TurnPlayer(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, int bool_victory, int key_pressed, int int_wanted_x, int int_wanted_y, List* p_list, int int_error, int int_stepback);
-
-    int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo_player, List *p_list);
-
 #endif
 
