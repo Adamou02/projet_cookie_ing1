@@ -6,9 +6,13 @@
     #include "Constant.h"
     #include "Miscellanous.h"
     
-    /*
-        \brief Fonction d'affichage de la Map dans le terminal
-    */
+    int MenuStartGame();
+
+    int MenuDifficulty();
+
+    int MenuMapSize();
+
+    //    \brief Fonction d'affichage de la Map dans le terminal    
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
