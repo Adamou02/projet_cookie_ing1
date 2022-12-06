@@ -11,11 +11,7 @@
     
     PlayerInfo SetupPlayer();
 
-    int MenuDifficulty();
-
     float ChooseDifficulty();
-
-    int MenuMapSize();
 
     int ChooseMapSize();
 
