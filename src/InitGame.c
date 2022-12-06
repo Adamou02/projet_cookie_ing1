@@ -14,41 +14,6 @@ PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
     return playerInfo;
 }
 
-int MenuDifficulty()
-{
-    int input;
-    int position = 1; //1 = position haute
-    ClearTerm();
-    printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-    while(1)
-    {
-        input = ListenKeyboard();
-        if (input == UP && position!=1)
-        { 
-            position--;
-        }
-        else if (input == DOWN && position !=3)
-        {
-            position++;
-        }
-        else if (input == ENTER) {
-            return position;
-        }
-        if (position == 1) {
-            ClearTerm();
-            printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-        }
-        else if (position == 2) {
-            ClearTerm();
-            printf("\nChoose a Difficulty :\n 1: Easy\n>2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-        }
-        else if (position == 3) {
-            ClearTerm();
-            printf("\nChoose a Difficulty :\n 1: Easy\n 2: Normal\n>3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-        }
-    }
-}
-
 float ChooseDifficulty()
 {
     int int_scanDiff = MenuDifficulty();
@@ -68,41 +33,6 @@ float ChooseDifficulty()
         exit(EXIT_FAILURE);
     }
     
-}
-
-int MenuMapSize()
-{
-    int input;
-    int position = 1; //1 = position haute
-    ClearTerm();
-    printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-    while(1)
-    {
-        input = ListenKeyboard();
-        if (input == UP && position!=1)
-        { 
-            position--;
-        }
-        else if (input == DOWN && position !=3)
-        {
-            position++;
-        }
-        else if (input == ENTER) {
-            return position;
-        }
-        if (position == 1) {
-            ClearTerm();
-            printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-        }
-        else if (position == 2) {
-            ClearTerm();
-            printf("\nChoose the map size :\n 1: Little\n>2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-        }
-        else if (position == 3) {
-            ClearTerm();
-            printf("\nChoose the map size :\n 1: Little\n 2: Average\n>3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-        }
-    }
 }
 
 int ChooseMapSize()
