@@ -6,7 +6,7 @@
     #include "Constant.h"
     #include "Miscellanous.h"
     
-    /// @brief Menu lorsqu'on lance le programme
+    /// @brief Menu lorsqu'on lance le programme, permet de lancer une nouvelle game, charger la précedente, ou voir l'historique.
     int MenuStartGame();
 
     /// @brief Menu pour choisir la difficulté 
