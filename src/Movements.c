@@ -222,7 +222,7 @@ void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerIn
     p_playerInfo->distance = p_playerInfo->distance + 1;
 }
 
-void PlayerOnBonus(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
+void PlayerOnBonus(PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
 {
     p_playerInfo->energy = (p_playerInfo->energy) + GAIN_ENERGY;
     p_playerInfo->gain_energy = (p_playerInfo->energy) + GAIN_ENERGY;
@@ -329,7 +329,7 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             break;
         
         case REP_BONUS1 :
-            PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+            PlayerOnBonus(p_playerInfo);
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePathList(p_playerInfo, p_list, 1);
@@ -337,7 +337,7 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             break;
 
         case REP_BONUS2 :
-        PlayerOnBonus(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
+        PlayerOnBonus(p_playerInfo);
         matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
         UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
         UpdatePathList(p_playerInfo, p_list, 2);
