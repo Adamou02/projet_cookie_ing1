@@ -1,6 +1,110 @@
 #include "Display.h"
 
 
+//Menu lorsqu'on lance le programme
+int MenuStartGame()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nWhat's your choice :\n>1: Load your previous game\n 2: Start a new game\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if (input == UP && position!=1)
+        { 
+            position--;
+        }
+        else if (input == DOWN && position !=2)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n>1: Load your previous game\n 2: Start a new game\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n>1: Load your previous game\n 2: Start a new game\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
+//Menu pour choisir la difficulté 
+int MenuDifficulty()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if (input == UP && position!=1)
+        { 
+            position--;
+        }
+        else if (input == DOWN && position !=3)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nChoose a Difficulty :\n>1: Easy\n 2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\nChoose a Difficulty :\n 1: Easy\n>2: Normal\n 3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 3) {
+            ClearTerm();
+            printf("\nChoose a Difficulty :\n 1: Easy\n 2: Normal\n>3: Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
+//Menu pour choisir la taille de la carte
+int MenuMapSize()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if (input == UP && position!=1)
+        { 
+            position--;
+        }
+        else if (input == DOWN && position !=3)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nChoose the map size :\n>1: Little\n 2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\nChoose the map size :\n 1: Little\n>2: Average\n 3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 3) {
+            ClearTerm();
+            printf("\nChoose the map size :\n 1: Little\n 2: Average\n>3: Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
 void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
