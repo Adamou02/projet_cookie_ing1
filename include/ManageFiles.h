@@ -19,6 +19,8 @@
 
     char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn);
 
+    char* GetListString(char* ListString, int int_mapSize, int num_turn);
+
     char* AllocMapString(int int_mapSize);
 
     char* AllocDistanceString(int int_mapSize);
@@ -48,5 +50,15 @@
     void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, List* p_list, int int_mapSize, PlayerInfo * s_playerInfo_player);
 
     void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
+
+    int RestoreMapSize();
+
+    void Save();
+
+    void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
+
+    void History(int int_mapSize);
+
+    void ReadHistory(int num_game, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
 
 #endif
