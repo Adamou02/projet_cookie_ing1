@@ -49,6 +49,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     AddNode(p_list,  p_playerInfo->coordonnees, 0);
 
     while( !bool_victory && p_playerInfo->energy > 0){
+        StockCurrentTurn(matrice_Map, matrice_Distance, p_list, int_mapSize, p_playerInfo);
         bool_stepback = 0;
         key_pressed = ListenKeyboard();
         ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo, &bool_stepback); 
