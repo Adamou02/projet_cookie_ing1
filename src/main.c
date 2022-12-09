@@ -5,13 +5,22 @@
         SetupGame();
         //Choix des parametre de la game
         float float_diffRate = ChooseDifficulty();
-        int int_mapSize = ChooseMapSize();
+        int int_mapSize;
+
+        //Récupération de la sauvegarde (pas terminé mais un peu de patience, ça progresse)
+        int recup_save = 0;
+        if(recup_save){
+            int_mapSize = RestoreMapSize();
+        }
+        else{
+            int_mapSize = ChooseMapSize();
+        }
 
         //Initialisation de la structure Joueur et du stockage du chemin
         PlayerInfo s_playerInfo = SetupPlayer(); 
         InitEnergy(&s_playerInfo, int_mapSize);
         List* p_listpath = InitList(s_playerInfo.coordonnees);
-        
+
         //Creation des structures contenant les infos de la carte
         int** matrice_Map = InitMap(int_mapSize, float_diffRate, &s_playerInfo);
         int*** matrice_Distance = InitDistance(int_mapSize);
