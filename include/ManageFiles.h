@@ -5,19 +5,19 @@
     #include "Constant.h"
     #include "InitGame.h"
 
-    int ExistFile(char char_NameFile[]);
+    int ExistFile(char str_NameFile[]);
 
-    void createFile(char char_NameFile[]);
+    void createFile(char str_NameFile[]);
    
-    int SupprFile(char char_NameFile[]);
+    int SupprFile(char str_NameFile[]);
 
-    int SavedTurnsCount(int int_mapSize);
+    int SavedTurnsCount(int int_mapSize, char str_NameFile[]);
 
-    void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_turn);
+    void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_turn, char str_NameFile[]);
 
-    char* GetMapString(char* MapString, int int_mapSize, int num_turn);
+    char* GetMapString(char* MapString, int int_mapSize, int num_turn, char str_NameFile[]);
 
-    char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn);
+    char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn, char str_NameFile[]);
 
     char* GetListString(char* ListString, int int_mapSize, int num_turn);
 
@@ -53,7 +53,7 @@
 
     int RestoreMapSize();
 
-    void Save();
+    void Save(int int_mapSize);
 
     void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
 

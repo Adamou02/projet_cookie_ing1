@@ -1,8 +1,8 @@
   #include "ManageFiles.h"
 
-int ExistFile(char char_NameFile[])
+int ExistFile(char str_NameFile[])
 {
-    FILE* File = fopen(char_NameFile, "r+");  
+    FILE* File = fopen(str_NameFile, "r+");  
     if (File == NULL){// Le fichier n'existe pas
         return 0;
     }else{// Le fichier existe  
@@ -11,20 +11,20 @@ int ExistFile(char char_NameFile[])
     }
 }
 
-void createFile(char char_NameFile[])
+void createFile(char str_NameFile[])
 {
-    FILE* File = fopen(char_NameFile, "w+");  
+    FILE* File = fopen(str_NameFile, "w+");  
         fclose(File);
 }
 
-int SupprFile(char char_NameFile[])
+int SupprFile(char str_NameFile[])
 {
-    int int_A = ExistFile(char_NameFile);
+    int int_A = ExistFile(str_NameFile);
     if (int_A == 0){// Le fichier n'existe pas, on ne peut donc pas le supprimer
-        return 0;
+        return (0);
     }else{// Le fichier existe, on le supprime
-        remove(char_NameFile);
-        return 1;
+        remove(str_NameFile);
+        return (1);
     }
 }
 
@@ -32,13 +32,13 @@ int SupprFile(char char_NameFile[])
 //******FONTIONS DE SAUVEGARDE/RECUPERATION PARTIE*******************
 //*******************************************************************
 
-int SavedTurnsCount(int int_mapSize)
+int SavedTurnsCount(int int_mapSize, char str_NameFile[])
 {
-    FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
+    FILE* file_CSV = fopen(str_NameFile, "r");
     char* CSV_String = malloc((int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String));
     int turn_count = 0;
 
-    while(fgets(CSV_String, (int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String) ,Current_Game_CSV))
+    while(fgets(CSV_String, (int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String) ,file_CSV))
     {
         turn_count++;
     }
@@ -46,16 +46,17 @@ int SavedTurnsCount(int int_mapSize)
     return(turn_count);
 }
 
-void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_turn)
+
+void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_turn, char str_NameFile[])
 {
-    FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
+    FILE* file_CSV = fopen(str_NameFile, "r");
     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
     
     //Acces au tour souhaité
     for(int i=0; i<num_turn; i++)
     {
         //Recuperation de toutes les donnees
-        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);
+        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,file_CSV);
     }
 
     //Separation et implementation des donnees aux variables de jeu
@@ -67,21 +68,21 @@ void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_tu
     s_playerInfo_player->lost_energy = atoi(strtok(NULL, ",;"));
     s_playerInfo_player->backward = atoi(strtok(NULL, ",;"));
     
-    fclose(Current_Game_CSV);
+    fclose(file_CSV);
     free(CSV_String);
     return;
 }
 
-char* GetMapString(char* MapString, int int_mapSize, int num_turn)
+char* GetMapString(char* MapString, int int_mapSize, int num_turn, char str_NameFile[])
 {
-    FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
+    FILE* file_CSV = fopen(str_NameFile, "r");
     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
     
     //Acces au tour souhaité
     for(int i=0; i<num_turn; i++)
     {
         //Recuperation de toutes les donnees
-        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);        
+        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,file_CSV);        
     }
 
     //Separation et implementation des donnees aux variables de jeu
@@ -94,21 +95,21 @@ char* GetMapString(char* MapString, int int_mapSize, int num_turn)
     strtok(NULL, ",;");
     strcpy(MapString,strtok(NULL, ",;"));
     
-    fclose(Current_Game_CSV);
+    fclose(file_CSV);
     free(CSV_String);
     return(MapString);
 }
 
-char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn)
+char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn, char str_NameFile[])
 {
-    FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
+    FILE* file_CSV = fopen(str_NameFile, "r");
     char* CSV_String = (char *)malloc(int_mapSize*int_mapSize*64+11);
     
     //Acces au tour souhaité
     for(int i=0; i<num_turn; i++)
     {
         //Recuperation de toutes les donnees
-        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,Current_Game_CSV);        
+        fgets(CSV_String, int_mapSize*int_mapSize*64+11 ,file_CSV);        
     }
 
     //Separation et implementation des donnees aux variables de jeu
@@ -122,7 +123,7 @@ char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn)
     strtok(NULL, ",;");
     strcpy(DistanceString,strtok(NULL, ",;"));
     
-    fclose(Current_Game_CSV);
+    fclose(file_CSV);
     free(CSV_String);
     return(DistanceString);
 }
@@ -308,7 +309,7 @@ char* SaveMap(int** matrice_Map, int int_mapSize)
 int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn)
 {
     char* MapString = AllocMapString(int_mapSize);
-    MapString = GetMapString(MapString, int_mapSize, num_turn);
+    MapString = GetMapString(MapString, int_mapSize, num_turn, SAVE_CSV);
     StringToMatriceMap(MapString, int_mapSize, matrice_Map);
     free(MapString);
     return(matrice_Map);
@@ -324,7 +325,7 @@ char* SaveDistance(int*** matrice_Distance, int int_mapSize)
 int*** RestoreDistance(int*** matrice_Distance, int int_mapSize, int num_turn)
 {
     char* DistanceString = AllocDistanceString(int_mapSize);
-    DistanceString = GetDistanceString(DistanceString, int_mapSize, num_turn);
+    DistanceString = GetDistanceString(DistanceString, int_mapSize, num_turn, SAVE_CSV);
     StringToMatriceDistance(DistanceString, int_mapSize, matrice_Distance);
     free(DistanceString);
     return(matrice_Distance);
@@ -371,7 +372,7 @@ void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, Pla
 {
     *matrice_Map = RestoreMap(*matrice_Map, int_mapSize, num_turn);
     *matrice_Distance = RestoreDistance(*matrice_Distance, int_mapSize, num_turn);
-    GetPlayerInfo(int_mapSize, s_playerInfo, num_turn);
+    GetPlayerInfo(int_mapSize, s_playerInfo, num_turn, SAVE_CSV);
 }
 
 int RestoreMapSize()
@@ -445,7 +446,7 @@ void SaveToCurrentGame()
 void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
 {
     SaveToCurrentGame();
-    RestoreTurn(SavedTurnsCount(int_mapSize), matrice_Map, matrice_Distance, s_playerInfo, int_mapSize);
+    RestoreTurn(SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV), matrice_Map, matrice_Distance, s_playerInfo, int_mapSize);
 }
 
 void History(int int_mapSize)
@@ -458,7 +459,7 @@ void History(int int_mapSize)
     {
         printf("\nErreur d'ouverture du fichier\n\n");
     }
-    fprintf(History_CSV, "%d\n", SavedTurnsCount(int_mapSize));
+    fprintf(History_CSV, "%d\n", SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV));
     current_Char = fgetc(Current_Game_CSV);
     while (current_Char != EOF)
     {

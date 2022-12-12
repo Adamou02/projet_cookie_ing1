@@ -5,6 +5,7 @@
     #include <termios.h>
     #include "Constant.h"
     #include "Miscellanous.h"
+    #include "Game.h"
 
     static struct termios old, current; //Structure qui permet de garder les deux états paramètres du terminal
     
@@ -28,7 +29,6 @@
     void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo);//Met à jour les infos du joueur en fonction du déplacement
 
     void PlayerOnBonus(PlayerInfo *p_playerInfo);//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
-
 
     void PlayerOnObstacle(PlayerInfo *p_playerInfo); //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
  

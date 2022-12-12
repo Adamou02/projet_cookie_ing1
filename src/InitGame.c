@@ -408,7 +408,7 @@ int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoo
                 TabModifCoordCheck[i] = Tab4[i];
             } break;
         default:
-            exit(EXIT_FAILURE);
+            return (-1);
             break;
     }
     for(int i=0; i<16; i=i+2){
@@ -496,10 +496,4 @@ int*** InitDistance(int int_mapSize)
     int*** matrice_Distance= AllocMatriceDistance(int_mapSize);
     matrice_Distance = GenerateMatriceDistance(int_mapSize, matrice_Distance);
     return (matrice_Distance);
-}
-
-
-void ExitWithoutSave() {
-    ClearTerm();
-    exit(EXIT_SUCCESS);
 }

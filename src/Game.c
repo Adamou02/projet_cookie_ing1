@@ -84,7 +84,7 @@ void Quit()
 
 void SaveAndQuit()
 {
-    Save();
+    Save(GameInfo.int_mapSize);
     Quit();
 }
 
@@ -92,4 +92,39 @@ void QuitFail(const char* str_errMsg){
     puts(str_errMsg);
     FreeGame();
     exit(EXIT_FAILURE);
+}
+
+void NewGame()
+{
+     //Choix des parametre de la game
+    GameInfo.float_diffRate = ChooseDifficulty();
+    GameInfo.int_mapSize = ChooseMapSize();
+
+    //Initialisation de la structure Joueur et du stockage du chemin
+    GameInfo.s_playerInfo = SetupPlayer(); 
+    InitEnergy(&GameInfo.s_playerInfo, GameInfo.int_mapSize);
+    GameInfo.p_listpath = InitList(GameInfo.s_playerInfo.coordonnees);
+
+    //Creation des structures contenant les infos de la carte
+    GameInfo.matrice_Map = InitMap(GameInfo.int_mapSize, GameInfo.float_diffRate, &GameInfo.s_playerInfo);
+    GameInfo.matrice_Distance = InitDistance(GameInfo.int_mapSize);
+}
+
+void ResumeGame()
+{
+    if(!ExistFile(SAVE_CSV)){ //Ajouter une verif si le fichier est vide
+        puts("File Save.csv not found or empty");
+        exit(EXIT_FAILURE);
+    }   
+    GameInfo.int_mapSize = RestoreMapSize();
+    GameInfo.matrice_Map = AllocMatriceMap(GameInfo.int_mapSize);
+    GameInfo.matrice_Distance = AllocMatriceDistance(GameInfo.int_mapSize);
+    RestoreTurn(
+                SavedTurnsCount(GameInfo.int_mapSize, SAVE_CSV)-1,
+                &GameInfo.matrice_Map,
+                &GameInfo.matrice_Distance,
+                &GameInfo.s_playerInfo,
+                GameInfo.int_mapSize    
+                );    
+    GameInfo.p_listpath = InitList(GameInfo.s_playerInfo.coordonnees); //a remplacer par la restauration de la list
 }

@@ -360,7 +360,6 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             break;
         
         default :
-            // exit(EXIT_FAILURE);
             return (matrice_map);
             break;
        }

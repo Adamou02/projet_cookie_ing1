@@ -23,13 +23,6 @@
         Node* firstnode;
     } List;
 
-    typedef struct FreeNeedsInfo{ // Structure contenant toute les infos necessaire pour pouvoir liberer la memoire allouer a tout moment 
-        int int_mapSize;
-        int **matrice_Map;
-        int ***matrice_Distance;
-        List* p_listpath;
-    } FreeNeedsInfo;
-
     typedef struct PlayerInfo{ // Structure contennant les informations du joueur
         coordonnees coordonnees;
         int energy;
@@ -38,6 +31,15 @@
         int lost_energy;
         int backward;
     } PlayerInfo;
+
+    typedef struct GameInformation{ // Structure contenant toute les infos necessaire pour pouvoir debuter une partie et pour liberer la memoire allouer a tout moment 
+        int int_mapSize;
+        float float_diffRate;
+        int **matrice_Map;
+        int ***matrice_Distance;
+        List* p_listpath;
+        PlayerInfo s_playerInfo;
+    } GameInformation;
 
     int RNG(int min, int max);
 
