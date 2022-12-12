@@ -108,8 +108,10 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_in
         break;
     case LEAVE:
         choice = printSaveMenu();
-        if (choice == 0) ExitWithoutSave(); //l'utilisateur a choisi de partir sans sauvegarder.
-        else printf("Partie sauvegardée"); /*fonction Fabien sauvegarde*/; 
+        if (choice == 0) 
+            Quit(); //l'utilisateur a choisi de partir sans sauvegarder.
+        else 
+            SaveAndQuit(); //l'user choisi de sauvegarder sa partie
         break;
     default:
         break;

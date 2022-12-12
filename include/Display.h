@@ -15,9 +15,8 @@
     /// @brief Menu pour choisir la taille de la carte
     int MenuMapSize();
 
-    /*
-        \brief Fonction d'affichage de la Map dans le terminal
-    */
+    
+    /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
@@ -29,6 +28,7 @@
     void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
     void DebugInfoPlayer(PlayerInfo s_playerInfo);
+
 
     void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
 

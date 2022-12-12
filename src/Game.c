@@ -68,11 +68,28 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     return bool_victory;
 }
 
-void FreeGame(int** matrice_Map, int*** matrice_Distance, List* p_listpath, int int_mapSize)
+void FreeGame()
 {
-    FreeList(p_listpath);
-    UnallocMatriceMap(matrice_Map, int_mapSize);
-    UnallocMatriceDistance(matrice_Distance, int_mapSize);
+    FreeList(GameInfo.p_listpath);
+    UnallocMatriceMap(GameInfo.matrice_Map, GameInfo.int_mapSize);
+    UnallocMatriceDistance(GameInfo.matrice_Distance, GameInfo.int_mapSize);
 }
 
 
+void Quit()
+{
+    FreeGame();
+    exit(EXIT_SUCCESS);
+}
+
+void SaveAndQuit()
+{
+    Save();
+    Quit();
+}
+
+void QuitFail(const char* str_errMsg){
+    puts(str_errMsg);
+    FreeGame();
+    exit(EXIT_FAILURE);
+}

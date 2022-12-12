@@ -8,11 +8,10 @@
     #include <string.h>
     #include <time.h>   
 
-    typedef struct coordonnees coordonnees;
-    struct coordonnees{ // Structure contenant des coordonnées 
+    typedef struct coordonnees{ // Structure contenant des coordonnées 
         int x;
         int y;
-    };
+    } coordonnees;
 
     typedef struct Node{ // enregistre les coordonnées dans une list 
         coordonnees coordonnees;
@@ -23,17 +22,22 @@
     typedef struct List{
         Node* firstnode;
     } List;
-    
 
-    typedef struct PlayerInfo PlayerInfo; 
-    struct PlayerInfo{ // Structure contennant les informations du joueur
+    typedef struct FreeNeedsInfo{ // Structure contenant toute les infos necessaire pour pouvoir liberer la memoire allouer a tout moment 
+        int int_mapSize;
+        int **matrice_Map;
+        int ***matrice_Distance;
+        List* p_listpath;
+    } FreeNeedsInfo;
+
+    typedef struct PlayerInfo{ // Structure contennant les informations du joueur
         coordonnees coordonnees;
         int energy;
         int distance;
         int gain_energy;
         int lost_energy;
         int backward;
-    };
+    } PlayerInfo;
 
     int RNG(int min, int max);
 
@@ -49,7 +53,7 @@
 
     coordonnees ModifCoord(coordonnees coord, int int_x, int int_y);
     
-     Node* CreateNode(coordonnees coord, int bonus);
+    Node* CreateNode(coordonnees coord, int bonus);
 
     List* InitList(coordonnees coord);
 
