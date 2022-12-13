@@ -69,7 +69,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             else //choice ==2 l'utilisateur veut revenir jouer sur sa game
                 BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
        } else {
-            matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list);
+            matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list, matrice_Distance);
             printf("\n"); 
             BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
         }
