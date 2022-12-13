@@ -10,11 +10,11 @@ int MenuStartGame()
     while(1)
     {
         input = ListenKeyboard();
-        if (input == UP && position!=1)
+        if ((input == UP || input == MAJ_UP) && position!=1)
         { 
             position--;
         }
-        else if (input == DOWN && position !=3)
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=3)
         {
             position++;
         }
@@ -45,11 +45,11 @@ int MenuDifficulty()
     while(1)
     {
         input = ListenKeyboard();
-        if (input == UP && position!=1)
+        if ((input == UP || input == MAJ_UP) && position!=1)
         { 
             position--;
         }
-        else if (input == DOWN && position !=3)
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=3)
         {
             position++;
         }
@@ -80,11 +80,11 @@ int MenuMapSize()
     while(1)
     {
         input = ListenKeyboard();
-        if (input == UP && position!=1)
+        if ((input == UP || input == MAJ_UP) && position!=1)
         { 
             position--;
         }
-        else if (input == DOWN && position !=3)
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=3)
         {
             position++;
         }
@@ -115,13 +115,13 @@ int printSaveMenu()
     while(1)
     {
         input = ListenKeyboard();
-        if (input == UP && position!=0)
+        if ((input == UP || input == MAJ_UP) && position!=0)
         {
             ClearTerm();
             printf("\n> Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
             position++;
         }
-        else if (input == DOWN && position !=1)
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=1)
         {
             ClearTerm();
             printf("\n Quit Game without saving?\n> Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
