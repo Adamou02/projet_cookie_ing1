@@ -115,24 +115,32 @@ int printSaveMenu()
     int input;
     int position = 0; //0 = position haute
     ClearTerm();
-    printf("\n> Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\n> Quit Game without saving?\n Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
         if ((input == UP || input == MAJ_UP) && position!=0)
         {
-            ClearTerm();
-            printf("\n> Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-            position++;
-        }
-        else if ((input == DOWN || input == MAJ_DOWN) && position !=1)
-        {
-            ClearTerm();
-            printf("\n Quit Game without saving?\n> Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
             position--;
+        }
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=2)
+        {
+            position++;
         }
         else if (input == ENTER) {
             return position;
+        }
+        if (position == 0) {
+            ClearTerm();
+            printf("\n> Quit Game without saving?\n Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 1) {
+            ClearTerm();
+            printf("\n Quit Game without saving?\n> Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\n Quit Game without saving?\n Save Game!\n> Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
