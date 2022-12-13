@@ -64,8 +64,10 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             choice = printSaveMenu();
             if (choice == 0) 
                 Quit(); //l'utilisateur a choisi de partir sans sauvegarder.
-            else 
+            else if (choice == 1)
                 SaveAndQuit();//*fonction Fabien sauvegarde*/; 
+            else //choice ==2 l'utilisateur veut revenir jouer sur sa game
+                BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
        } else {
             matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list);
             printf("\n"); 
