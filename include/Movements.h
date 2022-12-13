@@ -26,7 +26,7 @@
 
     int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo); // Met à jour les informations de la map en fonction du déplacement
 
-    void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo);//Met à jour les infos du joueur en fonction du déplacement
+    void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo,  int*** matrice_Distance);//Met à jour les infos du joueur en fonction du déplacement
 
     void PlayerOnBonus(PlayerInfo *p_playerInfo);//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
 
@@ -36,12 +36,12 @@
 
     int** WasABonus(int** matrice_map, int last_x, int last_y, PlayerInfo *p_playerInfo, char CST);
   
-    void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo);
+    void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int int_mapSize, int*** matrice_Distance);
 
     int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list);
 
     int AlreadyBeen2(int loop);
 
-    int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+    int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list,  int*** matrice_Distance);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 
 #endif
