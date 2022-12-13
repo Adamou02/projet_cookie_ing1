@@ -15,7 +15,9 @@
     /// @brief Menu pour choisir la taille de la carte
     int MenuMapSize();
 
-    
+    /// @brief Menu lors de la fermeture de la partie
+    int printSaveMenu ();
+
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
