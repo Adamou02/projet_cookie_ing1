@@ -6,7 +6,7 @@ int MenuStartGame()
     int input;
     int position = 1; //1 = position haute
     ClearTerm();
-    printf("\nWhat's your choice :\n> Continue your previous game\n Start a new game\n View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\nWhat's your choice :\n> Continue your previous game\n Start a new game\n View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
@@ -23,19 +23,19 @@ int MenuStartGame()
         }
         if (position == 1) {
             ClearTerm();
-            printf("\nWhat's your choice :\n> Continue your previous game\n Start a new game\n View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nWhat's your choice :\n> Continue your previous game\n Start a new game\n View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
             ClearTerm();
-            printf("\nWhat's your choice :\n Continue your previous game\n> Start a new game\n View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nWhat's your choice :\n Continue your previous game\n> Start a new game\n View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
             ClearTerm();
-            printf("\nWhat's your choice :\n Continue your previous game\n Start a new game\n> View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nWhat's your choice :\n Continue your previous game\n Start a new game\n> View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position ==4) {
             ClearTerm();
-            printf("\nWhat's your choice :\n Continue your previous game\n Start a new game\n View game history\n> Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nWhat's your choice :\n Continue your previous game\n Start a new game\n View game history\n> Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
@@ -45,7 +45,7 @@ int MenuDifficulty()
     int input;
     int position = 1; //1 = position haute
     ClearTerm();
-    printf("\nChoose a Difficulty :\n> Easy\n Normal\n Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\nChoose a Difficulty :\n> Easy\n Normal\n Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
@@ -62,15 +62,15 @@ int MenuDifficulty()
         }
         if (position == 1) {
             ClearTerm();
-            printf("\nChoose a Difficulty :\n> Easy\n Normal\n Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose a Difficulty :\n> Easy\n Normal\n Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
             ClearTerm();
-            printf("\nChoose a Difficulty :\n Easy\n> Normal\n Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose a Difficulty :\n Easy\n> Normal\n Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
             ClearTerm();
-            printf("\nChoose a Difficulty :\n Easy\n Normal\n> Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose a Difficulty :\n Easy\n Normal\n> Hard\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
@@ -80,7 +80,7 @@ int MenuMapSize()
     int input;
     int position = 1; //1 = position haute
     ClearTerm();
-    printf("\nChoose the map size :\n> Little\n Average\n Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\nChoose the map size :\n> Little\n Average\n Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
@@ -97,15 +97,15 @@ int MenuMapSize()
         }
         if (position == 1) {
             ClearTerm();
-            printf("\nChoose the map size :\n> Little\n Average\n Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose the map size :\n> Little\n Average\n Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
             ClearTerm();
-            printf("\nChoose the map size :\n Little\n> Average\n Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose the map size :\n Little\n> Average\n Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 3) {
             ClearTerm();
-            printf("\nChoose the map size :\n Little\n Average\n> Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\nChoose the map size :\n Little\n Average\n> Big\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
@@ -115,7 +115,7 @@ int printSaveMenu()
     int input;
     int position = 0; //0 = position haute
     ClearTerm();
-    printf("\n> Quit Game without saving?\n Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\n> Quit Game without saving?\n Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();
@@ -132,15 +132,15 @@ int printSaveMenu()
         }
         if (position == 0) {
             ClearTerm();
-            printf("\n> Quit Game without saving?\n Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\n> Quit Game without saving?\n Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 1) {
             ClearTerm();
-            printf("\n Quit Game without saving?\n> Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\n Quit Game without saving?\n> Save Game!\n Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
         else if (position == 2) {
             ClearTerm();
-            printf("\n Quit Game without saving?\n Save Game!\n> Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+            printf("\n Quit Game without saving?\n Save Game!\n> Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
 }
