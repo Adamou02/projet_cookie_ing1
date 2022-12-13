@@ -40,9 +40,8 @@ int printSaveMenu ()
 }
 
 //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
-void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_int_stepback)
+void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo)
 {
-    int choice;
     *x=p_playerInfo->coordonnees.x;
     *y=p_playerInfo->coordonnees.y;
     switch (key)
@@ -102,16 +101,6 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo, int* p_in
     case MAJ_DOWN_RIGHT:
         *x=*x+1;
         *y=*y+1;
-        break;
-    case STEP_BACK:
-        *p_int_stepback=1;
-        break;
-    case LEAVE:
-        choice = printSaveMenu();
-        if (choice == 0) 
-            Quit(); //l'utilisateur a choisi de partir sans sauvegarder.
-        else 
-            SaveAndQuit(); //l'user choisi de sauvegarder sa partie
         break;
     default:
         break;
