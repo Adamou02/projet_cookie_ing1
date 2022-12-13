@@ -44,26 +44,30 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
 {
     int key_pressed, int_wanted_x, int_wanted_y, int_error;
     int bool_victory = 0;
-    int bool_stepback = 0;
     RemoveNode(p_list);
     AddNode(p_list,  p_playerInfo->coordonnees, 0);
 
     while( !bool_victory && p_playerInfo->energy > 0){
         StockCurrentTurn(matrice_Map, matrice_Distance, p_list, int_mapSize, p_playerInfo);
-        bool_stepback = 0;
         key_pressed = ListenKeyboard();
         ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo, &bool_stepback); 
-        if(bool_stepback){
+        if(key_pressed == STEP_BACK){
             int_error = BeforeStepBack(p_playerInfo, p_list);
-            StepBack(p_list, matrice_Map, p_playerInfo);
             if(int_error != 0){
                 ErrorStepBack(int_error);
+            }else{
+                StepBack(p_list, matrice_Map, p_playerInfo);
+                BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
             }
-        } else {
+        } else if(key_pressed == LEAVE){
+            choice = printSaveMenu();
+            if (choice == 0) ExitWithoutSave(); //l'utilisateur a choisi de partir sans sauvegarder.
+            else printf("\nPartie sauvegardée\n"); /*fonction Fabien sauvegarde*/; 
+       } else {
             matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list);
             printf("\n"); 
+            BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
         }
-        BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
     }
     return bool_victory;
 }
