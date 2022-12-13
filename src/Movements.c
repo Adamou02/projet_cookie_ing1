@@ -11,34 +11,6 @@ int KeyAvailable(int key)
     }
 }
 
-//Menu lors de la fermeture de la partie
-int printSaveMenu() 
-{
-    int input;
-    int position = 0; //0 = position haute
-    ClearTerm();
-    printf("\n>Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-    while(1)
-    {
-        input = ListenKeyboard();
-        if (input == UP && position!=0)
-        {
-            ClearTerm();
-            printf("\n>Quit Game without saving?\n Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-            position++;
-        }
-        else if (input == DOWN && position !=1)
-        {
-            ClearTerm();
-            printf("\n Quit Game without saving?\n>Save Game!\n\n\n%s : z\t\t%s : x\t\t%s : Enter", UP_ARROW, DOWN_ARROW, ENTER_ICON);
-            position--;
-        }
-        else if (input == ENTER) {
-            return position;
-        }
-    }
-}
-
 //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
 void ChangePosition(int key, int* x, int* y, PlayerInfo *p_playerInfo)
 {
