@@ -177,12 +177,54 @@ int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, Play
     return (matrice_map);
 }
 
-void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo)//Met à jour les infos du joueur en fonction du déplacement
+void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo,  int*** matrice_Distance)//Met à jour les infos du joueur en fonction du déplacement
 {
+    int direction=0;
+    if(
+        int_wanted_x == p_playerInfo->coordonnees.x + 1 &&
+        int_wanted_y == p_playerInfo->coordonnees.y
+    ){
+                direction= 5;
+    } else if (
+        int_wanted_x == p_playerInfo->coordonnees.x &&
+        int_wanted_y == p_playerInfo->coordonnees.y + 1
+    ){
+                direction= 3;
+    } else if (
+        int_wanted_x == p_playerInfo->coordonnees.x + 1 &&
+        int_wanted_y == p_playerInfo->coordonnees.y + 1
+    ){
+                direction= 4;
+    } else if(
+        int_wanted_x == p_playerInfo->coordonnees.x - 1 &&
+        int_wanted_y == p_playerInfo->coordonnees.y
+    ){
+                direction= 1;
+    } else if (
+        int_wanted_x == p_playerInfo->coordonnees.x &&
+        int_wanted_y == p_playerInfo->coordonnees.y - 1
+    ){
+                direction= 7;
+    } else if (
+        int_wanted_x == p_playerInfo->coordonnees.x - 1 &&
+        int_wanted_y == p_playerInfo->coordonnees.y - 1
+    ){
+                direction= 0;
+    } else if (
+        int_wanted_x == p_playerInfo->coordonnees.x - 1 &&
+        int_wanted_y == p_playerInfo->coordonnees.y + 1
+    ){
+                direction= 2;
+    } else if (
+        int_wanted_x == p_playerInfo->coordonnees.x + 1 &&
+        int_wanted_y == p_playerInfo->coordonnees.y - 1
+    ){
+                direction = 6;
+    }
+    p_playerInfo->distance = p_playerInfo->distance + matrice_Distance[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y][direction];
     p_playerInfo->coordonnees.x = int_wanted_x;
     p_playerInfo->coordonnees.y = int_wanted_y;
     p_playerInfo->energy = (p_playerInfo->energy) - ITS_AN_OBSTACLE;
-    p_playerInfo->distance = p_playerInfo->distance + 1;
 }
 
 void PlayerOnBonus(PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
@@ -210,10 +252,12 @@ int** WasABonus(int** matrice_map, int last_x, int last_y, PlayerInfo *p_playerI
     return (matrice_map);
 }
 
-void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo) // Permet de faire un retour en arrière supprimant les infos dans la liste et en mettant à jour la map et le joueur
+void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int int_mapSize,  int*** matrice_Distance) // Permet de faire un retour en arrière supprimant les infos dans la liste et en mettant à jour la map et le joueur
 {
     int last_x;
     int last_y;
+    int direction = 0;
+    int nb_back = p_playerInfo-> backward;
     int was_bonus;
     GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
     printf("dernière coord %d %d\n", last_x, last_y);
@@ -235,11 +279,52 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo) // Perm
         matrice_map = UpdatePosition(matrice_map, last_x, last_y, p_playerInfo); // attention à changer parce que soucis si c'était un bonus
         printf("nouvelles coord %d %d\n", last_x, last_y);
     }
+    if(
+        p_playerInfo->coordonnees.x == last_x + 1 &&
+        p_playerInfo->coordonnees.y == last_y
+    ){
+                direction= 5;
+    } else if (
+        p_playerInfo->coordonnees.x == last_x &&
+        p_playerInfo->coordonnees.y == last_y+ 1
+    ){
+                direction= 3;
+    } else if (
+        p_playerInfo->coordonnees.x == last_x + 1 &&
+        p_playerInfo->coordonnees.y == last_y + 1
+    ){
+                direction= 4;
+    } else if(
+        p_playerInfo->coordonnees.x == last_x - 1 &&
+        p_playerInfo->coordonnees.y == last_y
+    ){
+                direction= 1;
+    } else if (
+        p_playerInfo->coordonnees.x == last_x &&
+        p_playerInfo->coordonnees.y == last_y - 1
+    ){
+                direction= 7;
+    } else if (
+        p_playerInfo->coordonnees.x == last_x - 1 &&
+        p_playerInfo->coordonnees.y == last_y - 1
+    ){
+                direction= 0;
+    } else if (
+        p_playerInfo->coordonnees.x == last_x - 1 &&
+        p_playerInfo->coordonnees.y == last_y + 1
+    ){
+                direction= 2;
+    } else if (
+        p_playerInfo->coordonnees.x == last_x + 1 &&
+        p_playerInfo->coordonnees.y == last_y - 1
+    ){
+                direction = 6;
+    }
     p_playerInfo-> backward = p_playerInfo-> backward - 1;
     p_playerInfo->coordonnees.x = last_x;
     p_playerInfo->coordonnees.y = last_y;
     p_playerInfo->energy = (p_playerInfo->energy) + LOST_ENERGY;
-    p_playerInfo->distance = p_playerInfo->distance - 1;
+    p_playerInfo->distance = p_playerInfo->distance - matrice_Distance[last_x][last_y][direction];
 }
 
 int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list)
@@ -269,7 +354,7 @@ int AlreadyBeen2(int loop)
     }
  }
 
-int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory, List* p_list)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory, List* p_list,  int*** matrice_Distance)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 {
     if(AlreadyBeen(int_wanted_x, int_wanted_y, p_list) == 1 && p_playerInfo->distance>0){
         int Bool_choice = 0;
@@ -294,7 +379,7 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
         case REP_BONUS1 :
             PlayerOnBonus(p_playerInfo);
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
-            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo, matrice_Distance);
             UpdatePathList(p_playerInfo, p_list, 1);
             // printf("Test bonus");
             break;
@@ -302,21 +387,21 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
         case REP_BONUS2 :
         PlayerOnBonus(p_playerInfo);
         matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
-        UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+        UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo, matrice_Distance);
         UpdatePathList(p_playerInfo, p_list, 2);
         // printf("Test bonus");
         break;
     
         case REP_END :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
-            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo, matrice_Distance);
             UpdatePathList(p_playerInfo, p_list, 0);
             *int_victory = 1;
             break;
         
         case REP_VOID :
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
-            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo);
+            UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo, matrice_Distance);
             UpdatePathList(p_playerInfo, p_list, 0);
             break;
         
