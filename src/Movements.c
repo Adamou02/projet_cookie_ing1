@@ -209,7 +209,7 @@ void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerIn
 {
     p_playerInfo->coordonnees.x = int_wanted_x;
     p_playerInfo->coordonnees.y = int_wanted_y;
-    p_playerInfo->energy = (p_playerInfo->energy) - LOST_ENERGY;
+    p_playerInfo->energy = (p_playerInfo->energy) - ITS_AN_OBSTACLE;
     p_playerInfo->distance = p_playerInfo->distance + 1;
 }
 
