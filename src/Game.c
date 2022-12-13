@@ -44,6 +44,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
 {
     int key_pressed, int_wanted_x, int_wanted_y, int_error;
     int bool_victory = 0;
+    int choice;
     RemoveNode(p_list);
     AddNode(p_list,  p_playerInfo->coordonnees, 0);
 
@@ -61,8 +62,10 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             }
         } else if(key_pressed == LEAVE){
             choice = printSaveMenu();
-            if (choice == 0) ExitWithoutSave(); //l'utilisateur a choisi de partir sans sauvegarder.
-            else printf("\nPartie sauvegardée\n"); /*fonction Fabien sauvegarde*/; 
+            if (choice == 0) 
+                Quit(); //l'utilisateur a choisi de partir sans sauvegarder.
+            else 
+                SaveAndQuit();//*fonction Fabien sauvegarde*/; 
        } else {
             matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list);
             printf("\n"); 
