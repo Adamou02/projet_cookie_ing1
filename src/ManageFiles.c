@@ -168,7 +168,7 @@ char* AllocDistanceString(int int_mapSize){
 
 char* AllocListString(int int_mapSize)
 {
-    char* ListString = malloc((2*BASE_ENERGY*int_mapSize)*sizeof(*ListString));
+    char* ListString = malloc((2*200*int_mapSize)*sizeof(*ListString));
     return(ListString);
 }
 
