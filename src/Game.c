@@ -50,7 +50,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
     while( !bool_victory && p_playerInfo->energy > 0){
         StockCurrentTurn(matrice_Map, matrice_Distance, p_list, int_mapSize, p_playerInfo);
         key_pressed = ListenKeyboard();
-        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo, &bool_stepback); 
+        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo); 
         if(key_pressed == STEP_BACK){
             int_error = BeforeStepBack(p_playerInfo, p_list);
             if(int_error != 0){
