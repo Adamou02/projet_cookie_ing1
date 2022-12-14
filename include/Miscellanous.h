@@ -53,6 +53,8 @@
 
     void InitRNG();
 
+    int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize);
+
     coordonnees ModifCoord(coordonnees coord, int int_x, int int_y);
     
     Node* CreateNode(coordonnees coord, int bonus);
@@ -72,8 +74,6 @@
     int IsInList(List* p_list, coordonnees coord);
 
     void CopyList(List* p_list, List* p_listCopy);
-
-    int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize);
 
     void ClearTerm();
 
