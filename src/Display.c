@@ -121,7 +121,7 @@ int MenuMapSize()
     }
 }
 
-int printSaveMenu() 
+int MenuSave() 
 {
     int input;
     int position = 0; //0 = position haute
@@ -343,8 +343,16 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
 
 void DisplayEndGame(bool_victory)
 {
-    if (bool_victory) printf("victoire");
-    else printf("defaite");
+    if (bool_victory) DisplayVictory();
+    else DisplayLoose();
+}
+
+void DisplayVictory() {
+
+}
+
+void DisplayLoose() {
+    
 }
 
 //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
