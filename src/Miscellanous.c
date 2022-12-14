@@ -189,7 +189,8 @@ int IsInList(List* p_list, coordonnees coord) //verifie si des coordonnees appar
 
 void ClearTerm()
 {
-    printf("\033[H\033[2J");
+    //printf("\033[H\033[2J");
+    system("clear");
 }
 
 
