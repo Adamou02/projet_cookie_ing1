@@ -129,7 +129,7 @@ void ResumeGame()
     GameInfo.matrice_Map = AllocMatriceMap(GameInfo.int_mapSize);
     GameInfo.matrice_Distance = AllocMatriceDistance(GameInfo.int_mapSize);
     RestoreTurn(
-                SavedTurnsCount(GameInfo.int_mapSize, SAVE_CSV)-1,
+                SavedTurnsCount(GameInfo.int_mapSize, SAVE_CSV),
                 &GameInfo.matrice_Map,
                 &GameInfo.matrice_Distance,
                 &GameInfo.s_playerInfo,
