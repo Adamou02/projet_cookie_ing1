@@ -258,7 +258,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     printf("\n");
 }
 
-void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list)
+void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list, int bool_victory)
 {
     int** matric_tmp = AllocMatriceMap(int_mapSize);
     for(int i=0; i<int_mapSize; i++){
@@ -315,6 +315,7 @@ void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list)
         node_current = node_current->next;
     }    
     DisplayMap(matric_tmp, int_mapSize);
+    DisplayEndGame(bool_victory);
     UnallocMatriceMap(matric_tmp,int_mapSize);
 }
 
@@ -340,6 +341,11 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
     UnallocMatriceMap(matric_tmp,int_mapSize);
 }
 
+void DisplayEndGame(bool_victory)
+{
+    if (bool_victory) printf("victoire");
+    else printf("defaite");
+}
 
 //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
 
