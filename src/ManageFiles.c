@@ -443,12 +443,6 @@ void SaveToCurrentGame()
     return;
 }
 
-void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
-{
-    SaveToCurrentGame();
-    RestoreTurn(SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV), matrice_Map, matrice_Distance, s_playerInfo, int_mapSize);
-}
-
 void History(int int_mapSize)
 {
     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
