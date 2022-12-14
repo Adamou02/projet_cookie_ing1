@@ -19,7 +19,7 @@
     int MenuMapSize();
 
     /// @brief Menu lors de la fermeture de la partie
-    int printSaveMenu ();
+    int MenuSave();
 
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
@@ -30,8 +30,14 @@
     /// @brief affiche la map avec le chemin suivis par une liste passer en parametre avec des fleches correspondant a la direction
     void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list, int bool_victory);
 
+    /// @brief Appelle l'affichage victoire ou defaite selon la valeur de bool_victory
     void DisplayEndGame(int bool_victory);
 
+    /// @brief Affiche l'écran de victoire
+    void DisplayVictory();
+    
+    /// @brief Affiche l'écran de défaite
+    void DisplayLoose();
 
     /////////////////////////////////////////////////////////////////////////////
     //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final//
