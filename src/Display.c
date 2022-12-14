@@ -1,6 +1,17 @@
 #include "Display.h"
 
 
+void EditTerminal()
+{
+    system("\
+coX=`xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\\1/' | cut -d 'x' -f1`;\n\
+coY=`xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\\1/' | cut -d 'x' -f2`;\n\
+resize -s `echo \"$(( $coY / 10 )) $(( $coX / 8 ))\"`>/dev/null;\n\
+");
+
+}
+
+
 int MenuStartGame()
 {
     int input;
@@ -360,18 +371,6 @@ void DebugInfoPlayer(PlayerInfo s_playerInfo)
     printf("Votre energie perdue : %d\n",s_playerInfo.lost_energy);
     printf("Vos retour en arrière disponible : %d\n",s_playerInfo.backward);
 }
-
-
-void EditTerminal()
-{
-    system("\
-coX=`xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\\1/' | cut -d 'x' -f1`;\n\
-coY=`xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\\1/' | cut -d 'x' -f2`;\n\
-resize -s `echo \"$(( $coY / 10 )) $(( $coX / 8 ))\"`>/dev/null;\n\
-");
-
-}
-
 
 void PrintList(List* p_list) //affiche une liste passer en parametre
 {
