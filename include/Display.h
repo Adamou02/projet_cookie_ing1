@@ -6,6 +6,9 @@
     #include "Constant.h"
     #include "Miscellanous.h"
     
+    /// @brief Modifie le terminal pour l'adapter au jeu 
+    void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
+
     /// @brief Menu lorsqu'on lance le programme, permet de lancer une nouvelle game, charger la précedente, ou voir l'historique.
     int MenuStartGame();
 
@@ -21,18 +24,21 @@
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
+    
+    /// @brief affiche la map avec le chemin suivis par une liste passer en parametre
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
 
-    //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
+
+    
+    /////////////////////////////////////////////////////////////////////////////
+    //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final//
+    /////////////////////////////////////////////////////////////////////////////
 
     void DebugDisplayMap(int** matrice_Map, int int_mapSize);
 
     void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
     void DebugInfoPlayer(PlayerInfo s_playerInfo);
-
-
-    void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
 
     void PrintList(List* p_list);
 
