@@ -160,7 +160,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
     char* constant_caseDisplay = ERROR;
-    int bool_isArrowC = 0;
+    int bool_isNotEmj = 0;
     ClearTerm();    
     printf(" ");
     for(int i=0; i<int_mapSize+1; i++)
@@ -173,7 +173,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
         printf(" %s", SIDEBAR);
         while ( (int_curseur+1)%(int_mapSize+1) != 0 )
         {
-            bool_isArrowC = 0;
+            bool_isNotEmj = 0;
             switch (matrice_Map[int_curseurBis][int_curseur])
             {
                 case REP_CHARACTER :
@@ -202,41 +202,45 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
                     break;
                  case REP_UP :
                     constant_caseDisplay = UP_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;
                 case REP_DOWN :
                     constant_caseDisplay = DOWN_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;    
                 case REP_LEFT :
                     constant_caseDisplay = LEFT_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;                
                 case REP_RIGHT :
                     constant_caseDisplay = RIGHT_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;                
                 case REP_UPLEFT :
                     constant_caseDisplay = UP_LEFT_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;                
                 case REP_UPRIGHT :
                     constant_caseDisplay = UP_RIGHT_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;                
                 case REP_DOWNLEFT :
                     constant_caseDisplay = DOWN_LEFT_ARROW;
-                    bool_isArrowC = 1;
+                    bool_isNotEmj = 1;
                     break;
                 case REP_DOWNRIGHT :
                     constant_caseDisplay = DOWN_RIGHT_ARROW;
-                    bool_isArrowC = 1;
-                    break;                
+                    bool_isNotEmj = 1;
+                    break;
+                case REP_DOT :
+                    constant_caseDisplay = DOT;
+                    bool_isNotEmj = 1;
+                    break;          
                 default :
                     constant_caseDisplay = ERROR;
                     break;       
             }
-            if(bool_isArrowC){
+            if(bool_isNotEmj){
                 printf(" ");
             } 
             printf("%s", constant_caseDisplay);
@@ -254,7 +258,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     printf("\n");
 }
 
-void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
+void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list)
 {
     int** matric_tmp = AllocMatriceMap(int_mapSize);
     for(int i=0; i<int_mapSize; i++){
@@ -307,6 +311,28 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
             ){
                      matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_UPRIGHT;
             }
+        }
+        node_current = node_current->next;
+    }    
+    DisplayMap(matric_tmp, int_mapSize);
+    UnallocMatriceMap(matric_tmp,int_mapSize);
+}
+
+
+
+void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
+{
+    int** matric_tmp = AllocMatriceMap(int_mapSize);
+    for(int i=0; i<int_mapSize; i++){
+        for(int j=0; j<int_mapSize; j++){
+            matric_tmp[i][j] = matric_Map[i][j];
+        }
+    }
+    Node* node_current = p_list->firstnode;
+    while(node_current != NULL && node_current->next != NULL)
+    {
+        if(!CoordCompare2(matric_Map, node_current->next->coordonnees, REP_CHARACTER)){
+            matric_tmp[node_current->next->coordonnees.x][node_current->next->coordonnees.y]= REP_DOT;
         }
         node_current = node_current->next;
     }    
