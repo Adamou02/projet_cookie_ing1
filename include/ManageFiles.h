@@ -55,8 +55,6 @@
 
     void Save(int int_mapSize);
 
-    void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
-
     void History(int int_mapSize);
 
     void ReadHistory(int num_game, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
