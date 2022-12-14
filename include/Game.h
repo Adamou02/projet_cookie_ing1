@@ -38,6 +38,8 @@
 
     void NewGame();
 
+    void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
+
     void ResumeGame();
     
 #endif
