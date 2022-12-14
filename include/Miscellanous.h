@@ -71,8 +71,12 @@
 
     int IsInList(List* p_list, coordonnees coord);
 
+    void CopyList(List* p_list, List* p_listCopy);
+
     int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize);
 
     void ClearTerm();
+
+    void CopyMap(int** matrice_Map, int** matrice_MapCopy, int int_mapSize);
 
 #endif
