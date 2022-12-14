@@ -28,7 +28,7 @@ int main(void)
     int bool_victory = Game(GameInfo.int_mapSize, GameInfo.matrice_Map, GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.p_listpath);
 
     //Affichage de fin de jeu
-    DisplayPathInMap(GameInfo.matrice_Map, GameInfo.int_mapSize, GameInfo.p_listpath);
+    DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, GameInfo.p_listpath);
 
     //liberation des donnée allouer
     FreeGame();
