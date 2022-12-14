@@ -119,6 +119,12 @@ void NewGame()
     GameInfo.matrice_Distance = InitDistance(GameInfo.int_mapSize);
 }
 
+void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
+{
+    SaveToCurrentGame();
+    RestoreTurn(SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV)+1, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize);
+}
+
 void ResumeGame()
 {
     if(!ExistFile(SAVE_CSV)){ //Ajouter une verif si le fichier est vide
@@ -128,12 +134,18 @@ void ResumeGame()
     GameInfo.int_mapSize = RestoreMapSize();
     GameInfo.matrice_Map = AllocMatriceMap(GameInfo.int_mapSize);
     GameInfo.matrice_Distance = AllocMatriceDistance(GameInfo.int_mapSize);
-    RestoreTurn(
-                SavedTurnsCount(GameInfo.int_mapSize, SAVE_CSV),
+    ReloadSave(
                 &GameInfo.matrice_Map,
                 &GameInfo.matrice_Distance,
                 &GameInfo.s_playerInfo,
-                GameInfo.int_mapSize    
-                );    
+                GameInfo.int_mapSize
+                );
+    // RestoreTurn(
+    //             SavedTurnsCount(GameInfo.int_mapSize, SAVE_CSV),
+    //             &GameInfo.matrice_Map,
+    //             &GameInfo.matrice_Distance,
+    //             &GameInfo.s_playerInfo,
+    //             GameInfo.int_mapSize    
+    //             );   
     GameInfo.p_listpath = InitList(GameInfo.s_playerInfo.coordonnees); //a remplacer par la restauration de la list
 }
