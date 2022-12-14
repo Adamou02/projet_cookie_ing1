@@ -28,7 +28,9 @@
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
 
     /// @brief affiche la map avec le chemin suivis par une liste passer en parametre avec des fleches correspondant a la direction
-    void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list);
+    void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list, int bool_victory);
+
+    void DisplayEndGame(int bool_victory);
 
 
     /////////////////////////////////////////////////////////////////////////////
