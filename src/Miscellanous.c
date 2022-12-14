@@ -186,6 +186,19 @@ int IsInList(List* p_list, coordonnees coord) //verifie si des coordonnees appar
     }
 }
 
+void CopyList(List* p_list, List* p_listCopy){
+    if(p_list == NULL || p_list->firstnode == NULL){
+        return;
+    } else {
+        Node * node_current = p_list->firstnode;
+        while(node_current != NULL){
+            AddNode(p_listCopy,node_current->coordonnees,node_current->is_bonus);
+            node_current = node_current->next;
+        }
+        return;
+    }
+}
+
 
 void ClearTerm()
 {
@@ -193,5 +206,11 @@ void ClearTerm()
     system("clear");
 }
 
-
-
+void CopyMap(int** matrice_Map, int** matrice_MapCopy, int int_mapSize)
+{
+    for(int i=0; i<int_mapSize; i++){
+        for(int j=0; j<int_mapSize; j++){
+            matrice_MapCopy[i][j] = matrice_Map[i][j];
+        }
+    }
+}
