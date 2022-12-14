@@ -35,6 +35,7 @@
     #define REP_UPRIGHT '6'
     #define REP_DOWNLEFT '7'
     #define REP_DOWNRIGHT '8'
+    #define REP_DOT '.'
 
 
     #define BONUS_COOKIE "\U0001f36a"
@@ -46,6 +47,7 @@
     #define END "\U0001f3c1"
     #define START "\U0001F43e"
     #define ERROR "\U0001F232"
+    #define DOT "."
 
 
     #define DOWNBAR "\uff3f"
@@ -92,7 +94,7 @@
 
     #define MAX_DISTANCE 9
     
-    #define MAX_ITERATION_CHMAP 130000
+    #define MAX_ITERATION_CHMAP 250000
 
     #define CURRENT_GAME_CSV "data/CurrentGame.csv"
     #define HISTORY_CSV "data/History.csv"
