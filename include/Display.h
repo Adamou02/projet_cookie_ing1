@@ -24,12 +24,13 @@
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
-    
     /// @brief affiche la map avec le chemin suivis par une liste passer en parametre
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
 
+    /// @brief affiche la map avec le chemin suivis par une liste passer en parametre avec des fleches correspondant a la direction
+    void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list);
 
-    
+
     /////////////////////////////////////////////////////////////////////////////
     //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final//
     /////////////////////////////////////////////////////////////////////////////
