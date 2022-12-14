@@ -61,7 +61,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
                 BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
             }
         } else if(key_pressed == LEAVE){
-            choice = printSaveMenu();
+            choice = MenuSave();
             if (choice == 0) 
                 Quit(); //l'utilisateur a choisi de partir sans sauvegarder.
             else if (choice == 1)
