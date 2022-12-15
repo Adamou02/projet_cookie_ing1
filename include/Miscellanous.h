@@ -59,7 +59,7 @@
     
     Node* CreateNode(coordonnees coord, int bonus);
 
-    List* InitList(coordonnees coord);
+    List* InitList(coordonnees coord, int is_bonus);
 
     void AddNode(List* p_list, coordonnees coord, int bonus);
 
