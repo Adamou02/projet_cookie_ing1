@@ -177,50 +177,56 @@ int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, Play
     return (matrice_map);
 }
 
-void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo,  int*** matrice_Distance)//Met à jour les infos du joueur en fonction du déplacement
+int GetDirection(int x, int y, int going_x, int going_y, int direction)
 {
-    int direction=0;
     if(
-        int_wanted_x == p_playerInfo->coordonnees.x + 1 &&
-        int_wanted_y == p_playerInfo->coordonnees.y
+        x == going_x + 1 &&
+        y == going_y
     ){
                 direction= 5;
     } else if (
-        int_wanted_x == p_playerInfo->coordonnees.x &&
-        int_wanted_y == p_playerInfo->coordonnees.y + 1
+        x == going_x &&
+        y == going_y + 1
     ){
                 direction= 3;
     } else if (
-        int_wanted_x == p_playerInfo->coordonnees.x + 1 &&
-        int_wanted_y == p_playerInfo->coordonnees.y + 1
+        x == going_x + 1 &&
+        y == going_y + 1
     ){
                 direction= 4;
     } else if(
-        int_wanted_x == p_playerInfo->coordonnees.x - 1 &&
-        int_wanted_y == p_playerInfo->coordonnees.y
+        x == going_x - 1 &&
+        y == going_y
     ){
                 direction= 1;
     } else if (
-        int_wanted_x == p_playerInfo->coordonnees.x &&
-        int_wanted_y == p_playerInfo->coordonnees.y - 1
+        x == going_x &&
+        y == going_y - 1
     ){
                 direction= 7;
     } else if (
-        int_wanted_x == p_playerInfo->coordonnees.x - 1 &&
-        int_wanted_y == p_playerInfo->coordonnees.y - 1
+        x == going_x - 1 &&
+        y == going_y - 1
     ){
                 direction= 0;
     } else if (
-        int_wanted_x == p_playerInfo->coordonnees.x - 1 &&
-        int_wanted_y == p_playerInfo->coordonnees.y + 1
+        x == going_x - 1 &&
+        y == going_y + 1
     ){
                 direction= 2;
     } else if (
-        int_wanted_x == p_playerInfo->coordonnees.x + 1 &&
-        int_wanted_y == p_playerInfo->coordonnees.y - 1
+        x == going_x + 1 &&
+        y == going_y - 1
     ){
                 direction = 6;
     }
+    return direction;
+}
+
+void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo,  int*** matrice_Distance)//Met à jour les infos du joueur en fonction du déplacement
+{
+    int direction=0;
+    direction = GetDirection(int_wanted_x, int_wanted_y, p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, direction);
     p_playerInfo->distance = p_playerInfo->distance + matrice_Distance[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y][direction];
     p_playerInfo->coordonnees.x = int_wanted_x;
     p_playerInfo->coordonnees.y = int_wanted_y;
@@ -279,47 +285,7 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int int
         matrice_map = UpdatePosition(matrice_map, last_x, last_y, p_playerInfo); // attention à changer parce que soucis si c'était un bonus
         printf("nouvelles coord %d %d\n", last_x, last_y);
     }
-    if(
-        p_playerInfo->coordonnees.x == last_x + 1 &&
-        p_playerInfo->coordonnees.y == last_y
-    ){
-                direction= 5;
-    } else if (
-        p_playerInfo->coordonnees.x == last_x &&
-        p_playerInfo->coordonnees.y == last_y+ 1
-    ){
-                direction= 3;
-    } else if (
-        p_playerInfo->coordonnees.x == last_x + 1 &&
-        p_playerInfo->coordonnees.y == last_y + 1
-    ){
-                direction= 4;
-    } else if(
-        p_playerInfo->coordonnees.x == last_x - 1 &&
-        p_playerInfo->coordonnees.y == last_y
-    ){
-                direction= 1;
-    } else if (
-        p_playerInfo->coordonnees.x == last_x &&
-        p_playerInfo->coordonnees.y == last_y - 1
-    ){
-                direction= 7;
-    } else if (
-        p_playerInfo->coordonnees.x == last_x - 1 &&
-        p_playerInfo->coordonnees.y == last_y - 1
-    ){
-                direction= 0;
-    } else if (
-        p_playerInfo->coordonnees.x == last_x - 1 &&
-        p_playerInfo->coordonnees.y == last_y + 1
-    ){
-                direction= 2;
-    } else if (
-        p_playerInfo->coordonnees.x == last_x + 1 &&
-        p_playerInfo->coordonnees.y == last_y - 1
-    ){
-                direction = 6;
-    }
+    direction = GetDirection(p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, last_x, last_y, direction);
     p_playerInfo-> backward = p_playerInfo-> backward - 1;
     p_playerInfo->coordonnees.x = last_x;
     p_playerInfo->coordonnees.y = last_y;
@@ -335,22 +301,65 @@ int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list)
     return IsInList(p_list, coord_wanted);
 }
 
-int AlreadyBeen2(int loop)
- {  
+int AlreadyBeen2(int loop, PlayerInfo *p_playerInfo,int int_wanted_x,int int_wanted_y)
+{  
     int key_pressed;
+    int direction = 0;
+    char key;
+    int key_already_pressed;
+    direction = GetDirection(int_wanted_x, int_wanted_y, p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, direction);
+    switch(direction)
+    {
+        case 0 :
+            key= 'a';
+            key_already_pressed=UP_LEFT;
+            break;
+        case 1 :
+            key= 'z';
+            key_already_pressed=UP;
+            break;
+        case 2 :
+            key= 'e';
+            key_already_pressed=UP_RIGHT;
+            break;
+        case 3 :
+            key= 'd';
+            key_already_pressed=RIGHT;
+            break;
+        case 4 :
+            key= 'c';
+            key_already_pressed=DOWN_RIGHT;
+            break;
+        case 5 :
+            key= 'x';
+            key_already_pressed=DOWN;
+            break;
+        case 6 :
+            key= 'w';
+            key_already_pressed=DOWN_LEFT;
+            break;
+        case 7 :
+           key= 'q';
+           key_already_pressed=LEFT;
+            break;
+        default :
+            break;
+    }
     if(loop == 0){
         printf("\nYou've already been there, do you want to go back ?\n");
-        printf("a : yes\t");
-        printf("e : no\n");
+        printf("%c : yes\t", key);
+        printf("r : no\n");
     }
     key_pressed = ListenKeyboard();
-    if(key_pressed == UP_LEFT){
+    if(key_pressed == key_already_pressed){ // en cours
         return 1;
-    }else if(key_pressed == UP_RIGHT){
+    }else if(key_pressed == STEP_BACK){
         return 0;
     }else{
-        printf("You've pressed a wrong key, choose again.\n");
-        return (AlreadyBeen2(1));
+        if(loop == 0){
+            printf("You've pressed a wrong key, choose again.\n");
+        }
+        return (AlreadyBeen2(1, p_playerInfo, int_wanted_x, int_wanted_y));
     }
  }
 
