@@ -33,7 +33,7 @@
 
     int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
-    int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_Start, int int_Energy);
+    int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int int_Start, int int_Energy);
 
     int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int int_Start, int int_Energy); //verifie si la matrice map generer possede un chemin faisable recursivement; 
 
