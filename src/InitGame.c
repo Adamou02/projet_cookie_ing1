@@ -426,8 +426,9 @@ int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoo
 int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int int_Start, int int_Energy) //verifie si la matrice map generer possede un chemin faisable recursivement;
 {
     int bool_PathFound;
-    
-    if( !IsBetween(coord_curr.x, 0, int_maxCoord) || !IsBetween(coord_curr.y, 0, int_maxCoord)){ //si le chemin arrive a une bordure
+    if(int_Energy >= BASE_ENERGY * (int_maxCoord + 1)){ //kill le chemin si l'energy necessaire est au dela de celle de base du joueur
+        return 0;
+    } else if( !IsBetween(coord_curr.x, 0, int_maxCoord) || !IsBetween(coord_curr.y, 0, int_maxCoord)){ //si le chemin arrive a une bordure
         return 0;
     } else if(CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_END)){ //chemin trouvé
         return 1;
