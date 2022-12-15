@@ -57,7 +57,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             if(int_error != 0){
                 ErrorStepBack(int_error);
             }else{
-                StepBack(p_list, matrice_Map, p_playerInfo, int_mapSize, matrice_Distance);
+                StepBack(p_list, matrice_Map, p_playerInfo, matrice_Distance);
                 BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
             }
         } else if(key_pressed == LEAVE){
