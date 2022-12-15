@@ -112,7 +112,7 @@ void NewGame()
     //Initialisation de la structure Joueur et du stockage du chemin
     GameInfo.s_playerInfo = SetupPlayer(); 
     InitEnergy(&GameInfo.s_playerInfo, GameInfo.int_mapSize);
-    GameInfo.p_listpath = InitList(GameInfo.s_playerInfo.coordonnees);
+    GameInfo.p_listpath = InitList(GameInfo.s_playerInfo.coordonnees, 0);
 
     //Creation des structures contenant les infos de la carte
     GameInfo.matrice_Map = InitMap(GameInfo.int_mapSize, GameInfo.float_diffRate, &GameInfo.s_playerInfo);
