@@ -28,7 +28,7 @@ int main(void)
     int bool_victory = Game(GameInfo.int_mapSize, GameInfo.matrice_Map, GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.p_listpath);
 
     //Affichage de fin de jeu
-    DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, GameInfo.p_listpath, &GameInfo.s_playerInfo, bool_victory);
+    DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, GameInfo.p_listpath);
     DisplayEndGame(bool_victory, &GameInfo.s_playerInfo);
 
     //liberation des donnée allouer
