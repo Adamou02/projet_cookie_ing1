@@ -33,9 +33,9 @@
 
     int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
-    void CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_Start, int int_Energy, int* pi_minEnergy, List* PathEnergy);
+    int CheckEachDirection(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CurrentPath, int int_Start, int int_Energy);
 
-    void CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List* pl_CheckedPath, int int_Start, int int_Energy, int* pi_minEnergy, List* PathEnergy); //verifie si la matrice map generer possede un chemin faisable recursivement; 
+    int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int int_Start, int int_Energy); //verifie si la matrice map generer possede un chemin faisable recursivement; 
 
     int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo); //Alloue, init et genere la map
 
