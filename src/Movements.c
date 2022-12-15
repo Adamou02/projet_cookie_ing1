@@ -367,7 +367,7 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
 {
     if(AlreadyBeen(int_wanted_x, int_wanted_y, p_list) == 1 && p_playerInfo->distance>0){
         int Bool_choice = 0;
-        Bool_choice = AlreadyBeen2(0);
+        Bool_choice = AlreadyBeen2(0,p_playerInfo, int_wanted_x,int_wanted_y);
         if(Bool_choice == 0){
             return (matrice_map);
         }
