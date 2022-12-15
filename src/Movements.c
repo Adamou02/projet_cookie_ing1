@@ -258,7 +258,7 @@ int** WasABonus(int** matrice_map, int last_x, int last_y, PlayerInfo *p_playerI
     return (matrice_map);
 }
 
-void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int int_mapSize,  int*** matrice_Distance) // Permet de faire un retour en arrière supprimant les infos dans la liste et en mettant à jour la map et le joueur
+void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo,  int*** matrice_Distance) // Permet de faire un retour en arrière supprimant les infos dans la liste et en mettant à jour la map et le joueur
 {
     int last_x;
     int last_y;
