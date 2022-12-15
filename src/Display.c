@@ -258,7 +258,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     printf("\n");
 }
 
-void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list, PlayerInfo *p_playerInfo, int bool_victory)
+void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list)
 {
     int** matric_tmp = AllocMatriceMap(int_mapSize);
     for(int i=0; i<int_mapSize; i++){
@@ -315,7 +315,6 @@ void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list, Play
         node_current = node_current->next;
     }    
     DisplayMap(matric_tmp, int_mapSize);
-    DisplayEndGame(bool_victory, p_playerInfo);
     UnallocMatriceMap(matric_tmp,int_mapSize);
 }
 
