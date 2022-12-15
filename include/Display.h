@@ -35,10 +35,10 @@
     /// @brief Appelle l'affichage victoire ou defaite selon la valeur de bool_victory
     void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo);
 
-    /// @brief Affiche l'écran de victoire
+    /// @brief Affiche les informations de victoire
     void DisplayVictory(PlayerInfo *p_playerInfo);
     
-    /// @brief Affiche l'écran de défaite
+    /// @brief Affiche les informations de défaite
     void DisplayLoose();
 
     /////////////////////////////////////////////////////////////////////////////
