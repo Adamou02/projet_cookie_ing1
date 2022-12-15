@@ -85,7 +85,7 @@ Node* CreateNode(coordonnees coord, int is_bonus) // Créer une nouvelle node à
     return node;
 }
 
-List* InitList(coordonnees coord) //initialise une liste chaine de coord avec des coord en param
+List* InitList(coordonnees coord, int is_bonus) //initialise une liste chaine de coord avec des coord en param
 {
     List *list_new = malloc(sizeof(*list_new));
     Node *node_new = malloc(sizeof(*node_new));
@@ -98,7 +98,7 @@ List* InitList(coordonnees coord) //initialise une liste chaine de coord avec de
     node_new->next = NULL;
     node_new->coordonnees.x=coord.x;
     node_new->coordonnees.y=coord.y;
-    node_new->is_bonus=0;
+    node_new->is_bonus=is_bonus;
     list_new->firstnode = node_new;
     return(list_new);
 }
@@ -107,7 +107,7 @@ void AddNode(List* p_list, coordonnees coord, int is_bonus) // Ajoute une node e
 {       
     /*creation de la nouvel node*/
     if(p_list == NULL){
-        p_list = InitList(coord);
+        p_list = InitList(coord, 0);
     } else {
         Node *node_new = CreateNode(coord, is_bonus);
         if(p_list == NULL){
