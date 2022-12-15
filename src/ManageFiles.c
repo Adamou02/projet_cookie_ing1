@@ -131,14 +131,15 @@ char* GetDistanceString(char* DistanceString, int int_mapSize, int num_turn, cha
 char* GetListString(char* ListString, int int_mapSize, int num_turn)
 {
     FILE* Current_Game_CSV = fopen(CURRENT_GAME_CSV, "r");
-    char* CSV_String = malloc((2*BASE_ENERGY*int_mapSize)*sizeof(*CSV_String));
+    char* CSV_String = malloc((int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String));
 
     //Acces au tour souhaité
     for(int i=0; i<num_turn; i++)
     {
         //Recuperation de toutes les donnees
-        fgets(CSV_String,(2*BASE_ENERGY*int_mapSize)*sizeof(*CSV_String) ,Current_Game_CSV);
+        fgets(CSV_String,(int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String) ,Current_Game_CSV);
     }
+
     //Separation et implementation des donnees aux variables de jeu
     strtok(CSV_String, ",;");
     strtok(NULL, ",;");
@@ -294,10 +295,68 @@ int*** StringToMatriceDistance(char* DistanceString, int int_mapSize, int*** mat
     return (matrice_Distance);
 }
 
-/*List* StringToList(List* p_list, char* ListString)
+int ListElementsCount(char* ListString)
 {
+    int count = 0;
+    int i = 0;
+    while(ListString[i] != '\0')
+    {
+        if(ListString[i] == '*')
+        {
+            count++;
+        }
+        i++;
+    }
+    return(count);
+}
 
-}*/
+List* StringToList(List* p_list, char* ListString)
+{
+    int tab_size = ListElementsCount(ListString);
+    int ** List_tab = malloc(3*tab_size*sizeof(int));
+    int Current_Val = atoi(strtok(ListString, ".*"));
+    coordonnees coord;
+    int bool = 1;
+    
+    for(int i = 0; i < tab_size; i++)
+    {
+        List_tab[i] = malloc(3*sizeof(int));
+    }
+
+    //Remplir le tableau avec les éléments de la liste
+    for(int j = 0; j < tab_size; j++)
+    {
+        for(int k = 0; k < 3; k++)
+        {
+            List_tab[j][k] = Current_Val;
+            Current_Val = atoi(strtok(NULL, ".*"));
+        }
+    }
+
+    //Créer la liste à partir des éléments du tableau
+    for(int m = tab_size-1; m >= 0; m--)
+    {
+        coord.x = List_tab[m][0];
+        coord.y = List_tab[m][1];
+        if(bool)
+        {
+            p_list = InitList(coord, List_tab[m][2]);
+            bool = 0;
+        }
+        else
+        {
+            AddNode(p_list, coord, List_tab[m][2]);
+        }
+    }
+
+    for(int l = 0; l < tab_size; l++)
+    {
+        free(List_tab[l]);
+    }
+
+    free(List_tab);
+    return(p_list);
+}
 
 char* SaveMap(int** matrice_Map, int int_mapSize)
 {
@@ -338,11 +397,11 @@ char* SaveList(List* p_list, int int_mapSize)
     return(ListString);
 }
 
-List* RestoreList(List* p_list, int int_mapSize, int num_turn)
+List* RestoreList(int int_mapSize, int num_turn)
 {
     char* ListString = AllocListString(int_mapSize);
     ListString = GetListString(ListString, int_mapSize, num_turn);
-    //StringToList(p_list, ListString);
+    List* p_list = StringToList(p_list, ListString);
     free(ListString);
     return(p_list);
 }
