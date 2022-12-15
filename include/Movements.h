@@ -26,6 +26,8 @@
 
     int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo); // Met à jour les informations de la map en fonction du déplacement
 
+    int GetDirection(int x, int y, int going_x, int going_y, int direction);    
+
     void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo,  int*** matrice_Distance);//Met à jour les infos du joueur en fonction du déplacement
 
     void PlayerOnBonus(PlayerInfo *p_playerInfo);//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
@@ -40,7 +42,7 @@
 
     int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list);
 
-    int AlreadyBeen2(int loop);
+    int AlreadyBeen2(int loop, PlayerInfo *p_playerInfo,int int_wanted_x,int int_wanted_y);
 
     int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list,  int*** matrice_Distance);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 
