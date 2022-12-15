@@ -446,7 +446,7 @@ void CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, List
         if( CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_BONUS1) || CoordCompare(matrice_Map, coord_curr.x, coord_curr.y, REP_BONUS2)){
             int_Energy -= GAIN_ENERGY;
         }
-        List* pl_CurrentPath = InitList(coord_curr);
+        List* pl_CurrentPath = InitList(coord_curr,0);
         if(pl_CheckedPath != NULL && pl_CheckedPath->firstnode != NULL){
             pl_CurrentPath->firstnode->next=pl_CheckedPath->firstnode;
         }
@@ -489,7 +489,7 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo)
         int_minEnergy = INF ;
         int **matrice_tmp = AllocMatriceMap(int_mapSize);
         CopyMap(matrice_Map, matrice_tmp, int_mapSize);
-        List* PathEnergy = InitList(p_playerInfo->coordonnees);
+        List* PathEnergy = InitList(p_playerInfo->coordonnees,0);
         CheckPath(
                     matrice_tmp,
                     p_playerInfo->coordonnees,
