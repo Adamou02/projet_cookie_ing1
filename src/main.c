@@ -29,6 +29,7 @@ int main(void)
 
     //Affichage de fin de jeu
     DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, GameInfo.p_listpath, &GameInfo.s_playerInfo, bool_victory);
+    DisplayEndGame(bool_victory, &GameInfo.s_playerInfo);
 
     //liberation des donnée allouer
     FreeGame();
