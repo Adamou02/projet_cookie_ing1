@@ -266,7 +266,6 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo,  int***
     int nb_back = p_playerInfo-> backward;
     int was_bonus;
     GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
-    printf("dernière coord %d %d\n", last_x, last_y);
     if(was_bonus == 1){
         RemoveNode(p_list);
         GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
@@ -283,7 +282,6 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo,  int***
         RemoveNode(p_list);
         GetfirstNode(p_list, &last_x, &last_y, &was_bonus);
         matrice_map = UpdatePosition(matrice_map, last_x, last_y, p_playerInfo); // attention à changer parce que soucis si c'était un bonus
-        printf("nouvelles coord %d %d\n", last_x, last_y);
     }
     direction = GetDirection(p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, last_x, last_y, direction);
     p_playerInfo-> backward = p_playerInfo-> backward - 1;
@@ -351,7 +349,7 @@ int AlreadyBeen2(int loop, PlayerInfo *p_playerInfo,int int_wanted_x,int int_wan
         printf("r : no\n");
     }
     key_pressed = ListenKeyboard();
-    if(key_pressed == key_already_pressed){ // en cours
+    if(key_pressed == key_already_pressed){
         return 1;
     }else if(key_pressed == STEP_BACK){
         return 0;
@@ -377,12 +375,10 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
         {
         case REP_OBSTACLE1 :
             PlayerOnObstacle(p_playerInfo);
-            // printf("Test obstacle");
             break;
 
         case REP_OBSTACLE2 :
             PlayerOnObstacle(p_playerInfo);
-            // printf("Test obstacle");
             break;
         
         case REP_BONUS1 :
@@ -390,7 +386,6 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
             matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
             UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo, matrice_Distance);
             UpdatePathList(p_playerInfo, p_list, 1);
-            // printf("Test bonus");
             break;
 
         case REP_BONUS2 :
@@ -398,7 +393,6 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
         matrice_map = UpdatePosition(matrice_map, int_wanted_x, int_wanted_y, p_playerInfo);
         UpdatePlayerInfo(int_wanted_x, int_wanted_y, p_playerInfo, matrice_Distance);
         UpdatePathList(p_playerInfo, p_list, 2);
-        // printf("Test bonus");
         break;
     
         case REP_END :
