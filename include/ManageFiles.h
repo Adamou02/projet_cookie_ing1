@@ -37,6 +37,10 @@
 
     int*** StringToMatriceDistance(char* DistanceString, int int_mapSize, int*** matrice_Distance);
 
+    int ListElementsCount(char* ListString);
+
+    List* StringToList(List* p_list, char* ListString);
+
     char* SaveMap(int** matrice_Map, int int_mapSize);
 
     int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn);
@@ -47,6 +51,8 @@
 
     char* SaveList(List* p_list, int int_mapSize);
 
+    List* RestoreList(int int_mapSize, int num_turn);
+
     void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, List* p_list, int int_mapSize, PlayerInfo * s_playerInfo_player);
 
     void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
@@ -54,6 +60,8 @@
     int RestoreMapSize();
 
     void Save(int int_mapSize);
+
+    void SaveToCurrentGame();
 
     void History(int int_mapSize);
 
