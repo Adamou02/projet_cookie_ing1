@@ -140,12 +140,5 @@ void ResumeGame()
                 &GameInfo.s_playerInfo,
                 GameInfo.int_mapSize
                 );
-    // RestoreTurn(
-    //             SavedTurnsCount(GameInfo.int_mapSize, SAVE_CSV),
-    //             &GameInfo.matrice_Map,
-    //             &GameInfo.matrice_Distance,
-    //             &GameInfo.s_playerInfo,
-    //             GameInfo.int_mapSize    
-    //             );   
-    GameInfo.p_listpath = InitList(GameInfo.s_playerInfo.coordonnees); //a remplacer par la restauration de la list
+    GameInfo.p_listpath = RestoreList(GameInfo.int_mapSize, SavedTurnsCount(GameInfo.int_mapSize, CURRENT_GAME_CSV)+1);
 }
