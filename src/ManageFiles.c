@@ -28,6 +28,23 @@ int SupprFile(char str_NameFile[])
     }
 }
 
+int IsEmptyFile(char str_NameFile[])
+{
+    if(ExistFile(str_NameFile)){
+        FILE* File = fopen(str_NameFile, "r");
+        fseek(File, 0, SEEK_END);
+        long lengthFile = ftell(File);
+        if(lengthFile == 0){
+            fclose(File);
+            return 1;
+        }else{
+            fclose(File);
+            return 0;
+        }
+    }
+    return 1;
+}
+
 //*******************************************************************
 //******FONTIONS DE SAUVEGARDE/RECUPERATION PARTIE*******************
 //*******************************************************************
