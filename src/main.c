@@ -22,7 +22,7 @@ int main(void)
             break;
     }
     //Affichage d'avant Tour
-    BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, NULL);
+    BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
 
     //Tours du joueur
     int bool_victory = Game(GameInfo.int_mapSize, GameInfo.matrice_Map, GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.p_listpath);
