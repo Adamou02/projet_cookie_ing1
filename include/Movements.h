@@ -38,7 +38,7 @@
 
     int** WasABonus(int** matrice_map, int last_x, int last_y, PlayerInfo *p_playerInfo, char CST);
   
-    void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int int_mapSize, int*** matrice_Distance);
+    void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int*** matrice_Distance);
 
     int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list);
 
