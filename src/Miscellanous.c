@@ -538,7 +538,7 @@ void CopyList(List* p_list, List* p_listCopy){
 void ClearTerm()
 {
     //printf("\033[H\033[2J");
-    //system("clear");
+    system("clear");
 }
 
 void CopyMap(int** matrice_Map, int** matrice_MapCopy, int int_mapSize)
@@ -549,3 +549,17 @@ void CopyMap(int** matrice_Map, int** matrice_MapCopy, int int_mapSize)
         }
     }
 }
+
+void CopyMatriceDist(int*** matrice_Distance, int*** matrice_DistanceCopy, int int_mapSize)
+{
+    for(int i=0; i<int_mapSize; i++){
+        for(int j=0; j<int_mapSize; j++){
+            for(int k=0; k<8; k++){
+                matrice_DistanceCopy[i][j][k] = matrice_Distance[i][j][k];
+            }
+            
+        }
+    }
+}
+
+

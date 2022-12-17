@@ -82,6 +82,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
 void FreeGame()
 {
     FreeList(GameInfo.p_listpath);
+    FreeList(GameInfo.p_listBestWay);
     UnallocMatriceMap(GameInfo.matrice_Map, GameInfo.int_mapSize);
     UnallocMatriceDistance(GameInfo.matrice_Distance, GameInfo.int_mapSize);
 }
@@ -121,8 +122,7 @@ void NewGame()
     GameInfo.matrice_Distance = InitDistance(GameInfo.int_mapSize);
 
     //puts("on lance dijkstra\n");
-    AlgoDijkstra(GameInfo.matrice_Map, GameInfo.matrice_Distance,&GameInfo.s_playerInfo, GameInfo.int_mapSize); 
-
+    
     //puts("on sort de dijkstra\n");
 }
 
@@ -149,3 +149,4 @@ void ResumeGame()
                 );
     GameInfo.p_listpath = RestoreList(GameInfo.int_mapSize, SavedTurnsCount(GameInfo.int_mapSize, CURRENT_GAME_CSV)+1);
 }
+

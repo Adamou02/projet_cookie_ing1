@@ -508,7 +508,7 @@ Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int
     int int_x;
     int int_y;
 
-    Node_d* NodeHere = FindLowerWay(p_list,firstnode,firstnode,matrice_Map, matrice_Distance,int_mapSize,1000,&int_position,&int_distance,coordEnd);
+    Node_d* NodeHere = FindLowerWay(p_list,firstnode,firstnode,matrice_Map, matrice_Distance,int_mapSize,INF,&int_position,&int_distance,coordEnd);
 
     if(NodeHere->DataD.x == coordEnd.y && NodeHere->DataD.y == coordEnd.x ){
         return(NodeHere);
@@ -563,9 +563,9 @@ Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int
     return(recurseDijkstra(p_list,firstnode,matrice_Map,matrice_Distance,int_mapSize, coordEnd));
 }
 
-void AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize)
+List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize)
 {
-    DisplayMap(matrice_Map, int_mapSize);
+    //DisplayMap(matrice_Map, int_mapSize);
 
     int int_x;
     int int_y;
@@ -601,9 +601,17 @@ void AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playe
     Node_d* Arrive= recurseDijkstra(ListDrijkstra, ListDrijkstra->firstnode, matrice_Map, matrice_Distance, int_mapSize, coordEnd);
 
     List* BetterWay = EndDijkstra(Arrive);
-    DisplayPathInMap(matrice_Map,int_mapSize,BetterWay);
 
+    BetterWay->firstnode->is_bonus = Arrive->DataD.distance;
+   
     FreeList_d(ListDrijkstra);
-    FreeList(BetterWay);
+    //unalloc de la copy de la matrice Distance
+    UnallocMatriceDistance(matrice_Distance, int_mapSize);
+    return(BetterWay);
+}
 
+int*** DuplicateMatriceDistance( int*** matrice_Distance,int int_mapSize){
+    int*** matrice_DistanceCopy = AllocMatriceDistance(int_mapSize);
+    CopyMatriceDist(matrice_Distance, matrice_DistanceCopy, int_mapSize);
+    return(matrice_DistanceCopy);
 }
