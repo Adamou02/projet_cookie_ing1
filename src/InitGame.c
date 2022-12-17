@@ -489,3 +489,121 @@ int*** InitDistance(int int_mapSize)
     matrice_Distance = GenerateMatriceDistance(int_mapSize, matrice_Distance);
     return (matrice_Distance);
 }
+
+
+int affiche(Node_d *node)
+{
+    puts("NODE-");
+    printf("%d %d   %d ", node->DataD.x,node->DataD.y, node->DataD.distance);
+    int int_cpt = 0;
+    //while (node->DataD.chemin[int_cpt]!= 100){ printf("{%d;%d}"); int_cpt = int_cpt+2;}
+    printf("\n");
+    if(node->next != NULL) return(affiche(node->next));
+}
+
+Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize, coordonnees coordEnd){
+
+    int int_position = 10;
+    int int_distance;
+    int int_x;
+    int int_y;
+
+    Node_d* NodeHere = FindLowerWay(p_list,firstnode,firstnode,matrice_Map, matrice_Distance,int_mapSize,1000,&int_position,&int_distance,coordEnd);
+
+    if(NodeHere->DataD.x == coordEnd.y && NodeHere->DataD.y == coordEnd.x ){
+        return(NodeHere);
+    }
+
+    switch (int_position){
+        case 0 :
+            int_x = (NodeHere->DataD.x) - 1;
+            int_y = (NodeHere->DataD.y) - 1;
+        break;
+
+        case 1:
+            int_x = (NodeHere->DataD.x) - 1;
+            int_y = (NodeHere->DataD.y);
+        break;
+
+        case 2:
+            int_x = (NodeHere->DataD.x) - 1;
+            int_y = (NodeHere->DataD.y) + 1 ;
+        break;
+
+        case 3:
+            int_x = (NodeHere->DataD.x);
+            int_y = (NodeHere->DataD.y) + 1 ;
+        break;
+
+        case 4:
+            int_x = (NodeHere->DataD.x) + 1;
+            int_y = (NodeHere->DataD.y) + 1 ;
+        break;
+
+        case 5:
+            int_x = (NodeHere->DataD.x) +1;
+            int_y = (NodeHere->DataD.y);
+        break;
+
+        case 6:
+            int_x = (NodeHere->DataD.x) + 1;
+            int_y = (NodeHere->DataD.y) - 1 ;
+        break;
+
+        case 7:
+            int_x = (NodeHere->DataD.x);
+            int_y = (NodeHere->DataD.y) - 1 ;
+        break;
+
+        default:
+        break;
+    }
+
+    int int_execution = AddNode_d(p_list,firstnode, int_x, int_y, int_distance,NodeHere);
+    return(recurseDijkstra(p_list,firstnode,matrice_Map,matrice_Distance,int_mapSize, coordEnd));
+}
+
+void AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize)
+{
+    DisplayMap(matrice_Map, int_mapSize);
+
+    int int_x;
+    int int_y;
+    coordonnees coordEnd = DefineEndGame(int_mapSize, matrice_Map);
+    coordonnees coordStart;
+    
+
+    switch (DefineStartPlayer(p_playerInfo, int_mapSize))
+    {
+    case 1:
+        coordStart.x = 0;
+        coordStart.y = 0;
+    break;
+    case 3:
+        coordStart.x = 0;
+        coordStart.y = int_mapSize-1;
+    break;
+    case 2:
+        coordStart.x = int_mapSize-1;
+        coordStart.y =0;
+    break;
+    case 4:
+        coordStart.x = int_mapSize-1;
+        coordStart.y = int_mapSize-1;
+    break;
+    default:
+        exit(0);
+    break;
+    }
+
+    List_d* ListDrijkstra = InitList_d(coordStart.x, coordStart.y);
+
+    Node_d* Arrive= recurseDijkstra(ListDrijkstra, ListDrijkstra->firstnode, matrice_Map, matrice_Distance, int_mapSize, coordEnd);
+
+    List* BetterWay = EndDijkstra(Arrive);
+    DisplayPathInMap(matrice_Map,int_mapSize,BetterWay);
+
+    FreeList_d(ListDrijkstra);
+    FreeList(BetterWay);
+
+}

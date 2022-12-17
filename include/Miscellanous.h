@@ -6,7 +6,8 @@
     #include <stdio.h>
     #include <time.h>
     #include <string.h>
-    #include <time.h>   
+    #include <time.h>  
+    #include "Constant.h" 
 
     typedef struct coordonnees{ // Structure contenant des coordonnées 
         int x;
@@ -22,6 +23,28 @@
     typedef struct List{
         Node* firstnode;
     } List;
+
+    
+    //List pour Dijkstra
+
+    typedef struct DataD DataD;
+    struct DataD{ // Structure contenant séquence du parcours, coordonnées actuelles, distance du point de départ
+        int x;
+        int y;
+        int distance;
+        int chemin[(2*(TAILLE_BIG_MAP * TAILLE_BIG_MAP))];
+    };
+
+    typedef struct Node_d{ // enregistre les  distance dans une liste
+        DataD DataD;
+        struct Node_d *next;
+    } Node_d;
+
+    typedef struct List_d{
+        Node_d* firstnode;
+    } List_d;
+    
+
 
     typedef struct PlayerInfo{ // Structure contennant les informations du joueur
         coordonnees coordonnees;
@@ -57,19 +80,37 @@
 
     coordonnees ModifCoord(coordonnees coord, int int_x, int int_y);
     
+    coordonnees DefineEndGame(int int_mapSize, int** matrice_map);
+    
     Node* CreateNode(coordonnees coord, int bonus);
 
     List* InitList(coordonnees coord, int is_bonus);
 
+    List_d* InitList_d(int int_x, int int_y);
+
     void AddNode(List* p_list, coordonnees coord, int bonus);
 
+    coordonnees FindLastStep (Node_d* Node);
+
+    Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matrice_map, int*** matrice_distance, int int_mapSize, int int_goodDistance, int *int_position, int *int_distance, coordonnees coordEnd);
+
+    List* EndDijkstra(Node_d * Arrive);
+    
+    Node_d* CreateDNode( int int_x, int int_y, int distance, Node_d* NodeD, Node_d* Node_Suivante);
+
+    int AddNode_d(List_d* p_list, Node_d* firstNode, int int_x, int int_y, int int_distance, Node_d* NodeD);
+
     void RemoveNode(List* p_list);
+
+    void RemoveNode_d(List_d* p_list);
 
     long LengthList(List *p_list);
 
     void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y, int* is_bonus);
     
     void FreeList(List* p_list);
+
+    void FreeList_d(List_d* p_list);
 
     int IsInList(List* p_list, coordonnees coord);
 

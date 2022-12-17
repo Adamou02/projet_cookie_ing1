@@ -7,7 +7,7 @@
     #include "Miscellanous.h"
     
     /// @brief Modifie le terminal pour l'adapter au jeu 
-    void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
+    void EditTerminal(); 
 
     /// @brief Menu lorsqu'on lance le programme, permet de lancer une nouvelle game, charger la précedente, ou voir l'historique.
     int MenuStartGame();

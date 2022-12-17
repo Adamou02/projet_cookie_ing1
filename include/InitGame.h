@@ -41,5 +41,12 @@
 
     int*** InitDistance(int int_mapSize); //Alloue, et genere la matrice Distance
 
+    int affiche(Node_d *node);
+
+    Node_d* recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize , coordonnees coordEnd);
+
+    void AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize);
+    
+
 #endif
 
