@@ -1,4 +1,6 @@
 #include "Miscellanous.h"
+#include "Constant.h"
+
 
 
 int RNG(int min, int max)
