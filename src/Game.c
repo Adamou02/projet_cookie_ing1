@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "InitGame.h"
 
 void SetupGame()
 {
