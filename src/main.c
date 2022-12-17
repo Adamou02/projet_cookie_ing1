@@ -25,11 +25,12 @@ int main(void)
     BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
 
     //Tours du joueur
-    int bool_victory = Game(GameInfo.int_mapSize, GameInfo.matrice_Map, GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.p_listpath);
+    //int bool_victory = Game(GameInfo.int_mapSize, GameInfo.matrice_Map, GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.p_listpath);
 
     //Affichage de fin de jeu
     DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, GameInfo.p_listpath);
-    DisplayEndGame(bool_victory, &GameInfo.s_playerInfo);
+
+    //DisplayEndGame(bool_victory, &GameInfo.s_playerInfo);
 
     //liberation des donnée allouer
     FreeGame();

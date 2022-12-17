@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "InitGame.h"
 
 void SetupGame()
 {
@@ -65,7 +66,7 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             if (choice == 0) 
                 Quit(); //l'utilisateur a choisi de partir sans sauvegarder.
             else if (choice == 1)
-                SaveAndQuit();//*fonction Fabien sauvegarde*/; 
+                SaveAndQuit();//fonction Fabien sauvegarde; 
             else //choice ==2 l'utilisateur veut revenir jouer sur sa game
                 BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
        } else {
@@ -74,7 +75,8 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
         }
     }
-    return bool_victory;
+    
+    return (1);//bool_victory;
 }
 
 void FreeGame()
@@ -117,6 +119,11 @@ void NewGame()
     //Creation des structures contenant les infos de la carte
     GameInfo.matrice_Map = InitMap(GameInfo.int_mapSize, GameInfo.float_diffRate, &GameInfo.s_playerInfo);
     GameInfo.matrice_Distance = InitDistance(GameInfo.int_mapSize);
+
+    //puts("on lance dijkstra\n");
+    AlgoDijkstra(GameInfo.matrice_Map, GameInfo.matrice_Distance,&GameInfo.s_playerInfo, GameInfo.int_mapSize); 
+
+    //puts("on sort de dijkstra\n");
 }
 
 void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
