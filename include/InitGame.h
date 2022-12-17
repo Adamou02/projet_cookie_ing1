@@ -45,7 +45,9 @@
 
     Node_d* recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize , coordonnees coordEnd);
 
-    void AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize);
+    List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize);
+
+    int*** DuplicateMatriceDistance( int*** matrice_Distance,int int_mapSize);
     
 
 #endif

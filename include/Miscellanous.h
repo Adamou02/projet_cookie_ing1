@@ -61,6 +61,7 @@
         int **matrice_Map;
         int ***matrice_Distance;
         List* p_listpath;
+        List* p_listBestWay;
         PlayerInfo s_playerInfo;
     } GameInformation;
 
@@ -119,5 +120,7 @@
     void ClearTerm();
 
     void CopyMap(int** matrice_Map, int** matrice_MapCopy, int int_mapSize);
+
+    void CopyMatriceDist(int*** matrice_Distance, int*** matrice_DistanceCopy, int int_mapSize);
 
 #endif
