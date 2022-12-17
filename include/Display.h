@@ -24,21 +24,19 @@
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
-    /// @brief ffiche la map avec le chemin suivis par une liste passer en parametre
-    /// @param p_list liste contenant le chemin à afficher
+    /// @brief affiche la map avec le chemin suivis par une liste passer en parametre
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
 
     /// @brief affiche la map avec le chemin suivis par une liste passer en parametre avec des fleches correspondant a la direction
-    /// @param p_list liste contenant le chemin à afficher
     void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list);
 
     /// @brief Appelle l'affichage victoire ou defaite selon la valeur de bool_victory
     void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo);
 
-    /// @brief Affiche les informations de victoire
+    /// @brief Affiche l'écran de victoire
     void DisplayVictory(PlayerInfo *p_playerInfo);
     
-    /// @brief Affiche les informations de défaite
+    /// @brief Affiche l'écran de défaite
     void DisplayLoose();
 
     /////////////////////////////////////////////////////////////////////////////
