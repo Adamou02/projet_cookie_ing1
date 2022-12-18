@@ -382,10 +382,10 @@ char* SaveMap(int** matrice_Map, int int_mapSize)
     return(MapString);
 }
 
-int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn)
+int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn, char str_NameFile[])
 {
     char* MapString = AllocMapString(int_mapSize);
-    MapString = GetMapString(MapString, int_mapSize, num_turn, SAVE_CSV);
+    MapString = GetMapString(MapString, int_mapSize, num_turn, str_NameFile);
     StringToMatriceMap(MapString, int_mapSize, matrice_Map);
     free(MapString);
     return(matrice_Map);
@@ -398,10 +398,10 @@ char* SaveDistance(int*** matrice_Distance, int int_mapSize)
     return(DistanceString);
 }
 
-int*** RestoreDistance(int*** matrice_Distance, int int_mapSize, int num_turn)
+int*** RestoreDistance(int*** matrice_Distance, int int_mapSize, int num_turn, char str_NameFile[])
 {
     char* DistanceString = AllocDistanceString(int_mapSize);
-    DistanceString = GetDistanceString(DistanceString, int_mapSize, num_turn, SAVE_CSV);
+    DistanceString = GetDistanceString(DistanceString, int_mapSize, num_turn, str_NameFile);
     StringToMatriceDistance(DistanceString, int_mapSize, matrice_Distance);
     free(DistanceString);
     return(matrice_Distance);
@@ -444,11 +444,11 @@ void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, List* p_list, 
     return;
 }
 
-void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
+void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize, char str_NameFile[])
 {
-    *matrice_Map = RestoreMap(*matrice_Map, int_mapSize, num_turn);
-    *matrice_Distance = RestoreDistance(*matrice_Distance, int_mapSize, num_turn);
-    GetPlayerInfo(int_mapSize, s_playerInfo, num_turn, SAVE_CSV);
+    *matrice_Map = RestoreMap(*matrice_Map, int_mapSize, num_turn, str_NameFile);
+    *matrice_Distance = RestoreDistance(*matrice_Distance, int_mapSize, num_turn, str_NameFile);
+    GetPlayerInfo(int_mapSize, p_playerInfo, num_turn, str_NameFile);
 }
 
 int RestoreMapSize()
@@ -559,7 +559,7 @@ void ReadHistory(int num_game, int*** matrice_Map, int**** matrice_Distance, Pla
 
     for(int k=1; k<=atoi(CSV_String); k++)
     {
-        RestoreTurn(k/*+sum_turns*/, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize);
+        RestoreTurn(k/*+sum_turns*/, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize, SAVE_CSV);
         DisplayMap(*matrice_Map, int_mapSize);
         sleep(1);
     }

@@ -6,6 +6,7 @@
     #include "Miscellanous.h"
     #include "InitGame.h"
     #include "ManageFiles.h"
+    #include "Display.h"
 
     extern GameInformation GameInfo;
 
@@ -21,7 +22,7 @@
     
     /// @brief boucle de jeu principal 
     /// @return retourne un booleen en fonction de la victoire ou la defaite
-    int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, List* p_list);
+    void Game();
 
     /// @brief libere les variables du jeu allouées
     void FreeGame();
@@ -36,10 +37,18 @@
     /// @param str_errMsg message d'echec/d'erreur 
     void QuitFail(const char* str_errMsg);
 
+    ///@brief Crrer une nouvel partie 
     void NewGame();
 
     void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
 
+    ///@brief Reprend la Game Sauvegarder
     void ResumeGame();
+
+    ///@brief Apres Jeu
+    void EndGame();
+
+    ///@brief Initialisation du jeu
+    void InitGame();
     
 #endif

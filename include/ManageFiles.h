@@ -47,11 +47,11 @@
 
     char* SaveMap(int** matrice_Map, int int_mapSize);
 
-    int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn);
+    int** RestoreMap(int** matrice_Map, int int_mapSize, int num_turn, char str_NameFile[]);
 
     char* SaveDistance(int*** matrice_Distance, int int_mapSize);
 
-    int*** RestoreDistance(int*** matrice_Distance, int int_mapSize, int num_turn);
+    int*** RestoreDistance(int*** matrice_Distance, int int_mapSize, int num_turn, char str_NameFile[]);
 
     char* SaveList(List* p_list, int int_mapSize);
 
@@ -59,7 +59,7 @@
 
     void StockCurrentTurn(int** matrice_Map, int*** matrice_Distance, List* p_list, int int_mapSize, PlayerInfo * s_playerInfo_player);
 
-    void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
+    void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize, char str_NameFile[]);
 
     int RestoreMapSize();
 

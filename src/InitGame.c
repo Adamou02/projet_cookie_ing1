@@ -605,13 +605,5 @@ List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_play
     BetterWay->firstnode->is_bonus = Arrive->DataD.distance;
    
     FreeList_d(ListDrijkstra);
-    //unalloc de la copy de la matrice Distance
-    UnallocMatriceDistance(matrice_Distance, int_mapSize);
     return(BetterWay);
-}
-
-int*** DuplicateMatriceDistance( int*** matrice_Distance,int int_mapSize){
-    int*** matrice_DistanceCopy = AllocMatriceDistance(int_mapSize);
-    CopyMatriceDist(matrice_Distance, matrice_DistanceCopy, int_mapSize);
-    return(matrice_DistanceCopy);
 }

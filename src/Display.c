@@ -160,9 +160,8 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
     char* constant_caseDisplay = ERROR;
-    int bool_isNotEmj = 0;
-    ClearTerm();    
-    printf(" ");
+    int bool_isNotEmj = 0;   
+    //printf(" ");
     for(int i=0; i<int_mapSize+1; i++)
     {
         printf("%s", DOWNBAR);
@@ -347,12 +346,35 @@ void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo)
 }
 
 void DisplayVictory(PlayerInfo *p_playerInfo) {
-    printf("Message victoire");
+    printf("Message victoire\n");
 }
 
 void DisplayLoose() {
-    printf("Message défaite");
+    printf("Message défaite\n");
 }
+
+void DisplayList(List* p_list)
+{
+    if(p_list == NULL){
+        printf("Liste Vide\n");
+        return;
+    }
+    Node* node_current = p_list->firstnode;
+    while(node_current != NULL)
+    {
+        if(node_current->next){
+             printf("[%d;%d]->", node_current->coordonnees.x, node_current->coordonnees.y);
+        } else {
+            printf("[%d;%d]\n", node_current->coordonnees.x, node_current->coordonnees.y);
+        }
+       
+        node_current = node_current->next;
+    }
+    printf("\n");
+}
+
+
+
 
 //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
 

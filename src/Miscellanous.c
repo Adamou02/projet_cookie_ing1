@@ -1,6 +1,7 @@
 #include "Miscellanous.h"
 
 
+
 int RNG(int min, int max)
 {
     return ( ( rand() % (max - min + 1) ) + min );
@@ -560,4 +561,23 @@ void CopyMatriceDist(int*** matrice_Distance, int*** matrice_DistanceCopy, int i
     }
 }
 
+
+List* InvertList(List* p_list)
+{   
+    int int_ListSize= LengthList(p_list);
+    coordonnees TabList[int_ListSize];
+    Node* node_current = p_list->firstnode;
+    for( int j=int_ListSize-1; j>=0; j--){
+        TabList[j]= node_current->coordonnees;
+        node_current = node_current->next;
+        RemoveNode(p_list);
+    } 
+    List* p_listinverted = InitList(TabList[0], 0);
+    for(int i=1; i<int_ListSize; i++){
+       AddNode(p_listinverted, TabList[i], 0);
+    }
+    CopyList(p_listinverted, p_list);
+    FreeList(p_listinverted);
+    return (p_list);
+}
 

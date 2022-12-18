@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "InitGame.h"
 
 void SetupGame()
 {
@@ -10,6 +9,7 @@ void SetupGame()
 
 void BeforeTurn(int** matrice_Map, int*** matrice_Distance, int int_mapSize, PlayerInfo* p_playerInfo, List* p_list)
 {
+    ClearTerm();
     if(p_list == NULL){
         DisplayMap(matrice_Map, int_mapSize);
     } else {
@@ -41,25 +41,26 @@ int BeforeStepBack(PlayerInfo* p_playerInfo, List* p_list)
     }
 }
 
-int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo *p_playerInfo, List* p_list)
+void Game()
 {
     int key_pressed, int_wanted_x, int_wanted_y, int_error;
     int bool_victory = 0;
     int choice;
-    RemoveNode(p_list);
-    AddNode(p_list,  p_playerInfo->coordonnees, 0);
+    RemoveNode(GameInfo.p_listpath);
+    AddNode(GameInfo.p_listpath,  GameInfo.s_playerInfo.coordonnees, 0);
 
-    while( !bool_victory && p_playerInfo->energy > 0){
-        StockCurrentTurn(matrice_Map, matrice_Distance, p_list, int_mapSize, p_playerInfo);
+    BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
+    while( !bool_victory && GameInfo.s_playerInfo.energy > 0){
+        StockCurrentTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.p_listpath, GameInfo.int_mapSize, &GameInfo.s_playerInfo);
         key_pressed = ListenKeyboard();
-        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, p_playerInfo); 
+        ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, &GameInfo.s_playerInfo); 
         if(key_pressed == STEP_BACK){
-            int_error = BeforeStepBack(p_playerInfo, p_list);
+            int_error = BeforeStepBack(&GameInfo.s_playerInfo, GameInfo.p_listpath);
             if(int_error != 0){
                 ErrorStepBack(int_error);
             }else{
-                StepBack(p_list, matrice_Map, p_playerInfo, matrice_Distance);
-                BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
+                StepBack(GameInfo.p_listpath, GameInfo.matrice_Map, &GameInfo.s_playerInfo, GameInfo.matrice_Distance);
+                BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
             }
         } else if(key_pressed == LEAVE){
             choice = MenuSave();
@@ -68,15 +69,15 @@ int Game(int int_mapSize, int** matrice_Map,int*** matrice_Distance, PlayerInfo 
             else if (choice == 1)
                 SaveAndQuit();//fonction Fabien sauvegarde; 
             else //choice ==2 l'utilisateur veut revenir jouer sur sa game
-                BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
+                BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
        } else {
-            matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, p_playerInfo, int_mapSize, &bool_victory, p_list, matrice_Distance);
+            GameInfo.matrice_Map = AfterMovement(GameInfo.matrice_Map, int_wanted_x, int_wanted_y, &GameInfo.s_playerInfo, GameInfo.int_mapSize, &bool_victory, GameInfo.p_listpath, GameInfo.matrice_Distance);
             printf("\n"); 
-            BeforeTurn(matrice_Map, matrice_Distance, int_mapSize, p_playerInfo, p_list);
+            BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
         }
     }
-    
-    return (1);//bool_victory;
+    GameInfo.bool_victory=bool_victory;
+    return;
 }
 
 void FreeGame()
@@ -120,16 +121,12 @@ void NewGame()
     //Creation des structures contenant les infos de la carte
     GameInfo.matrice_Map = InitMap(GameInfo.int_mapSize, GameInfo.float_diffRate, &GameInfo.s_playerInfo);
     GameInfo.matrice_Distance = InitDistance(GameInfo.int_mapSize);
-
-    //puts("on lance dijkstra\n");
-    
-    //puts("on sort de dijkstra\n");
 }
 
 void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
 {
     SaveToCurrentGame();
-    RestoreTurn(SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV)+1, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize);
+    RestoreTurn(SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV)+1, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize, SAVE_CSV );
 }
 
 void ResumeGame()
@@ -150,3 +147,46 @@ void ResumeGame()
     GameInfo.p_listpath = RestoreList(GameInfo.int_mapSize, SavedTurnsCount(GameInfo.int_mapSize, CURRENT_GAME_CSV)+1);
 }
 
+void EndGame()
+{
+    ClearTerm();
+    DisplayEndGame(GameInfo.bool_victory, &GameInfo.s_playerInfo);
+    printf("The Path you followed: ");
+    DisplayList(InvertList(GameInfo.p_listpath));
+    DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, InvertList(GameInfo.p_listpath));
+    puts("");
+    //recherche et affichage du meilleur chemin en terme de distance
+    RestoreTurn(1 ,&GameInfo.matrice_Map, &GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.int_mapSize, CURRENT_GAME_CSV);
+    GameInfo.matrice_Map = RestoreMap(GameInfo.matrice_Map, GameInfo.int_mapSize,1, CURRENT_GAME_CSV);
+    GameInfo.p_listBestWay = AlgoDijkstra(GameInfo.matrice_Map,
+                                          GameInfo.matrice_Distance,
+                                          &GameInfo.s_playerInfo, 
+                                          GameInfo.int_mapSize
+                                          );
+    // RestoreDistance(GameInfo.matrice_Distance, GameInfo.int_mapSize,1,CURRENT_GAME_CSV)
+    printf("The shortest Way: ");
+    DisplayList(GameInfo.p_listBestWay);
+    printf("Total distance: %d\n", GameInfo.p_listBestWay->firstnode->is_bonus);
+    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
+    
+}
+
+void InitGame()
+{
+    switch(MenuStartGame()){
+        case 1:
+            ResumeGame();
+            break;
+        case 2:
+            NewGame();
+            break;
+        case 3:
+            break;
+        case 4:
+            exit(EXIT_SUCCESS);
+            break;
+        default:
+            exit(EXIT_FAILURE);
+            break;
+    }
+}

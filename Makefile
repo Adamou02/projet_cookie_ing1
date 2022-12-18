@@ -44,7 +44,7 @@ $(PROG) : $(OBJ)
 $(Dir_OBJ)/%.o : $(Dir_SRC)/%.c 
 	@echo "Compiling $^ ..."
 	@$(MKDIR_P) $(Dir_OBJ)
-	@$(CC) $(CFLAGS) -I include $(Dir_INCL) -c $< -o $@ 
+	@$(CC) $(CFLAGS) -I $(Dir_INCL) -c $< -o $@ 
 
 .PHONY : clean
 

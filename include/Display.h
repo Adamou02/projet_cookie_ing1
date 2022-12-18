@@ -24,7 +24,7 @@
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
-    /// @brief ffiche la map avec le chemin suivis par une liste passer en parametre
+    /// @brief affiche la map avec le chemin suivis par une liste passer en parametre
     /// @param p_list liste contenant le chemin à afficher
     void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list);
 
@@ -40,6 +40,8 @@
     
     /// @brief Affiche les informations de défaite
     void DisplayLoose();
+
+    void DisplayList(List* p_list);
 
     /////////////////////////////////////////////////////////////////////////////
     //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final//

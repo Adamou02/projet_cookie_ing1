@@ -63,6 +63,7 @@
         List* p_listpath;
         List* p_listBestWay;
         PlayerInfo s_playerInfo;
+        int bool_victory;
     } GameInformation;
 
     int RNG(int min, int max);
@@ -113,14 +114,29 @@
 
     void FreeList_d(List_d* p_list);
 
+    /// @return 1 if coord belongs to the list, 0 otherwise
     int IsInList(List* p_list, coordonnees coord);
 
+    /// @brief copy a List*
+    /// @param matrice_Map original List
+    /// @param matrice_MapCopy copy of the List, needs to be alloc before
     void CopyList(List* p_list, List* p_listCopy);
 
+    /// @brief clear the terminal where the 
     void ClearTerm();
 
+    /// @brief copy a matrice_Map
+    /// @param matrice_Map original matrice (size: int_mapSize x int_mapSize)
+    /// @param matrice_MapCopy copy of the matrice, needs to be alloc before
     void CopyMap(int** matrice_Map, int** matrice_MapCopy, int int_mapSize);
 
+    /// @brief copy a matrice_distance
+    /// @param matrice_Distance original matrice (size: int_mapSize x int_mapSize x 8)
+    /// @param matrice_DistanceCopy copy of the matrice, needs to be alloc before
     void CopyMatriceDist(int*** matrice_Distance, int*** matrice_DistanceCopy, int int_mapSize);
+
+    /// @brief invert a list
+    /// @return Inverted List ("isbonus" is not keep from the original list)
+    List* InvertList(List* p_list);
 
 #endif
