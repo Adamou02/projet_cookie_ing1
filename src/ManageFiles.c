@@ -451,18 +451,18 @@ void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, Pla
     GetPlayerInfo(int_mapSize, p_playerInfo, num_turn, str_NameFile);
 }
 
-int RestoreMapSize()
+int RestoreMapSize(char str_NameFile[])
 {
-    FILE* Save_CSV = fopen(SAVE_CSV, "r");
+    FILE* File_CSV = fopen(str_NameFile, "r");
     char* CSV_String = malloc(4*sizeof(*CSV_String));
     int int_mapSize = 0;
 
     //Verification de l'ouverture du fichier
-    if(Save_CSV == NULL){
+    if(File_CSV == NULL){
         printf("\nErreur de chemin d'accès au fichier\n\n");
     }
 
-    fgets(CSV_String, 4*sizeof(*CSV_String), Save_CSV);
+    fgets(CSV_String, 4*sizeof(*CSV_String), File_CSV);
     int_mapSize = atoi(CSV_String);
     free(CSV_String);
     return(int_mapSize);
@@ -529,7 +529,10 @@ void History(int int_mapSize)
     {
         printf("\nErreur d'ouverture du fichier\n\n");
     }
+
+    fprintf(History_CSV, "%d\n", int_mapSize);
     fprintf(History_CSV, "%d\n", SavedTurnsCount(int_mapSize, CURRENT_GAME_CSV));
+
     current_Char = fgetc(Current_Game_CSV);
     while (current_Char != EOF)
     {
@@ -541,28 +544,70 @@ void History(int int_mapSize)
     return;
 }
 
-void ReadHistory(int num_game, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize)
+void ReadHistory(int num_game, int*** matrice_Map)
 {
     FILE* History_CSV = fopen(HISTORY_CSV, "r");
+    int int_mapSize = RestoreMapSize(HISTORY_CSV);
     char* CSV_String = malloc((int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String));
-    //int sum_turns = 0;
+    int sum_turns = 0;
+    int turns_nbr = 0;
+    fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
     fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
 
-    //for(int i=1; i<num_game; i++)
-    //{
-    //    //sum_turns+=atoi(CSV_String);
-    //    for(int j=1; j<=atoi(CSV_String); j++){
-    //        fgets(CSV_String, (int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String), History_CSV);
-    //    }
-    //    fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
-    //}
-
-    for(int k=1; k<=atoi(CSV_String); k++)
+    for(int i=1; i<num_game; i++)
     {
-        RestoreTurn(k/*+sum_turns*/, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize, SAVE_CSV);
+        sum_turns+=atoi(CSV_String)+2;
+        turns_nbr = atoi(CSV_String);
+
+        for(int j=0; j<turns_nbr; j++){
+            fgets(CSV_String, (int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String), History_CSV);
+        }
+        fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
+        fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
+    }
+
+    for(int k=3; k<atoi(CSV_String)+3; k++)
+    {
+        //RestoreTurn(k/*+sum_turns*/, matrice_Map, matrice_Distance, s_playerInfo, int_mapSize, SAVE_CSV);
+        ClearTerm();
+
+        RestoreMap(*matrice_Map, int_mapSize, k + sum_turns, HISTORY_CSV);
+
         DisplayMap(*matrice_Map, int_mapSize);
         sleep(1);
     }
     free(CSV_String);
     return;
+}
+
+int CountHistory()
+{
+    FILE* History_CSV = fopen(HISTORY_CSV, "r");
+    int int_mapSize = RestoreMapSize(HISTORY_CSV);
+    char* CSV_String = malloc((int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String));
+    char* String_Value;
+    int sum_turns = 0;
+    int turns_nbr = 0;
+    fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
+    fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
+
+    while(String_Value != NULL)
+    {
+        sum_turns+=1;
+        turns_nbr = atoi(CSV_String);
+
+        for(int j=0; j<turns_nbr; j++){
+            fgets(CSV_String, (int_mapSize*int_mapSize*64+11)*sizeof(*CSV_String), History_CSV);
+        }
+        fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
+        String_Value = fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
+    }
+
+    free(CSV_String);
+    return(sum_turns);
+}
+
+void ClearHistory()
+{
+    SupprFile(HISTORY_CSV);
 }
