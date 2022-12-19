@@ -135,7 +135,7 @@ void ResumeGame()
         puts("File Save.csv not found or empty");
         exit(EXIT_FAILURE);
     }   
-    GameInfo.int_mapSize = RestoreMapSize();
+    GameInfo.int_mapSize = RestoreMapSize(SAVE_CSV);
     GameInfo.matrice_Map = AllocMatriceMap(GameInfo.int_mapSize);
     GameInfo.matrice_Distance = AllocMatriceDistance(GameInfo.int_mapSize);
     ReloadSave(
@@ -168,7 +168,9 @@ void EndGame()
     DisplayList(GameInfo.p_listBestWay);
     printf("Total distance: %d\n", GameInfo.p_listBestWay->firstnode->is_bonus);
     DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
-    
+
+    History(GameInfo.int_mapSize);
+
 }
 
 void InitGame()
