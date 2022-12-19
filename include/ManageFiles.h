@@ -61,7 +61,7 @@
 
     void RestoreTurn(int num_turn, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize, char str_NameFile[]);
 
-    int RestoreMapSize();
+    int RestoreMapSize(char str_NameFile[]);
 
     void Save(int int_mapSize);
 
@@ -69,6 +69,10 @@
 
     void History(int int_mapSize);
 
-    void ReadHistory(int num_game, int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
+    void ReadHistory(int num_game, int*** matrice_Map);
+
+    int CountHistory();
+
+    void ClearHistory();
 
 #endif
