@@ -399,17 +399,11 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
 
 void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo)
 {
-    if (bool_victory) DisplayVictory(p_playerInfo);
-    else DisplayLoose();
+    if (bool_victory) printf("Bravo, vous avez gagné avec %d d'énergie restante !\nVous avez parcouru %d.\nVous avez gagné %d d'énergie grâce au bonus et perdu %d d'énergie à cause des obstacles.", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
+    else printf("Défaite ! Vous auriez du suivre ce chemin !");
 }
 
-void DisplayVictory(PlayerInfo *p_playerInfo) {
-    printf("Bravo, vous avez gagné avec %d d'énergie restante !\nVous avez parcouru %d.\nVous avez gagné %d d'énergie grâce au bonus et perdu %d d'énergie à cause des obstacles.", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
-}
 
-void DisplayLoose() {
-    printf("Défaite ! Vous auriez du suivre ce chemin !");
-}
 
 void DisplayList(List* p_list)
 {
