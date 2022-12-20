@@ -53,7 +53,17 @@ int MenuStartGame()
 
 int MenuGameHistory()
 {
+    int i, count = CountHistory();
+    if(count != 0){
+        for(i=0; i<count; i++){
+            printf("%d) Voir game %d\n", i, i);
+        }
     return 1;
+    }
+    else {
+        printf("Erreur, aucune partie n'a été sauvegardé");
+        //exit()
+    }
 }
 
 int MenuHistory()
@@ -132,7 +142,7 @@ void ConfirmClearHistory()
 {
     int choice = MenuConfirmClearHistory();
     if (choice) ClearHistory();
-    else ManageHistory(); 
+    else ManageHistory();
 }
 
 void ManageHistory()
