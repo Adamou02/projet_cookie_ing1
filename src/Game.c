@@ -185,6 +185,7 @@ void InitGame()
             NewGame();
             break;
         case 3:
+            ManageHistory();
             break;
         case 4:
             exit(EXIT_SUCCESS);
