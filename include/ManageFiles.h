@@ -15,6 +15,8 @@
     /// @return Renvoie 1 si fichier vide ou n'existe pas, renvoie 0 si le fichier n'est pas vide
     int IsEmptyFile(char str_NameFile[]);
 
+    void DeleteLastLine(char str_NameFile[]);
+
     int SavedTurnsCount(int int_mapSize, char str_NameFile[]);
 
     void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_turn, char str_NameFile[]);
