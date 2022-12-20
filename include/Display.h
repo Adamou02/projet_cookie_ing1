@@ -21,6 +21,9 @@
     /// @brief Menu lors de la fermeture de la partie
     int MenuSave();
 
+    /// @brief Affiche les touches pour les coups dispos (et leur coup en distance)
+    void ShowKeyAvailable();
+
     /// @brief Fonction d'affichage de la Map dans le terminal
     void DisplayMap(int** matrice_Map, int int_mapSize);
 
