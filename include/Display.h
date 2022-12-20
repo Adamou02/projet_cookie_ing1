@@ -35,14 +35,8 @@
     /// @param p_list liste contenant le chemin à afficher
     void DisplayPathInMapArrow(int** matric_Map, int int_mapSize, List* p_list);
 
-    /// @brief Appelle l'affichage victoire ou defaite selon la valeur de bool_victory
+    /// @brief Affiche les informations de victoire ou de défaite
     void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo);
-
-    /// @brief Affiche les informations de victoire
-    void DisplayVictory(PlayerInfo *p_playerInfo);
-    
-    /// @brief Affiche les informations de défaite
-    void DisplayLoose();
 
     void DisplayList(List* p_list);
 
