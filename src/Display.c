@@ -44,10 +44,113 @@ int MenuStartGame()
             ClearTerm();
             printf("\nWhat's your choice :\n Continue your previous game\n Start a new game\n> View game history\n Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
-        else if (position ==4) {
+        else if (position == 4) {
             ClearTerm();
             printf("\nWhat's your choice :\n Continue your previous game\n Start a new game\n View game history\n> Exit\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
+    }
+}
+
+int MenuGameHistory()
+{
+    return 1;
+}
+
+int MenuHistory()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nWhat's your choice :\n> View game history\n Clear the history\n Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if ((input == UP || input == MAJ_UP) && position!=1)
+        { 
+            position--;
+        }
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=3)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n> View game history\n Clear the history\n Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n View game history\n> Clear the history\n Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 3) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n View game history\n Clear the history\n> Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
+void ViewGameHistory() {
+    int choice = MenuGameHistory();
+    printf("Hop j'envoie a fabien le num de la partie à lire");
+    //History(choice);
+}
+
+int MenuConfirmClearHistory()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nWhat's your choice :\n> Clear the history\n Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if ((input == UP || input == MAJ_UP) && position!=1)
+        { 
+            position--;
+        }
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=2)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n> Clear the history\n Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\nWhat's your choice :\n Clear the history\n> Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
+void ConfirmClearHistory() 
+{
+    int choice = MenuConfirmClearHistory();
+    if (choice) ClearHistory();
+    else ManageHistory(); 
+}
+
+void ManageHistory()
+{
+    int choice = MenuHistory();
+    switch (choice)
+    {
+    case 1:
+        ViewGameHistory();
+        break;
+    case 2:
+        MenuConfirmClearHistory();
+        break;
+    case 3:
+        InitGame();
+        break;
+    default:
+        break;
     }
 }
 
