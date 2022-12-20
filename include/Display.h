@@ -12,6 +12,9 @@
     /// @brief Menu lorsqu'on lance le programme, permet de lancer une nouvelle game, charger la précedente, ou voir l'historique.
     int MenuStartGame();
 
+    /// @brief Menu pour choisir la partie à visionner
+    int MenuHistory();
+
     /// @brief Menu pour choisir la difficulté 
     int MenuDifficulty();
 
