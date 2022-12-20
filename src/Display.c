@@ -346,11 +346,11 @@ void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo)
 }
 
 void DisplayVictory(PlayerInfo *p_playerInfo) {
-    printf("Message victoire\n");
+    printf("Bravo, vous avez gagné avec %d d'énergie restante !\nVous avez parcouru %d.\nVous avez gagné %d d'énergie grâce au bonus et perdu %d d'énergie à cause des obstacles.", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
 }
 
 void DisplayLoose() {
-    printf("Message défaite\n");
+    printf("Défaite ! Vous auriez du suivre ce chemin !");
 }
 
 void DisplayList(List* p_list)
@@ -457,3 +457,5 @@ void PrintFirstList(List* p_list)
     }
     printf("x=%d, y=%d \n", p_list->firstnode->coordonnees.x, p_list->firstnode->coordonnees.y);
 }
+
+
