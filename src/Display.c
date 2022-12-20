@@ -156,6 +156,64 @@ int MenuSave()
     }
 }
 
+void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
+{
+    int line_count=0;
+    printf("\nListe des touches :\n\n");
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][0]) {
+        printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][0]);
+        printf("\t\t");
+        line_count++;
+    }
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][1]) {
+        printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][1]);
+        printf("\t\t");
+        line_count++;
+    }
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][2]) {
+        printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][2]);
+        printf("\t\t");
+        line_count++;
+    }
+    SkipLine(line_count, &line_count);
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][7]) {
+        printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][7]);
+        printf("\t\t");
+        line_count++;
+    }
+    SkipLine(line_count, &line_count);
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][3]) {
+        printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][3]);
+        printf("\t\t");
+        line_count++;
+    }
+    SkipLine(line_count, &line_count);
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][5]) {
+        printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][5]);
+        printf("\t\t");
+        line_count++;
+    }
+    SkipLine(line_count, &line_count);
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][6]) {
+        printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][6]);
+        printf("\t\t");
+        line_count++;
+    }
+    SkipLine(line_count, &line_count);
+    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][4]) {
+        printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][4]);
+        printf("\t\t");
+        line_count++;
+    }
+    SkipLine(line_count, &line_count);
+    printf("%s : r ", STEP_BACK_ICON);
+    line_count++;
+    printf("\t\t");
+    SkipLine(line_count, &line_count);
+    printf("%s : p ", SAVE_ICON);
+    printf("\n\n");
+}
+
 void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
@@ -457,5 +515,3 @@ void PrintFirstList(List* p_list)
     }
     printf("x=%d, y=%d \n", p_list->firstnode->coordonnees.x, p_list->firstnode->coordonnees.y);
 }
-
-
