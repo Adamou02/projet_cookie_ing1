@@ -145,6 +145,7 @@ void ResumeGame()
                 GameInfo.int_mapSize
                 );
     GameInfo.p_listpath = RestoreList(GameInfo.int_mapSize, SavedTurnsCount(GameInfo.int_mapSize, CURRENT_GAME_CSV)+1);
+    DeleteLastLine(CURRENT_GAME_CSV);
 }
 
 void EndGame()
@@ -170,6 +171,7 @@ void EndGame()
     DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
 
     History(GameInfo.int_mapSize);
+    ReadHistory(CountHistory(), &GameInfo.matrice_Map);
 
 }
 
