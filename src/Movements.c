@@ -88,65 +88,6 @@ void SkipLine(int line_count, int *p_line_count)
     }
 }
 
-//Affiche les touches pour les coups dispos (et leur coup en distance)
-void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
-{
-    int line_count=0;
-    printf("\nListe des touches :\n\n");
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][0]) {
-        printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][0]);
-        printf("\t\t");
-        line_count++;
-    }
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][1]) {
-        printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][1]);
-        printf("\t\t");
-        line_count++;
-    }
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][2]) {
-        printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][2]);
-        printf("\t\t");
-        line_count++;
-    }
-    SkipLine(line_count, &line_count);
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][7]) {
-        printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][7]);
-        printf("\t\t");
-        line_count++;
-    }
-    SkipLine(line_count, &line_count);
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][3]) {
-        printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][3]);
-        printf("\t\t");
-        line_count++;
-    }
-    SkipLine(line_count, &line_count);
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][5]) {
-        printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][5]);
-        printf("\t\t");
-        line_count++;
-    }
-    SkipLine(line_count, &line_count);
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][6]) {
-        printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][6]);
-        printf("\t\t");
-        line_count++;
-    }
-    SkipLine(line_count, &line_count);
-    if (matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][4]) {
-        printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees.x][p_playerInfo_player->coordonnees.y][4]);
-        printf("\t\t");
-        line_count++;
-    }
-    SkipLine(line_count, &line_count);
-    printf("%s : r ", STEP_BACK_ICON);
-    line_count++;
-    printf("\t\t");
-    SkipLine(line_count, &line_count);
-    printf("%s : p ", SAVE_ICON);
-    printf("\n\n");
-}
-
 //Permet de lire la touche pressé. Le programme est en pause tant que utilisateur appuie touche
 int ListenKeyboard()
 {
