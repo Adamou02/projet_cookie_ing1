@@ -73,10 +73,10 @@ void Game()
             else //choice ==2 l'utilisateur veut revenir jouer sur sa game
                 BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
        } else {
-            if(AlreadyBeen(int_wanted_x, int_wanted_y, p_list) == 1 && p_playerInfo->distance>0){ //on regarde si le joueur est déjà passé sur la case
+            if(AlreadyBeen(int_wanted_x, int_wanted_y, GameInfo.p_listpath) == 1 && GameInfo.s_playerInfo.distance>0){ //on regarde si le joueur est déjà passé sur la case
                 bool_alreadybeen = 1;
             }
-            GameInfo.matrice_Map = AfterMovement(GameInfo.matrice_Map, int_wanted_x, int_wanted_y, &GameInfo.s_playerInfo, GameInfo.int_mapSize, &bool_victory, GameInfo.p_listpath, GameInfo.matrice_Distance);
+            GameInfo.matrice_Map = AfterMovement(GameInfo.matrice_Map, int_wanted_x, int_wanted_y, &GameInfo.s_playerInfo, GameInfo.int_mapSize, &bool_victory, GameInfo.p_listpath, GameInfo.matrice_Distance, &bool_isanObstacle);
             printf("\n"); 
             BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
             if(bool_isanObstacle == 1){
