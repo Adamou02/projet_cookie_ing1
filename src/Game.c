@@ -46,6 +46,8 @@ void Game()
     int key_pressed, int_wanted_x, int_wanted_y, int_error;
     int bool_victory = 0;
     int choice;
+    int bool_isanObstacle = 0;
+    int bool_alreadybeen = 0;
     RemoveNode(GameInfo.p_listpath);
     AddNode(GameInfo.p_listpath,  GameInfo.s_playerInfo.coordonnees, 0);
 
@@ -71,9 +73,20 @@ void Game()
             else //choice ==2 l'utilisateur veut revenir jouer sur sa game
                 BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
        } else {
+            if(AlreadyBeen(int_wanted_x, int_wanted_y, p_list) == 1 && p_playerInfo->distance>0){ //on regarde si le joueur est déjà passé sur la case
+                bool_alreadybeen = 1;
+            }
             GameInfo.matrice_Map = AfterMovement(GameInfo.matrice_Map, int_wanted_x, int_wanted_y, &GameInfo.s_playerInfo, GameInfo.int_mapSize, &bool_victory, GameInfo.p_listpath, GameInfo.matrice_Distance);
             printf("\n"); 
             BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
+            if(bool_isanObstacle == 1){
+                printf("\nOh no, it was an obstacle, you lost %d energy\n", LOST_ENERGY);
+                bool_isanObstacle=0;
+            }
+            if(bool_alreadybeen == 1){
+                printf("\nBe careful, you've already been there\n");
+                bool_alreadybeen = 0;
+            }
         }
     }
     GameInfo.bool_victory=bool_victory;
