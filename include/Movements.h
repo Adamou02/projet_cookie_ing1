@@ -39,8 +39,6 @@
 
     int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list);
 
-    int AlreadyBeen2(int loop, PlayerInfo *p_playerInfo,int int_wanted_x,int int_wanted_y);
-
-    int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list,  int*** matrice_Distance);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+    int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *bool_victory, List* p_list,  int*** matrice_Distance, int *bool_isanObstacle);// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 
 #endif
