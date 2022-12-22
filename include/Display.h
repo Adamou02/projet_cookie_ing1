@@ -51,6 +51,7 @@
 
     void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
+    /// @brief Affiche toutes les informations à propos du personnage
     void DebugInfoPlayer(PlayerInfo s_playerInfo);
 
     void PrintList(List* p_list);
