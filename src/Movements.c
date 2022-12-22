@@ -171,7 +171,7 @@ void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerIn
     p_playerInfo->distance = p_playerInfo->distance + matrice_Distance[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y][direction];
     p_playerInfo->coordonnees.x = int_wanted_x;
     p_playerInfo->coordonnees.y = int_wanted_y;
-    p_playerInfo->energy = (p_playerInfo->energy) - STEP;
+    p_playerInfo->energy = (p_playerInfo->energy) - STEP_ENERGY;
 }
 
 void PlayerOnBonus(PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
@@ -228,7 +228,7 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int*** 
     p_playerInfo-> backward = p_playerInfo-> backward - 1;
     p_playerInfo->coordonnees.x = last_x;
     p_playerInfo->coordonnees.y = last_y;
-    p_playerInfo->energy = (p_playerInfo->energy) + STEP;
+    p_playerInfo->energy = (p_playerInfo->energy) + STEP_ENERGY;
     p_playerInfo->distance = p_playerInfo->distance - matrice_Distance[last_x][last_y][direction];
 }
 
