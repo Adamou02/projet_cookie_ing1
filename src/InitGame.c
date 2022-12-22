@@ -446,7 +446,7 @@ int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int i
                                             coord_curr,
                                             int_maxCoord,
                                             int_Start,
-                                            int_Energy + STEP
+                                            int_Energy + STEP_ENERGY
                                             );
         return(bool_PathFound);
     }
