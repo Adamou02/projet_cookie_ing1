@@ -62,6 +62,7 @@
         int ***matrice_Distance;
         List* p_listpath;
         List* p_listBestWay;
+        List* p_listBestWayEnergy;
         PlayerInfo s_playerInfo;
         int bool_victory;
     } GameInformation;
@@ -90,12 +91,13 @@
 
     List_d* InitList_d(int int_x, int int_y);
 
-    /// @brief ajoute une node en début de liste, avec les dernière coordonnées du joueur et si la case était un bonus ou non
     void AddNode(List* p_list, coordonnees coord, int bonus);
 
     coordonnees FindLastStep (Node_d* Node);
 
-    Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matrice_map, int*** matrice_distance, int int_mapSize, int int_goodDistance, int *int_position, int *int_distance, coordonnees coordEnd);
+    int ReturnDiff(int** matrice_map, int*** matrice_distance, int int_mapSize, Node_d* Node,int int_diffX, int int_diffY,int int_position,int int_mode);
+    
+    Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matrice_map, int*** matrice_distance, int int_mapSize, int int_goodDistance, int *int_position, int *int_distance, coordonnees coordEnd, int int_mode);
 
     List* EndDijkstra(Node_d * Arrive);
     
@@ -103,18 +105,14 @@
 
     int AddNode_d(List_d* p_list, Node_d* firstNode, int int_x, int int_y, int int_distance, Node_d* NodeD);
 
-    /// @brief Supprime la dernière node ajoutée à la liste
     void RemoveNode(List* p_list);
 
     void RemoveNode_d(List_d* p_list);
 
-    /// @brief Renvoie la taille de la liste
     long LengthList(List *p_list);
 
-    /// @brief Permet de récupérer la dernière node ajoutée à la liste, avec les coordonnées et l'information de si c'est un bonus
     void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y, int* is_bonus);
     
-    /// @brief Vide la liste et free toutes ses nodes
     void FreeList(List* p_list);
 
     void FreeList_d(List_d* p_list);

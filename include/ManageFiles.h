@@ -5,14 +5,10 @@
     #include "Constant.h"
     #include "InitGame.h"
 
-    /// @brief Permet de savoir si un fichier existe ou non
-    /// @param str_NameFile Nom du fichier et chemin pour y parvenir
     int ExistFile(char str_NameFile[]);
 
-    /// @brief Creer un nouveau fichier vide
     void createFile(char str_NameFile[]);
    
-    /// @brief Supprime un fichier
     int SupprFile(char str_NameFile[]);
 
     /// @brief Permet de savoir si un fichier est vide ou non

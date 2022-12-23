@@ -17,7 +17,7 @@
     #define BASE_ENERGY 2
     #define GAIN_ENERGY 5
     #define LOST_ENERGY 5
-    #define STEP_ENERGY 1
+    #define STEP 1
 
     #define REP_CHARACTER 'P'
     #define REP_BONUS1 'b'
