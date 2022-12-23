@@ -46,8 +46,6 @@ void Game()
     int key_pressed, int_wanted_x, int_wanted_y, int_error;
     int bool_victory = 0;
     int choice;
-    int bool_isanObstacle = 0;
-    int bool_alreadybeen = 0;
     RemoveNode(GameInfo.p_listpath);
     AddNode(GameInfo.p_listpath,  GameInfo.s_playerInfo.coordonnees, 0);
 
@@ -73,20 +71,9 @@ void Game()
             else //choice ==2 l'utilisateur veut revenir jouer sur sa game
                 BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
        } else {
-            if(AlreadyBeen(int_wanted_x, int_wanted_y, GameInfo.p_listpath) == 1 && GameInfo.s_playerInfo.distance>0){ //on regarde si le joueur est déjà passé sur la case
-                bool_alreadybeen = 1;
-            }
-            GameInfo.matrice_Map = AfterMovement(GameInfo.matrice_Map, int_wanted_x, int_wanted_y, &GameInfo.s_playerInfo, GameInfo.int_mapSize, &bool_victory, GameInfo.p_listpath, GameInfo.matrice_Distance, &bool_isanObstacle);
+            GameInfo.matrice_Map = AfterMovement(GameInfo.matrice_Map, int_wanted_x, int_wanted_y, &GameInfo.s_playerInfo, GameInfo.int_mapSize, &bool_victory, GameInfo.p_listpath, GameInfo.matrice_Distance);
             printf("\n"); 
             BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
-            if(bool_isanObstacle == 1){
-                printf("\nOh no, it was an obstacle, you lost %d energy\n", LOST_ENERGY);
-                bool_isanObstacle=0;
-            }
-            if(bool_alreadybeen == 1){
-                printf("\nBe careful, you've already been there\n");
-                bool_alreadybeen = 0;
-            }
         }
     }
     GameInfo.bool_victory=bool_victory;
@@ -172,19 +159,31 @@ void EndGame()
     //recherche et affichage du meilleur chemin en terme de distance
     RestoreTurn(1 ,&GameInfo.matrice_Map, &GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.int_mapSize, CURRENT_GAME_CSV);
     GameInfo.matrice_Map = RestoreMap(GameInfo.matrice_Map, GameInfo.int_mapSize,1, CURRENT_GAME_CSV);
-    GameInfo.p_listBestWay = AlgoDijkstra(GameInfo.matrice_Map,
+    /*GameInfo.p_listBestWay = AlgoDijkstra(GameInfo.matrice_Map,
                                           GameInfo.matrice_Distance,
                                           &GameInfo.s_playerInfo, 
-                                          GameInfo.int_mapSize
+                                          GameInfo.int_mapSize,
+                                          1
+                                          );*/
+    GameInfo.p_listBestWayEnergy = AlgoDijkstra(GameInfo.matrice_Map,
+                                          GameInfo.matrice_Distance,
+                                          &GameInfo.s_playerInfo, 
+                                          GameInfo.int_mapSize,
+                                          2
                                           );
-    // RestoreDistance(GameInfo.matrice_Distance, GameInfo.int_mapSize,1,CURRENT_GAME_CSV)
-    printf("The shortest Way: ");
+    /*RestoreDistance(GameInfo.matrice_Distance, GameInfo.int_mapSize,1,CURRENT_GAME_CSV);
+    /*printf("The shortest Way: ");
     DisplayList(GameInfo.p_listBestWay);
     printf("Total distance: %d\n", GameInfo.p_listBestWay->firstnode->is_bonus);
-    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
+    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));puts("\n");*/
 
-    History(GameInfo.int_mapSize);
-    ReadHistory(CountHistory(), &GameInfo.matrice_Map);
+    printf("The shortest Way (Energy): ");
+    DisplayList(GameInfo.p_listBestWayEnergy);
+    printf("Energy Total Spent: %d\n", GameInfo.p_listBestWayEnergy->firstnode->is_bonus);
+    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWayEnergy));
+
+    //History(GameInfo.int_mapSize);
+    //ReadHistory(CountHistory(), &GameInfo.matrice_Map);
 
 }
 

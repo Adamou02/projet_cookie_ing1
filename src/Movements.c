@@ -171,7 +171,7 @@ void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerIn
     p_playerInfo->distance = p_playerInfo->distance + matrice_Distance[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y][direction];
     p_playerInfo->coordonnees.x = int_wanted_x;
     p_playerInfo->coordonnees.y = int_wanted_y;
-    p_playerInfo->energy = (p_playerInfo->energy) - STEP_ENERGY;
+    p_playerInfo->energy = (p_playerInfo->energy) - STEP;
 }
 
 void PlayerOnBonus(PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
@@ -228,7 +228,7 @@ void StepBack(List* p_list, int** matrice_map, PlayerInfo *p_playerInfo, int*** 
     p_playerInfo-> backward = p_playerInfo-> backward - 1;
     p_playerInfo->coordonnees.x = last_x;
     p_playerInfo->coordonnees.y = last_y;
-    p_playerInfo->energy = (p_playerInfo->energy) + STEP_ENERGY;
+    p_playerInfo->energy = (p_playerInfo->energy) + STEP;
     p_playerInfo->distance = p_playerInfo->distance - matrice_Distance[last_x][last_y][direction];
 }
 
@@ -240,19 +240,86 @@ int AlreadyBeen(int int_wanted_x, int int_wanted_y, List* p_list)
     return IsInList(p_list, coord_wanted);
 }
 
-int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory, List* p_list,  int*** matrice_Distance, int* p_bool_isanObstacle)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
+int AlreadyBeen2(int loop, PlayerInfo *p_playerInfo,int int_wanted_x,int int_wanted_y)
+{  
+    int key_pressed;
+    int direction = 0;
+    char key;
+    int key_already_pressed;
+    direction = GetDirection(int_wanted_x, int_wanted_y, p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, direction);
+    switch(direction)
+    {
+        case 0 :
+            key= 'a';
+            key_already_pressed=UP_LEFT;
+            break;
+        case 1 :
+            key= 'z';
+            key_already_pressed=UP;
+            break;
+        case 2 :
+            key= 'e';
+            key_already_pressed=UP_RIGHT;
+            break;
+        case 3 :
+            key= 'd';
+            key_already_pressed=RIGHT;
+            break;
+        case 4 :
+            key= 'c';
+            key_already_pressed=DOWN_RIGHT;
+            break;
+        case 5 :
+            key= 'x';
+            key_already_pressed=DOWN;
+            break;
+        case 6 :
+            key= 'w';
+            key_already_pressed=DOWN_LEFT;
+            break;
+        case 7 :
+           key= 'q';
+           key_already_pressed=LEFT;
+            break;
+        default :
+            break;
+    }
+    if(loop == 0){
+        printf("\nYou've already been there, do you want to go back ?\n");
+        printf("%c : yes\t", key);
+        printf("r : no\n");
+    }
+    key_pressed = ListenKeyboard();
+    if(key_pressed == key_already_pressed){
+        return 1;
+    }else if(key_pressed == STEP_BACK){
+        return 0;
+    }else{
+        if(loop == 0){
+            printf("You've pressed a wrong key, choose again.\n");
+        }
+        return (AlreadyBeen2(1, p_playerInfo, int_wanted_x, int_wanted_y));
+    }
+ }
+
+int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerInfo, int int_mapSize, int *int_victory, List* p_list,  int*** matrice_Distance)// Permet de déplacer ou non le joueur en fonction du déplacement demandé et de la carte
 {
+    if(AlreadyBeen(int_wanted_x, int_wanted_y, p_list) == 1 && p_playerInfo->distance>0){
+        int Bool_choice = 0;
+        Bool_choice = AlreadyBeen2(0,p_playerInfo, int_wanted_x,int_wanted_y);
+        if(Bool_choice == 0){
+            return (matrice_map);
+        }
+    }
     if(int_wanted_x>=0 && int_wanted_x<int_mapSize && int_wanted_y>=0 && int_wanted_y<int_mapSize){
       switch(matrice_map[int_wanted_x][int_wanted_y])
         {
         case REP_OBSTACLE1 :
             PlayerOnObstacle(p_playerInfo);
-            *p_bool_isanObstacle = 1;
             break;
 
         case REP_OBSTACLE2 :
             PlayerOnObstacle(p_playerInfo);
-              *p_bool_isanObstacle = 1;
             break;
         
         case REP_BONUS1 :
