@@ -5,7 +5,7 @@
     #include "InitGame.h"
     #include "Constant.h"
     #include "Miscellanous.h"
-    
+      
     /// @brief Modifie le terminal pour l'adapter au jeu 
     void EditTerminal(); 
 
@@ -16,6 +16,10 @@
 
     /// @brief Menu pour choisir la partie à visionner
     int MenuHistory();
+    
+    int MenuConfirmClearHistory();
+
+    void ConfirmClearHistory();
 
 
     int MenuConfirmClearHistory();
@@ -62,7 +66,7 @@
     void DebugDisplayMap(int** matrice_Map, int int_mapSize);
 
     void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance);
-
+    
     /// @brief Affiche toutes les informations à propos du personnage
     void DebugInfoPlayer(PlayerInfo s_playerInfo);
 

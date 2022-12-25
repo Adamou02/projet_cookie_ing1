@@ -446,7 +446,7 @@ int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int i
                                             coord_curr,
                                             int_maxCoord,
                                             int_Start,
-                                            int_Energy + STEP_ENERGY
+                                            int_Energy + STEP
                                             );
         return(bool_PathFound);
     }
@@ -490,7 +490,7 @@ int*** InitDistance(int int_mapSize)
     return (matrice_Distance);
 }
 
-
+/*
 int affiche(Node_d *node)
 {
     puts("NODE-");
@@ -499,20 +499,21 @@ int affiche(Node_d *node)
     //while (node->DataD.chemin[int_cpt]!= 100){ printf("{%d;%d}"); int_cpt = int_cpt+2;}
     printf("\n");
     if(node->next != NULL) return(affiche(node->next));
-}
+}*/
 
-Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize, coordonnees coordEnd){
+Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize, coordonnees coordEnd, int int_mode){
 
     int int_position = 10;
     int int_distance;
     int int_x;
     int int_y;
 
-    Node_d* NodeHere = FindLowerWay(p_list,firstnode,firstnode,matrice_Map, matrice_Distance,int_mapSize,INF,&int_position,&int_distance,coordEnd);
+    Node_d* NodeHere = FindLowerWay(p_list,firstnode,firstnode,matrice_Map, matrice_Distance,int_mapSize,INF,&int_position,&int_distance,coordEnd,int_mode);
 
     if(NodeHere->DataD.x == coordEnd.y && NodeHere->DataD.y == coordEnd.x ){
         return(NodeHere);
     }
+   
 
     switch (int_position){
         case 0 :
@@ -560,12 +561,11 @@ Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int
     }
 
     int int_execution = AddNode_d(p_list,firstnode, int_x, int_y, int_distance,NodeHere);
-    return(recurseDijkstra(p_list,firstnode,matrice_Map,matrice_Distance,int_mapSize, coordEnd));
+    return(recurseDijkstra(p_list,firstnode,matrice_Map,matrice_Distance,int_mapSize, coordEnd,int_mode));
 }
 
-List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize)
+List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize, int int_mode)
 {
-    //DisplayMap(matrice_Map, int_mapSize);
 
     int int_x;
     int int_y;
@@ -598,12 +598,14 @@ List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_play
 
     List_d* ListDrijkstra = InitList_d(coordStart.x, coordStart.y);
 
-    Node_d* Arrive= recurseDijkstra(ListDrijkstra, ListDrijkstra->firstnode, matrice_Map, matrice_Distance, int_mapSize, coordEnd);
+    Node_d* Arrive= recurseDijkstra(ListDrijkstra, ListDrijkstra->firstnode, matrice_Map, matrice_Distance, int_mapSize, coordEnd,int_mode);
 
     List* BetterWay = EndDijkstra(Arrive);
 
     BetterWay->firstnode->is_bonus = Arrive->DataD.distance;
    
     FreeList_d(ListDrijkstra);
+
+  
     return(BetterWay);
 }
