@@ -117,6 +117,7 @@
     /// @brief Permet de récupérer la dernière node ajoutée à la liste, avec les coordonnées et l'information de si c'est un bonus
     void GetfirstNode(List* p_list, int* p_last_x, int* p_last_y, int* is_bonus);
     
+    /// @brief Free la list et free toutes ses nodes
     void FreeList(List* p_list);
 
     void FreeList_d(List_d* p_list);
