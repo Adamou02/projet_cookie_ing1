@@ -102,7 +102,8 @@
     List* EndDijkstra(Node_d * Arrive);
     
     Node_d* CreateDNode( int int_x, int int_y, int distance, Node_d* NodeD, Node_d* Node_Suivante);
-
+    
+    /// @brief ajoute une node en début de liste, avec les dernière coordonnées du joueur et si la case était un bonus ou non
     int AddNode_d(List_d* p_list, Node_d* firstNode, int int_x, int int_y, int int_distance, Node_d* NodeD);
 
     void RemoveNode(List* p_list);
