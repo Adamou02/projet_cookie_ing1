@@ -311,7 +311,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             {
                 matrice_Distance[i][j][2] = 0;
                 matrice_Distance[i][j][4] = 0;
-            }else{
+            }else{          
                 if (matrice_Distance[i-1][j+1][6] ==0)
                 {
                     matrice_Distance[i][j][2] = RNG(1,MAX_DISTANCE);
@@ -446,7 +446,7 @@ int CheckPath(int** matrice_Map, coordonnees coord_curr, int int_maxCoord, int i
                                             coord_curr,
                                             int_maxCoord,
                                             int_Start,
-                                            int_Energy + STEP
+                                            int_Energy + STEP_ENERGY
                                             );
         return(bool_PathFound);
     }
