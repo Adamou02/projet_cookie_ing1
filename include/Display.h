@@ -5,15 +5,21 @@
     #include "InitGame.h"
     #include "Constant.h"
     #include "Miscellanous.h"
-    
+      
     /// @brief Modifie le terminal pour l'adapter au jeu 
     void EditTerminal(); 
 
     /// @brief Menu lorsqu'on lance le programme, permet de lancer une nouvelle game, charger la précedente, ou voir l'historique.
     int MenuStartGame();
 
+    int MenuGameHistory();
+
     /// @brief Menu pour choisir la partie à visionner
     int MenuHistory();
+    
+    int MenuConfirmClearHistory();
+
+    void ConfirmClearHistory();
 
     /// @brief Menu pour choisir la difficulté 
     int MenuDifficulty();
@@ -23,6 +29,9 @@
 
     /// @brief Menu lors de la fermeture de la partie
     int MenuSave();
+
+    ///@brief attend que l'user appuis sur entrer pour continuer le process/affcihage 
+    void MenuNext();
 
     /// @brief Affiche les touches pour les coups dispos (et leur coup en distance)
     void ShowKeyAvailable();
