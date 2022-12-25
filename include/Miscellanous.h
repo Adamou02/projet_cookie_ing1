@@ -105,7 +105,8 @@
     Node_d* CreateDNode( int int_x, int int_y, int distance, Node_d* NodeD, Node_d* Node_Suivante);
 
     int AddNode_d(List_d* p_list, Node_d* firstNode, int int_x, int int_y, int int_distance, Node_d* NodeD);
-
+    
+    /// @brief Supprime la dernière node ajoutée à la liste
     void RemoveNode(List* p_list);
 
     void RemoveNode_d(List_d* p_list);
