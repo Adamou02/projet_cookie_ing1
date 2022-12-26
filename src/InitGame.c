@@ -234,6 +234,9 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
         break;
     } 
     matrice_Map[int_rdmRow][int_rdmCol] = REP_END ;
+    coordonnees coord_End;
+    coord_End.x = int_rdmRow;
+    coord_End.y = int_rdmCol;
     
     while( int_nbObstacles > 0 ) { //Placement des Obstacles
         int_rdmRow = RNG(0,int_maxCoord);
@@ -251,20 +254,29 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
             int_nbObstacles-- ;
         }
     }
+    int int_toocloseborn = (GAIN_ENERGY/2)+1;
     while( int_nbBonus > 0 ) { //Placement des Bonus
         int_rdmRow = RNG(0,int_maxCoord);
         int_rdmCol = RNG(0,int_maxCoord);
-        //printf("%d,%d\n", int_rdmRow, int_rdmCol);
+        //check si la case ou veut etre placer le bonus est vide 
         if( CoordCompare(matrice_Map, int_rdmRow, int_rdmCol, REP_DEFAULT) ) {
-            int_nbBonus--;
-            switch (RNG(1,2))
-            {
-                case 1:
-                    matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS1;
-                    break;
-                case 2:
-                    matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS2;
-                    break;
+            //check si le bonus qui veut etre placer n'est pas trop pret du drapeau (utile pour la recherche du meilleur chemin en energie)
+            if(
+                !(
+                    IsBetween(int_rdmRow,(coord_End.x)-int_toocloseborn,(coord_End.x)+int_toocloseborn)
+                    && IsBetween(int_rdmCol,(coord_End.y)-int_toocloseborn,(coord_End.y)+int_toocloseborn)
+                )
+            ){
+                int_nbBonus--;
+                switch (RNG(1,2))
+                {
+                    case 1:
+                        matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS1;
+                        break;
+                    case 2:
+                        matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS2;
+                        break;
+                }
             }
         }
     }
@@ -311,7 +323,7 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
             {
                 matrice_Distance[i][j][2] = 0;
                 matrice_Distance[i][j][4] = 0;
-            }else{          
+            }else{
                 if (matrice_Distance[i-1][j+1][6] ==0)
                 {
                     matrice_Distance[i][j][2] = RNG(1,MAX_DISTANCE);

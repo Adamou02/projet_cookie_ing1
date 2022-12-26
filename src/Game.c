@@ -163,30 +163,56 @@ void ResumeGame()
 
 void EndGame()
 {
-    ClearTerm();
+   ClearTerm();
+    //messsage de victoire/defaite et recap de la partie
     DisplayEndGame(GameInfo.bool_victory, &GameInfo.s_playerInfo);
+    MenuNext();
     printf("The Path you followed: ");
     DisplayList(InvertList(GameInfo.p_listpath));
     DisplayPathInMapArrow(GameInfo.matrice_Map, GameInfo.int_mapSize, InvertList(GameInfo.p_listpath));
-    puts("");
+    MenuNext();
     //recherche et affichage du meilleur chemin en terme de distance
     RestoreTurn(1 ,&GameInfo.matrice_Map, &GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.int_mapSize, CURRENT_GAME_CSV);
-    GameInfo.matrice_Map = RestoreMap(GameInfo.matrice_Map, GameInfo.int_mapSize,1, CURRENT_GAME_CSV);
     GameInfo.p_listBestWay = AlgoDijkstra(GameInfo.matrice_Map,
                                           GameInfo.matrice_Distance,
                                           &GameInfo.s_playerInfo, 
-                                          GameInfo.int_mapSize
+                                          GameInfo.int_mapSize,
+                                          1
                                           );
-    // RestoreDistance(GameInfo.matrice_Distance, GameInfo.int_mapSize,1,CURRENT_GAME_CSV)
-    printf("The shortest Way: ");
+    printf("The shortest path: ");
     DisplayList(GameInfo.p_listBestWay);
     printf("Total distance: %d\n", GameInfo.p_listBestWay->firstnode->is_bonus);
     DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
-
+    MenuNext();
+    //recherche et affichage du meilleur chemin en terme de Energy
+    RestoreTurn(1 ,&GameInfo.matrice_Map, &GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.int_mapSize, CURRENT_GAME_CSV);
+    GameInfo.p_listBestWayEnergy = AlgoDijkstra(GameInfo.matrice_Map,
+                                          GameInfo.matrice_Distance,
+                                          &GameInfo.s_playerInfo, 
+                                          GameInfo.int_mapSize,
+                                          2
+                                          );
+    printf("Less energy intensive path: ");
+    DisplayList(GameInfo.p_listBestWay);
+    printf("Total energy: %d\n", GameInfo.p_listBestWayEnergy->firstnode->is_bonus);
+    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWayEnergy));
+    //ajout de la partie dans l'historique
     History(GameInfo.int_mapSize);
+    //revisualisation de la partie (ajouter un menu pr choisir oui ou non a la place de MenuNext)
+    MenuNext();
     ReadHistory(CountHistory(), &GameInfo.matrice_Map);
-
 }
+
+void ViewGameHistory() 
+{
+    int choice = MenuGameHistory();
+    if(choice != 0){
+        GameInfo.matrice_Map = AllocMatriceMap(RestoreMapSize(HISTORY_CSV)) ;// Pas sur :ajouter pour que restore map Size restore la taille de la map du int choice ème historique
+        ReadHistory(choice, &GameInfo.matrice_Map);
+    }
+    
+}
+
 
 void InitGame()
 {
@@ -206,5 +232,24 @@ void InitGame()
         default:
             exit(EXIT_FAILURE);
             break;
+    }
+}
+
+void ManageHistory()
+{
+    int choice = MenuHistory();
+    switch (choice)
+    {
+    case 1:
+        ViewGameHistory();
+        break;
+    case 2:
+        MenuConfirmClearHistory();
+        break;
+    case 3:
+        InitGame();
+        break;
+    default:
+        break;
     }
 }

@@ -56,13 +56,15 @@ int MenuGameHistory()
     int i, count = CountHistory();
     if(count != 0){
         for(i=0; i<count; i++){
-            printf("%d) Voir game %d\n", i, i);
+            printf("%d) Voir game %d\n", i+1, i+1);
         }
+    MenuNext();
     return 1;
     }
     else {
         printf("Erreur, aucune partie n'a été sauvegardé");
         //exit()
+        return 0;
     }
 }
 
@@ -101,12 +103,6 @@ int MenuHistory()
     }
 }
 
-void ViewGameHistory() {
-    int choice = MenuGameHistory();
-    printf("Hop j'envoie a fabien le num de la partie à lire");
-    //History(choice);
-}
-
 int MenuConfirmClearHistory()
 {
     int input;
@@ -143,25 +139,6 @@ void ConfirmClearHistory()
     int choice = MenuConfirmClearHistory();
     if (choice) ClearHistory();
     else ManageHistory();
-}
-
-void ManageHistory()
-{
-    int choice = MenuHistory();
-    switch (choice)
-    {
-    case 1:
-        ViewGameHistory();
-        break;
-    case 2:
-        MenuConfirmClearHistory();
-        break;
-    case 3:
-        InitGame();
-        break;
-    default:
-        break;
-    }
 }
 
 int MenuDifficulty()
@@ -267,6 +244,17 @@ int MenuSave()
             printf("\n Quit Game without saving?\n Save Game!\n> Go back\n\n\n%s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
+}
+
+void MenuNext()
+{
+    int input = -1;
+    printf("Press %s Enter to continue :\n", ENTER_ICON);
+    while(input != ENTER){
+        input = ListenKeyboard();
+    }
+    ClearTerm();
+    
 }
 
 void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
@@ -512,8 +500,8 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
 
 void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo)
 {
-    if (bool_victory) printf("Bravo, vous avez gagné avec %d d'énergie restante !\nVous avez parcouru %d.\nVous avez gagné %d d'énergie grâce au bonus et perdu %d d'énergie à cause des obstacles.", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
-    else printf("Défaite ! Vous auriez du suivre ce chemin !");
+    if (bool_victory) printf("Bravo, vous avez gagné avec %d d'énergie restante !\nVous avez parcouru %d.\nVous avez gagné %d d'énergie grâce au bonus et perdu %d d'énergie à cause des obstacles.\n", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
+    else printf("Défaite !\n");
 }
 
 
