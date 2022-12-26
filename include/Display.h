@@ -3,6 +3,7 @@
     #include <stdlib.h>
     #include <unistd.h>
     #include "InitGame.h"
+    #include "Movements.h"
     #include "Constant.h"
     #include "Miscellanous.h"
       
@@ -21,12 +22,9 @@
 
     void ConfirmClearHistory();
 
-
     int MenuConfirmClearHistory();
 
     void ConfirmClearHistory();
-
-    
 
     /// @brief Menu pour choisir la difficulté 
     int MenuDifficulty();
