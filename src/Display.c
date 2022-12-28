@@ -53,6 +53,7 @@ int MenuStartGame()
 
 int MenuGameHistory()
 {
+    ClearTerm();
     int i, count = CountHistory();
     if(count != 0){
         for(i=0; i<count; i++){
@@ -121,6 +122,7 @@ int MenuConfirmClearHistory()
             position++;
         }
         else if (input == ENTER) {
+            printf("%d", position);
             return position;
         }
         if (position == 1) {
@@ -137,7 +139,7 @@ int MenuConfirmClearHistory()
 void ConfirmClearHistory() 
 {
     int choice = MenuConfirmClearHistory();
-    if (choice) ClearHistory();
+    if (choice == 1) ClearHistory();
     else ManageHistory();
 }
 
