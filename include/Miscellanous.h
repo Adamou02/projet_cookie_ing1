@@ -89,19 +89,29 @@
 
     List* InitList(coordonnees coord, int is_bonus);
 
+    /// @brief Initialize a List_d type list with the first node containing the given coordinates, a distance of zero, and the path array initialized to the start.
     List_d* InitList_d(int int_x, int int_y);
     
     /// @brief ajoute une node en début de liste, avec les dernière coordonnées du joueur et si la case était un bonus ou non
     void AddNode(List* p_list, coordonnees coord, int bonus);
 
+    /// @brief Retrieve the coordinates of the last move of the node passed as a parameter
+    /// @return the coordinates of the last move in the form of the "coordonnees" structure.
     coordonnees FindLastStep (Node_d* Node);
 
+    /// @brief Determine, using the character's position on the map and the chosen move, the correct value based on what is on the next square.Taking into account the mode (energy or distance traversal)
+    /// @return 0 if there is an obstacle or if we are leaving the map, and otherwise the distance between the current square and the tested square.
     int ReturnDiff(int** matrice_map, int*** matrice_distance, int int_mapSize, Node_d* Node,int int_diffX, int int_diffY,int int_position,int int_mode);
     
+    /// @brief Takes all data of the character and the map, tests all possible combinations, and returns the best one according to the Dijkstra algorithm
+    /// @return the best node-d in the list_d "p_list", and also modifies the value of the "*int_position" pointer passed as a parameter to have the best position from the right node
     Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matrice_map, int*** matrice_distance, int int_mapSize, int int_goodDistance, int *int_position, int *int_distance, coordonnees coordEnd, int int_mode);
 
+    /// @brief Takes the final node of the algorithm as a parameter and transforms it into a list "List" with the final value (energy or distance) and the entire path taken stored in the nodes of the list.
+    /// @return the final list
     List* EndDijkstra(Node_d * Arrive);
     
+    /// @brief Create a node of the form "node_d" and initialize it with all the data passed as parameters (coordinates, distance, previous node and next node
     Node_d* CreateDNode( int int_x, int int_y, int distance, Node_d* NodeD, Node_d* Node_Suivante);
 
     int AddNode_d(List_d* p_list, Node_d* firstNode, int int_x, int int_y, int int_distance, Node_d* NodeD);
@@ -109,6 +119,7 @@
     /// @brief Supprime la dernière node ajoutée à la liste
     void RemoveNode(List* p_list);
 
+    /// @brief Remove the nodes in the list (list_d) whose distance values are all equal to 0.
     void RemoveNode_d(List_d* p_list);
     
     /// @brief Renvoie la taille de la liste
@@ -120,6 +131,7 @@
     /// @brief Free la list et free toutes ses nodes
     void FreeList(List* p_list);
 
+    /// @brief Free la list (list_d) et free toutes ses nodes (node_d)
     void FreeList_d(List_d* p_list);
 
     /// @return 1 if coord belongs to the list, 0 otherwise
