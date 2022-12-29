@@ -43,8 +43,10 @@
 
     int affiche(Node_d *node);
 
+    /// @brief through the AlgoDijkstra function, and is called each time to apply the recursive model of the Dijkstra algorithm.
     Node_d* recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize , coordonnees coordEnd,int int_mode);
 
+    /// @brief "Takes all game data as a parameter, And through all the functions created in initgame.c and miscellaneous.c, applies the principle of the Dijkstra algorithm to find the best path to the destination.
     List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_playerInfo, int int_mapSize, int int_mode);
   
 
