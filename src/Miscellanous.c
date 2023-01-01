@@ -291,7 +291,7 @@ List* EndDijkstra(Node_d * Arrive)
     coordonnees FirstNode;
     FirstNode.x = Arrive->DataD.chemin[i];
     FirstNode.y = Arrive->DataD.chemin[i+1];
-    int rien;
+    int nothing;
     //printf("%d - %d\n", FirstNode.x,FirstNode.y);
     List* BetterWay = InitList(FirstNode, 0);
     i = i + 2;
@@ -301,9 +301,10 @@ List* EndDijkstra(Node_d * Arrive)
         tmp.x = Arrive->DataD.chemin[i];
         tmp.y = Arrive->DataD.chemin[i+1];
         Node* tmp_Node = CreateNode(tmp,0);
-        rien = AddEnd(BetterWay->firstnode,tmp_Node);
+        nothing = AddEnd(BetterWay->firstnode,tmp_Node);
         i = i + 2 ;
     }
+    nothing = 1;
 
     return (BetterWay);
 }
