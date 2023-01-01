@@ -217,7 +217,7 @@ int ReturnDiff(int** matrice_map, int*** matrice_distance, int int_mapSize, Node
                 matrice_distance[Node->DataD.x][Node->DataD.y][int_position] = 0;
             }
     }
-    return(-1);
+    return(INF);
 }
 
 
