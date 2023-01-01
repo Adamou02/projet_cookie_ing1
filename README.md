@@ -6,7 +6,7 @@ On his way, the character will be able to meet obstacles that make him lose ener
 If the player runs out of energy, the game is lost.
 The character can move from top to bottom, with z/x keys, from right to left, with q/d, but also diagonally with a/e/w/c.
 The player also has the ability to make up to 6 backward moves to cancel the last one.
-It is possible to resume a game in progress after leaving the game, if it has been saved. It is also possible to review an old part
+It is possible to resume a game in progress after leaving the game, if it has been saved. It is also possible to review an old game.
 
 
 ### Prerequisites
