@@ -73,16 +73,16 @@ int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize) //fonction reto
 
 coordonnees DefineEndGame(int int_mapSize, int** matrice_map)
 {
-     coordonnees coord;
-     coord.x = -1;
-     coord.y = -1;
+     //coordonnees coord;
+     //coord.x = -1;
+     //coord.y = -1;
     for(int i = 0; i<int_mapSize; i++)
     {
         for(int j = 0;j<int_mapSize; j++)
         {
             if (CoordCompare(matrice_map, i,j,REP_END))
             {
-               
+               coordonnees coord;
                 coord.x = j;
                 coord.y = i;
                 return (coord);
@@ -217,7 +217,8 @@ int ReturnDiff(int** matrice_map, int*** matrice_distance, int int_mapSize, Node
                 matrice_distance[Node->DataD.x][Node->DataD.y][int_position] = 0;
             }
     }
-    return(INF);
+    //return(INF);
+    return(-1);
 }
 
 
