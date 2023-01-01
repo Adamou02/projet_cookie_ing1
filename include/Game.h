@@ -48,8 +48,12 @@
     ///@brief Apres Jeu
     void EndGame();
 
-    /// @brief Recupere les inforation 
+    /// @brief 
     void ViewGameHistory();
+
+    ///@brief
+    void ConfirmClearHistory();
+
 
     /// @brief Pan du jeu pour voir les historique de partie 
     void ManageHistory();

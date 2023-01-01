@@ -55,17 +55,35 @@ int MenuGameHistory()
 {
     ClearTerm();
     int i, count = CountHistory();
-    if(count != 0){
-        for(i=0; i<count; i++){
-            printf("%d) Voir game %d\n", i+1, i+1);
+    int input;
+    int position = 0; //0 = position haute
+    while(1)
+    {
+        printf("\nChoose the Game to rewatch\n");
+        if(count != 0){
+            for(i=0; i<count; i++){
+                if(position == i)
+                    printf(">");
+                printf(" Rewatch game n°%d\n", i+1);
+            }
+            printf("\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
-    MenuNext();
-    return 1;
-    }
-    else {
-        printf("Erreur, aucune partie n'a été sauvegardé");
-        //exit()
-        return 0;
+        else {
+            printf("No Game has been saved yet\n");
+        }
+        input = ListenKeyboard();
+        if ((input == UP || input == MAJ_UP) && position!=0)
+        { 
+            position--;
+        }
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=count-1)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position+1;
+        }
+        ClearTerm();
     }
 }
 
@@ -122,7 +140,6 @@ int MenuConfirmClearHistory()
             position++;
         }
         else if (input == ENTER) {
-            printf("%d", position);
             return position;
         }
         if (position == 1) {
@@ -134,13 +151,6 @@ int MenuConfirmClearHistory()
             printf("\nWhat's your choice :\n Clear the history\n> Go back\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
         }
     }
-}
-
-void ConfirmClearHistory() 
-{
-    int choice = MenuConfirmClearHistory();
-    if (choice == 1) ClearHistory();
-    else ManageHistory();
 }
 
 int MenuDifficulty()

@@ -133,13 +133,13 @@ void GetPlayerInfo(int int_mapSize, PlayerInfo * s_playerInfo_player, int num_tu
 char* GetMapString(char* MapString, int int_mapSize, int num_turn, char str_NameFile[])
 {
     FILE* file_CSV = fopen(str_NameFile, "r");
-    char* CSV_String = malloc((int_mapSize*int_mapSize*6400+11)*sizeof(*CSV_String));
+    char* CSV_String = malloc((int_mapSize*int_mapSize*2048)*sizeof(*CSV_String));
     
     //Acces au tour souhaité
     for(int i=0; i<num_turn; i++)
     {
         //Recuperation de toutes les donnees
-        fgets(CSV_String, (int_mapSize*int_mapSize*6400+11)*sizeof(*CSV_String) ,file_CSV);        
+        fgets(CSV_String, (int_mapSize*int_mapSize*2048)*sizeof(*CSV_String) ,file_CSV);        
     }
 
     //Separation et implementation des donnees aux variables de jeu
@@ -589,7 +589,7 @@ void ReadHistory(int num_game, int*** matrice_Map)
 {
     FILE* History_CSV = fopen(HISTORY_CSV, "r");
     int int_mapSize = RestoreMapSize(HISTORY_CSV); // ajouter un moyen de recuperer la taille de la map du nème historique
-    char* CSV_String = malloc((int_mapSize*int_mapSize*6400+11)*sizeof(*CSV_String));
+    char* CSV_String = malloc(int_mapSize*int_mapSize*2048*sizeof(*CSV_String));
     int sum_turns = 0;
     int turns_nbr = 0;
     fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
@@ -601,7 +601,7 @@ void ReadHistory(int num_game, int*** matrice_Map)
         turns_nbr = atoi(CSV_String);
 
         for(int j=0; j<turns_nbr; j++){
-            fgets(CSV_String, (int_mapSize*int_mapSize*6400+11)*sizeof(*CSV_String), History_CSV);
+            fgets(CSV_String, (int_mapSize*int_mapSize*2048)*sizeof(*CSV_String), History_CSV);
         }
         fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
         int_mapSize = atoi(CSV_String);
@@ -628,8 +628,9 @@ int CountHistory()
 {
     FILE* History_CSV = fopen(HISTORY_CSV, "r");
     int int_mapSize = RestoreMapSize(HISTORY_CSV);
-    char* CSV_String = malloc((int_mapSize*int_mapSize*6400+11)*sizeof(*CSV_String));
+    char* CSV_String = malloc((int_mapSize*int_mapSize*2048)*sizeof(*CSV_String));
     char* String_Value;
+
     int sum_turns = 0;
     int turns_nbr = 0;
     fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
@@ -641,7 +642,7 @@ int CountHistory()
         turns_nbr = atoi(CSV_String);
 
         for(int j=0; j<turns_nbr; j++){
-            fgets(CSV_String, (int_mapSize*int_mapSize*6400+11)*sizeof(*CSV_String), History_CSV);
+            fgets(CSV_String, (int_mapSize*int_mapSize*2048)*sizeof(*CSV_String), History_CSV);
         }
         fgets(CSV_String, 4*sizeof(*CSV_String), History_CSV);
         int_mapSize = atoi(CSV_String);

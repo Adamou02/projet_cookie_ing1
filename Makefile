@@ -15,7 +15,7 @@ Dir_INCL = include
 CC = gcc
 
 #Compiler flags
-CFLAGS = -g -W -Wall -fsanitize=address -Wno-unused-variable -Wno-uninitialized
+CFLAGS = -g -W -Wall -fsanitize=address -Wno-unused-variable -Wno-uninitialized -Wno-unused-but-set-variable -Wno-return-type
 
 #Library flags
 LDLIBS = -lm 

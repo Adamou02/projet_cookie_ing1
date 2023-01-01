@@ -1,5 +1,6 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
+    #include <stdio.h>
     #include <stdlib.h>
     #include <unistd.h>
     #include "InitGame.h"
@@ -23,8 +24,6 @@
     void ConfirmClearHistory();
 
     int MenuConfirmClearHistory();
-
-    void ConfirmClearHistory();
 
     /// @brief Menu pour choisir la difficulté 
     int MenuDifficulty();

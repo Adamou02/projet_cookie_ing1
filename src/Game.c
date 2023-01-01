@@ -89,6 +89,7 @@ void Game()
             }
         }
     }
+    StockCurrentTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.p_listpath, GameInfo.int_mapSize, &GameInfo.s_playerInfo);
     GameInfo.bool_victory=bool_victory;
     return;
 }
@@ -144,9 +145,11 @@ void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_play
 
 void ResumeGame()
 {
-    if(!ExistFile(SAVE_CSV)){ //Ajouter une verif si le fichier est vide
+    if(!ExistFile(SAVE_CSV)){ //verif si le fichier est vide ou n'existe pas
         puts("File Save.csv not found or empty");
-        exit(EXIT_FAILURE);
+        sleep(1);
+        InitGame();
+        return;
     }   
     GameInfo.int_mapSize = RestoreMapSize(SAVE_CSV);
     GameInfo.matrice_Map = AllocMatriceMap(GameInfo.int_mapSize);
@@ -193,7 +196,7 @@ void EndGame()
                                           2
                                           );
     printf("Less energy intensive path: ");
-    DisplayList(GameInfo.p_listBestWay);
+    DisplayList(GameInfo.p_listBestWayEnergy);
     printf("Total energy: %d\n", GameInfo.p_listBestWayEnergy->firstnode->is_bonus);
     DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWayEnergy));
     //ajout de la partie dans l'historique
@@ -207,12 +210,47 @@ void ViewGameHistory()
 {
     int choice = MenuGameHistory();
     if(choice != 0){
-        GameInfo.matrice_Map = AllocMatriceMap(RestoreMapSize(HISTORY_CSV)) ;// Pas sur :ajouter pour que restore map Size restore la taille de la map du int choice ème historique
+        GameInfo.matrice_Map = AllocMatriceMap(TAILLE_BIG_MAP) ;
         ReadHistory(choice, &GameInfo.matrice_Map);
     }
     
 }
 
+
+void ConfirmClearHistory() 
+{
+    int choice = MenuConfirmClearHistory();
+    if (choice == 1) 
+        ClearHistory();
+    ManageHistory();
+}
+
+void ManageHistory()    
+{
+    if(!ExistFile(HISTORY_CSV)){ //verif si le fichier est vide ou n'existe pas
+        puts("File History.csv not found or empty");
+        sleep(1);
+        InitGame();
+        return;
+    }
+    int choice = MenuHistory();
+    switch (choice)
+    {
+    case 1:
+        ViewGameHistory();
+        exit(EXIT_SUCCESS);
+        break;
+    case 2:
+        ConfirmClearHistory();
+        ManageHistory();
+        break;
+    case 3:
+        InitGame();
+        break;
+    default:
+        break;
+    }      
+}
 
 void InitGame()
 {
@@ -232,24 +270,5 @@ void InitGame()
         default:
             exit(EXIT_FAILURE);
             break;
-    }
-}
-
-void ManageHistory()
-{
-    int choice = MenuHistory();
-    switch (choice)
-    {
-    case 1:
-        ViewGameHistory();
-        break;
-    case 2:
-        MenuConfirmClearHistory();
-        break;
-    case 3:
-        InitGame();
-        break;
-    default:
-        break;
     }
 }

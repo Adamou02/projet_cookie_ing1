@@ -177,13 +177,13 @@ void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *p_playerIn
 void PlayerOnBonus(PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur lorsqu'il marche sur un bonus
 {
     p_playerInfo->energy = (p_playerInfo->energy) + GAIN_ENERGY;
-    p_playerInfo->gain_energy = (p_playerInfo->energy) + GAIN_ENERGY;
+    p_playerInfo->gain_energy = (p_playerInfo->gain_energy) + GAIN_ENERGY;
 }
 
 void PlayerOnObstacle(PlayerInfo *p_playerInfo) //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
 {
     p_playerInfo->energy = (p_playerInfo->energy) - LOST_ENERGY;
-    p_playerInfo->lost_energy = (p_playerInfo->energy) - LOST_ENERGY;
+    p_playerInfo->lost_energy = (p_playerInfo->lost_energy) + LOST_ENERGY;
 }
 
 void UpdatePathList(PlayerInfo *p_playerInfo, List* p_list, int is_bonus) // met à jour la dernière position du joueur dans la lise chainée
