@@ -288,7 +288,6 @@ int AddEnd(Node* NodeHere, Node* node){
 List* EndDijkstra(Node_d * Arrive)
 {
     int i = 0;
-    int rien;
     coordonnees FirstNode;
     FirstNode.x = Arrive->DataD.chemin[i];
     FirstNode.y = Arrive->DataD.chemin[i+1];
