@@ -27,7 +27,7 @@ cd projet_cookie_ing1
 ```
 End with an example of getting some data out of the system or using it for a little demo
 
-## Compilation
+### Compilation
 
 In the cloned directory, run:
 
