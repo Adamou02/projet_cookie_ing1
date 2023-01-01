@@ -291,6 +291,7 @@ List* EndDijkstra(Node_d * Arrive)
     coordonnees FirstNode;
     FirstNode.x = Arrive->DataD.chemin[i];
     FirstNode.y = Arrive->DataD.chemin[i+1];
+    int rien;
     //printf("%d - %d\n", FirstNode.x,FirstNode.y);
     List* BetterWay = InitList(FirstNode, 0);
     i = i + 2;
