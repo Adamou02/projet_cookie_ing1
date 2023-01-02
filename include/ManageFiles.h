@@ -104,12 +104,10 @@
     void History(int int_mapSize);
 
     /// @brief Lis la partie numéro num_game depuis l'historique
-    void ReadHistory(int num_game, int*** matrice_Map);
+    void ReadHistory(int num_game, int*** matrice_Map, int speed);
 
     /// @brief Compte le nombre de parties dans l'historique
     int CountHistory();
 
     /// @brief Efface l'historique
-    void ClearHistory();
-
 #endif

@@ -73,9 +73,7 @@ int DefineStartPlayer(PlayerInfo* p_playerInfo, int int_mapSize) //fonction reto
 
 coordonnees DefineEndGame(int int_mapSize, int** matrice_map)
 {
-     coordonnees coord;
-     coord.x = -1;
-     coord.y = -1;
+    coordonnees coord;
     for(int i = 0; i<int_mapSize; i++)
     {
         for(int j = 0;j<int_mapSize; j++)
@@ -90,7 +88,6 @@ coordonnees DefineEndGame(int int_mapSize, int** matrice_map)
             
         }
     }
-    return(coord);
 }
 
 
@@ -181,8 +178,8 @@ coordonnees FindLastStep (Node_d* Node)
     
     if(int_cpt == 2 || int_cpt == 3)
     {
-        coord.x = 1000;
-        coord.y = 1000;
+        coord.x = INF;
+        coord.y = INF;
         return (coord);
     }
     coord.x = Node->DataD.chemin[int_cpt - 4];
@@ -251,7 +248,7 @@ Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matri
         }
     }
 
-    if(int_goodDistance == 1000){
+    if(int_goodDistance == INF){
         return(FindLowerWay(p_list, Node->next, GoodNode,matrice_map, matrice_distance, int_mapSize , int_goodDistance,int_position,int_distance,coordEnd,int_mode));
     }
     if (int_goodDistance != int_tmp)

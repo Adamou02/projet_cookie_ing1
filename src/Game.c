@@ -21,6 +21,8 @@ void BeforeTurn(int** matrice_Map, int*** matrice_Distance, int int_mapSize, Pla
 
 void ErrorStepBack(int int_error)
 {
+    ClearTerm();    //on clear et réaffiche la map, pour eviter l'accumulation de message d'erreur 
+    BeforeTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.int_mapSize, &GameInfo.s_playerInfo, GameInfo.p_listpath);
     if(int_error == 1){
         printf("\nVous n'avez plus de retour en arrière possible.\n");
     } else if(int_error == 2){
@@ -89,7 +91,7 @@ void Game()
             }
         }
     }
-    StockCurrentTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.p_listpath, GameInfo.int_mapSize, &GameInfo.s_playerInfo);
+    //StockCurrentTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.p_listpath, GameInfo.int_mapSize, &GameInfo.s_playerInfo);
     GameInfo.bool_victory=bool_victory;
     return;
 }
@@ -146,8 +148,9 @@ void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_play
 void ResumeGame()
 {
     if(!ExistFile(SAVE_CSV)){ //verif si le fichier est vide ou n'existe pas
-        puts("File Save.csv not found or empty");
-        sleep(1);
+        ClearTerm();
+        puts("File Save.csv not found or empty, press enter to return to the previous menu");
+        ListenKeyboard();
         InitGame();
         return;
     }   
@@ -168,7 +171,7 @@ void EndGame()
 {
    ClearTerm();
     //messsage de victoire/defaite et recap de la partie
-    DisplayEndGame(GameInfo.bool_victory, &GameInfo.s_playerInfo);
+    VictoryMessage(GameInfo.bool_victory, &GameInfo.s_playerInfo);
     MenuNext();
     printf("The Path you followed: ");
     DisplayList(InvertList(GameInfo.p_listpath));
@@ -201,9 +204,12 @@ void EndGame()
     DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWayEnergy));
     //ajout de la partie dans l'historique
     History(GameInfo.int_mapSize);
-    //revisualisation de la partie (ajouter un menu pr choisir oui ou non a la place de MenuNext)
     MenuNext();
-    ReadHistory(CountHistory(), &GameInfo.matrice_Map);
+    //revisualisation de la partie (ajouter un menu pr choisir oui ou non a la place de MenuNext)
+    if(MenuReplay()){
+         ReadHistory(CountHistory(), &GameInfo.matrice_Map, MenuSpeedHistory());
+    }
+    SupprFile(CURRENT_GAME_CSV);
 }
 
 void ViewGameHistory() 
@@ -211,7 +217,8 @@ void ViewGameHistory()
     int choice = MenuGameHistory();
     if(choice != 0){
         GameInfo.matrice_Map = AllocMatriceMap(TAILLE_BIG_MAP) ;
-        ReadHistory(choice, &GameInfo.matrice_Map);
+        ReadHistory(choice, &GameInfo.matrice_Map, MenuSpeedHistory());
+        UnallocMatriceMap(GameInfo.matrice_Map, TAILLE_BIG_MAP);
     }
     
 }
@@ -228,8 +235,9 @@ void ConfirmClearHistory()
 void ManageHistory()    
 {
     if(!ExistFile(HISTORY_CSV)){ //verif si le fichier est vide ou n'existe pas
-        puts("File History.csv not found or empty");
-        sleep(1);
+        ClearTerm();
+        puts("File History.csv not found or empty, press enter to return to the previous menu");
+        ListenKeyboard();
         InitGame();
         return;
     }

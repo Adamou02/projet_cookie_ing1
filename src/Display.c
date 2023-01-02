@@ -269,6 +269,72 @@ void MenuNext()
     
 }
 
+int MenuSpeedHistory()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nChoose the speed for your replay :\n> Slow\n Normal\n Fast\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if ((input == UP || input == MAJ_UP) && position!=1)
+        { 
+            position--;
+        }
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=3)
+        {
+            position++;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nChoose the speed for your replay :\n> Slow\n Normal\n Fast\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 2) {
+            ClearTerm();
+            printf("\nChoose the speed for your replay :\n Slow\n> Normal\n Fast\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 3) {
+            ClearTerm();
+            printf("\nChoose the speed for your replay :\n Slow\n Normal\n> Fast\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
+int MenuReplay()
+{
+    int input;
+    int position = 1; //1 = position haute
+    ClearTerm();
+    printf("\nDo you want to rewatch your game :\n> Yes\n No\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    while(1)
+    {
+        input = ListenKeyboard();
+        if ((input == UP || input == MAJ_UP) && position!=1)
+        { 
+            position++;
+        }
+        else if ((input == DOWN || input == MAJ_DOWN) && position !=0)
+        {
+            position--;
+        }
+        else if (input == ENTER) {
+            return position;
+        }
+        if (position == 1) {
+            ClearTerm();
+            printf("\nDo you want to rewatch your game :\n> Yes\n No\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+        else if (position == 0) {
+            ClearTerm();
+            printf("\nDo you want to rewatch your game :\n Yes\n> No\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+        }
+    }
+}
+
 void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
 {
     int line_count=0;
@@ -332,7 +398,7 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     int int_curseur = 0;
     char* constant_caseDisplay = ERROR;
     int bool_isNotEmj = 0;   
-    //printf(" ");
+    printf(" ");
     for(int i=0; i<int_mapSize+1; i++)
     {
         printf("%s", DOWNBAR);
@@ -510,10 +576,12 @@ void DisplayPathInMap(int** matric_Map, int int_mapSize, List* p_list)
     UnallocMatriceMap(matric_tmp,int_mapSize);
 }
 
-void DisplayEndGame(int bool_victory, PlayerInfo *p_playerInfo)
+void VictoryMessage(int bool_victory, PlayerInfo *p_playerInfo)
 {
-    if (bool_victory) printf("Bravo, vous avez gagné avec %d d'énergie restante !\nVous avez parcouru %d.\nVous avez gagné %d d'énergie grâce au bonus et perdu %d d'énergie à cause des obstacles.\n", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
-    else printf("Défaite !\n");
+    if (bool_victory) 
+        printf("Congratulations, you won with %d energy remaining!\nYou traveled %d km.\nYou earned %d energy from the bonus and lost %d energy from obstacles.\n", p_playerInfo->energy, p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
+    else 
+        printf("Too bad, you lost shamefully!\nYou traveled %d km.\nYou earned %d energy from the bonus and lost %d energy from obstacles.\n", p_playerInfo->distance, p_playerInfo->gain_energy, p_playerInfo->lost_energy);
 }
 
 
@@ -540,8 +608,9 @@ void DisplayList(List* p_list)
 
 
 
-
-//Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
+/////////////////////////////////////////////////////////////////////////////
+//Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final//
+////////////////////////////////////////////////////////////////////////////
 
 void DebugDisplayMap(int** matrice_Map, int int_mapSize)
 {
@@ -622,3 +691,14 @@ void PrintFirstList(List* p_list)
     }
     printf("x=%d, y=%d \n", p_list->firstnode->coordonnees.x, p_list->firstnode->coordonnees.y);
 }
+
+/*
+int affiche(Node_d *node)
+{
+    puts("NODE-");
+    printf("%d %d   %d ", node->DataD.x,node->DataD.y, node->DataD.distance);
+    int int_cpt = 0;
+    //while (node->DataD.chemin[int_cpt]!= 100){ printf("{%d;%d}"); int_cpt = int_cpt+2;}
+    printf("\n");
+    if(node->next != NULL) return(affiche(node->next));
+}*/

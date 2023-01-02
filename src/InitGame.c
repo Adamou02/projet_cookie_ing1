@@ -502,17 +502,6 @@ int*** InitDistance(int int_mapSize)
     return (matrice_Distance);
 }
 
-/*
-int affiche(Node_d *node)
-{
-    puts("NODE-");
-    printf("%d %d   %d ", node->DataD.x,node->DataD.y, node->DataD.distance);
-    int int_cpt = 0;
-    //while (node->DataD.chemin[int_cpt]!= 100){ printf("{%d;%d}"); int_cpt = int_cpt+2;}
-    printf("\n");
-    if(node->next != NULL) return(affiche(node->next));
-}*/
-
 Node_d*recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize, coordonnees coordEnd, int int_mode){
 
     int int_position = 10;

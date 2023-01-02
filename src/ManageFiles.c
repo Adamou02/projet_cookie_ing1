@@ -585,7 +585,7 @@ void History(int int_mapSize)
     return;
 }
 
-void ReadHistory(int num_game, int*** matrice_Map)
+void ReadHistory(int num_game, int*** matrice_Map, int speed)
 {
     FILE* History_CSV = fopen(HISTORY_CSV, "r");
     int int_mapSize = RestoreMapSize(HISTORY_CSV); // ajouter un moyen de recuperer la taille de la map du nème historique
@@ -612,13 +612,29 @@ void ReadHistory(int num_game, int*** matrice_Map)
     {
         ClearTerm();
         RestoreMap(*matrice_Map, int_mapSize, k + sum_turns, HISTORY_CSV);
-
         DisplayMap(*matrice_Map, int_mapSize);
-        //sleep(1);
         struct timeval tv;//
-        tv.tv_sec = 0;
-        tv.tv_usec = 250000; // 0.25 seconde
-        select(0, NULL, NULL, NULL, &tv);//equivalent de sleep, pour pouvoir chosir la vitesse
+        switch (speed)
+        {
+            case 1: //Slow
+                tv.tv_sec = 0;
+                tv.tv_usec = SLOW_SPEED * 10000; 
+                select(0, NULL, NULL, NULL, &tv);//equivalent de sleep
+                break;
+            case 2: //Normal
+                tv.tv_sec = 0;
+                tv.tv_usec = NORMAL_SPEED * 10000; 
+                select(0, NULL, NULL, NULL, &tv);//equivalent de sleep
+                break;
+            case 3: //Fast
+                tv.tv_sec = 0;
+                tv.tv_usec = FAST_SPEED * 10000;
+                select(0, NULL, NULL, NULL, &tv);//equivalent de sleep
+                break;
+            
+            default:
+                break;
+        }
     }
     free(CSV_String);
     return;

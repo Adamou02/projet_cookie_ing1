@@ -36,7 +36,7 @@
     void PlayerOnBonus(PlayerInfo *p_playerInfo);
 
     /// @brief Fait les actions nécessaire lorsque le joueur se déplace sur un obstacle
-    void PlayerOnObstacle(PlayerInfo *p_playerInfo,int*** matrice_Distance,int int_wanted_x,int int_wanted_y);
+    void PlayerOnObstacle(PlayerInfo *p_playerInfo);
  
     /// @brief Met à jour la liste contenant tous les déplacements du joueur ainsi que les moments où les cases étaient des obstacles
     void UpdatePathList(PlayerInfo *p_playerInfo, List* p_list, int is_bonus);

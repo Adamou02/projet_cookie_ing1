@@ -11,10 +11,10 @@
     
     PlayerInfo SetupPlayer();
 
-    ///@brief Menu de selection de difficulté
+    ///@brief selection de difficulté
     float ChooseDifficulty();
     
-    ///@brief Menu de selection de taille de map
+    ///@brief selection de taille de map
     int ChooseMapSize();
 
     ///@brief Initialise l'énergie de base du joueur en fonction de la taille de la carte
@@ -57,8 +57,6 @@
 
     ///@brief Alloue, et genere la matrice Distance
     int*** InitDistance(int int_mapSize);
-    
-    int affiche(Node_d *node);
 
     /// @brief through the AlgoDijkstra function, and is called each time to apply the recursive model of the Dijkstra algorithm.
     Node_d* recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, int*** matrice_Distance, int int_mapSize , coordonnees coordEnd,int int_mode);
