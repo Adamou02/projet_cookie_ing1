@@ -84,7 +84,7 @@ make help
 
 ## Authors
 
-* **BOUHRARA Adam** _alias_ [@adamou02](https://github.com/adamou02)
+* **BOUHRARA Adam** _alias_ [@Adamou02](https://github.com/Adamou02)
 * **CASSIET Clement** _alias_ [@Clément](https://github.com/clementcst)
 * **CERF Fabien** _alias_ [@Fab780](https://github.com/Fab780)
 * **GAUTIER Jordan** _alias_ [@JordanG2](https://github.com/JordanG2)
