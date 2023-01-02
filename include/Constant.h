@@ -14,10 +14,10 @@
     #define TAUX_BONUS 2
     #define TAUX_OBSTACLE 2.3
 
-    #define BASE_ENERGY 2
-    #define GAIN_ENERGY 5
-    #define LOST_ENERGY 5
-    #define STEP_ENERGY 1
+    #define BASE_ENERGY 2       //
+    #define GAIN_ENERGY 5       //  Les constantes d'energie doivent être très inferieur au taille de map
+    #define LOST_ENERGY 5       //  
+    #define STEP_ENERGY 1       //
 
     #define REP_CHARACTER 'P'
     #define REP_BONUS1 'b'

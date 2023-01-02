@@ -185,10 +185,15 @@ void EndGame()
                                           GameInfo.int_mapSize,
                                           1
                                           );
-    printf("The shortest path: ");
-    DisplayList(GameInfo.p_listBestWay);
-    printf("Total distance: %d\n", GameInfo.p_listBestWay->firstnode->is_bonus);
-    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
+    if(GameInfo.p_listBestWay != NULL){
+        printf("The shortest path: ");
+        DisplayList(GameInfo.p_listBestWay);
+        printf("Total distance: %d\n", GameInfo.p_listBestWay->firstnode->is_bonus);
+        DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWay));
+    } else {
+        puts("Error in Dijkstra Distance"); 
+    }
+
     MenuNext();
     //recherche et affichage du meilleur chemin en terme de Energy
     RestoreTurn(1 ,&GameInfo.matrice_Map, &GameInfo.matrice_Distance, &GameInfo.s_playerInfo, GameInfo.int_mapSize, CURRENT_GAME_CSV);
@@ -198,10 +203,14 @@ void EndGame()
                                           GameInfo.int_mapSize,
                                           2
                                           );
-    printf("Less energy intensive path: ");
-    DisplayList(GameInfo.p_listBestWayEnergy);
-    printf("Total energy: %d\n", GameInfo.p_listBestWayEnergy->firstnode->is_bonus);
-    DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWayEnergy));
+    if(GameInfo.p_listBestWayEnergy != NULL){
+        printf("Less energy intensive path: ");
+        DisplayList(GameInfo.p_listBestWayEnergy);
+        printf("Total energy left: %d\n", (BASE_ENERGY*GameInfo.int_mapSize)-(GameInfo.p_listBestWayEnergy->firstnode->is_bonus));
+        DisplayPathInMapArrow(GameInfo.matrice_Map,GameInfo.int_mapSize,InvertList(GameInfo.p_listBestWayEnergy));
+    } else {
+         puts("Error in Dijkstra Energy");
+    }
     //ajout de la partie dans l'historique
     History(GameInfo.int_mapSize);
     MenuNext();

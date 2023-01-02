@@ -194,7 +194,7 @@ int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSiz
     return (matrice_Map);
 }
 
-int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, PlayerInfo *p_playerInfo) //Work In Progress
+int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, PlayerInfo *p_playerInfo) 
 {
     float int_nbObstacles = int_mapSize * float_diffRate * TAUX_OBSTACLE;
     float int_nbBonus = int_mapSize/5 * (1/float_diffRate) * TAUX_BONUS;
@@ -267,15 +267,23 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
                     && IsBetween(int_rdmCol,(coord_End.y)-int_toocloseborn,(coord_End.y)+int_toocloseborn)
                 )
             ){
-                int_nbBonus--;
-                switch (RNG(1,2))
-                {
-                    case 1:
-                        matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS1;
-                        break;
-                    case 2:
-                        matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS2;
-                        break;
+                //check si le bonus qui veut etre placer n'est pas trop pret du joueur(utile pour la recherche du meilleur chemin en energie)
+                if(
+                    !(
+                        IsBetween(int_rdmRow,(p_playerInfo->coordonnees.x)-GAIN_ENERGY,(p_playerInfo->coordonnees.x)+GAIN_ENERGY)
+                        && IsBetween(int_rdmRow,(p_playerInfo->coordonnees.y)-GAIN_ENERGY,(p_playerInfo->coordonnees.y)+GAIN_ENERGY)
+                    )
+                ){
+                    int_nbBonus--;
+                    switch (RNG(1,2))
+                    {
+                        case 1:
+                            matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS1;
+                            break;
+                        case 2:
+                            matrice_Map[int_rdmRow][int_rdmCol] = REP_BONUS2;
+                            break;
+                    }
                 }
             }
         }

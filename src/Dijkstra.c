@@ -58,8 +58,8 @@ int ReturnDiff(int** matrice_map, int*** matrice_distance, int int_mapSize, Node
                     if(int_mode == 2){
                         if( CoordCompare(matrice_map, (Node->DataD.x)+(int_diffX), (Node->DataD.y)+(int_diffY), REP_BONUS1) || CoordCompare(matrice_map, (Node->DataD.x)+(int_diffX), (Node->DataD.y)+(int_diffY), REP_BONUS2))
                         {
-                            matrice_distance[Node->DataD.x][Node->DataD.y][int_position] = -4;
-                            return((Node->DataD.distance)-4);
+                            matrice_distance[Node->DataD.x][Node->DataD.y][int_position] = 1-GAIN_ENERGY;
+                            return((Node->DataD.distance)+(1-GAIN_ENERGY));
                         }
                     matrice_distance[Node->DataD.x][Node->DataD.y][int_position] = 1;
                     return((Node->DataD.distance) + 1);
@@ -76,8 +76,9 @@ int ReturnDiff(int** matrice_map, int*** matrice_distance, int int_mapSize, Node
 
 Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matrice_map, int*** matrice_distance, int int_mapSize, int int_goodDistance, int *int_position, int *int_distance, coordonnees coordEnd, int int_mode)
 {
-    if(Node == NULL)
-        puts("TAMERELAPROF");
+    if(Node == NULL && int_goodDistance != 1000){
+        return CreateDNode(-1,-1,-1,NULL,NULL);
+    }
     if (Node->DataD.x == coordEnd.y && Node->DataD.y == coordEnd.x)
     { 
         return (Node);
@@ -105,7 +106,7 @@ Node_d* FindLowerWay(List_d* p_list, Node_d* Node, Node_d* GoodNode, int** matri
             *int_position = test;
         }
     }
-
+    
     if(int_goodDistance == 1000){
         return(FindLowerWay(p_list, Node->next, GoodNode,matrice_map, matrice_distance, int_mapSize , int_goodDistance,int_position,int_distance,coordEnd,int_mode));
     }
@@ -258,10 +259,12 @@ Node_d* recurseDijkstra(List_d* p_list, Node_d* firstnode, int** matrice_Map, in
 
     Node_d* NodeHere = FindLowerWay(p_list,firstnode,firstnode,matrice_Map, matrice_Distance,int_mapSize,1000,&int_position,&int_distance,coordEnd,int_mode);
 
+    if(NodeHere->DataD.x == -1 && NodeHere->DataD.y == -1 ){
+        return (NodeHere);        
+    }
     if(NodeHere->DataD.x == coordEnd.y && NodeHere->DataD.y == coordEnd.x ){
         return(NodeHere);
     }
-   
 
     switch (int_position){
         case 0 :
@@ -348,6 +351,12 @@ List* AlgoDijkstra(int** matrice_Map,int*** matrice_Distance, PlayerInfo* p_play
 
     Node_d* Arrive= recurseDijkstra(ListDrijkstra, ListDrijkstra->firstnode, matrice_Map, matrice_Distance, int_mapSize, coordEnd,int_mode);
 
+    if(Arrive->DataD.x == -1 && Arrive->DataD.y == -1 ){
+         puts("Error in Dijkstra Energy, the energy of the path to go to the first accessible bonus makes it negative and is less than the number of squares available from the starting square\n");
+         MenuNext();
+         return (NULL);
+         
+    }
     List* BetterWay = EndDijkstra(Arrive);
 
     BetterWay->firstnode->is_bonus = Arrive->DataD.distance;

@@ -6,6 +6,7 @@
     #include <stdio.h>
     #include "Constant.h"
     #include "Miscellanous.h"
+    #include "Display.h"
     
     typedef struct DataD DataD;
     struct DataD{ // Structure contenant séquence du parcours, coordonnées actuelles, distance du point de départ

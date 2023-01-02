@@ -3,8 +3,7 @@
 GameInformation GameInfo;
 
 int main(void)
-{   
-    
+{  
     SetupGame();
     InitGame();
     Game();
