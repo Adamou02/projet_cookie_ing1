@@ -100,6 +100,6 @@
 
     #define SLOW_SPEED 40
     #define NORMAL_SPEED 30
-    #define FAST_SPEED 5
+    #define FAST_SPEED 15
 
 #endif
