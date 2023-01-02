@@ -110,4 +110,5 @@
     int CountHistory();
 
     /// @brief Efface l'historique
+    void ClearHistory();
 #endif
