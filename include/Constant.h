@@ -98,8 +98,8 @@
     #define HISTORY_CSV "data/History.csv"
     #define SAVE_CSV "data/Save.csv"
 
-    #define SLOW_SPEED 40
-    #define NORMAL_SPEED 30
+    #define SLOW_SPEED 35
+    #define NORMAL_SPEED 25
     #define FAST_SPEED 15
 
 #endif
