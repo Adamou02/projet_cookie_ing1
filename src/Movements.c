@@ -186,7 +186,7 @@ void PlayerOnObstacle(PlayerInfo *p_playerInfo,  int*** matrice_Distance, int in
     direction = GetDirection(int_wanted_x, int_wanted_y, p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, direction);
     p_playerInfo->distance = p_playerInfo->distance + matrice_Distance[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y][direction];
     p_playerInfo->energy = (p_playerInfo->energy) - LOST_ENERGY;
-    p_playerInfo->lost_energy = (p_playerInfo->energy) - LOST_ENERGY;
+    p_playerInfo->lost_energy = (p_playerInfo->,lost_energy) - LOST_ENERGY;
 }
 
 void UpdatePathList(PlayerInfo *p_playerInfo, List* p_list, int is_bonus) // met à jour la dernière position du joueur dans la lise chainée
