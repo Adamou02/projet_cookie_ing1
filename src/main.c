@@ -4,10 +4,11 @@ GameInformation GameInfo;
 
 int main(void)
 {   
+    
     SetupGame();
     InitGame();
     Game();
     EndGame();
-    FreeGame();    
+    FreeGame();
     return 0;
 }

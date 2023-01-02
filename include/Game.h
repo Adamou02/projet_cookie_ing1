@@ -7,6 +7,7 @@
     #include "InitGame.h"
     #include "ManageFiles.h"
     #include "Display.h"
+    #include "Dijkstra.h"
 
     extern GameInformation GameInfo;
 
@@ -41,10 +42,6 @@
     void NewGame();
 
     /// @brief reload la partie à l'etat de la sauvegarde presente dans le fichier Save.csv
-    /// @param matrice_Map 
-    /// @param matrice_Distance 
-    /// @param s_playerInfo 
-    /// @param int_mapSize 
     void ReloadSave(int*** matrice_Map, int**** matrice_Distance, PlayerInfo* s_playerInfo, int int_mapSize);
 
     ///@brief Reprend la Game Sauvegarder

@@ -180,11 +180,8 @@ void PlayerOnBonus(PlayerInfo *p_playerInfo)//Donne de l'énergie à un joueur l
     p_playerInfo->gain_energy = (p_playerInfo->gain_energy) + GAIN_ENERGY;
 }
 
-void PlayerOnObstacle(PlayerInfo *p_playerInfo,  int*** matrice_Distance, int int_wanted_x, int int_wanted_y) //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
+void PlayerOnObstacle(PlayerInfo *p_playerInfo) //retire de l'énergie au joueur lorsqu'il rentre dans un obstacle
 {
-    int direction=0;
-    direction = GetDirection(int_wanted_x, int_wanted_y, p_playerInfo->coordonnees.x, p_playerInfo->coordonnees.y, direction);
-    p_playerInfo->distance = p_playerInfo->distance + matrice_Distance[p_playerInfo->coordonnees.x][p_playerInfo->coordonnees.y][direction];
     p_playerInfo->energy = (p_playerInfo->energy) - LOST_ENERGY;
     p_playerInfo->lost_energy = (p_playerInfo->lost_energy) + LOST_ENERGY;
 }
@@ -249,12 +246,12 @@ int** AfterMovement(int** matrice_map, int int_wanted_x, int int_wanted_y, Playe
       switch(matrice_map[int_wanted_x][int_wanted_y])
         {
         case REP_OBSTACLE1 :
-            PlayerOnObstacle(p_playerInfo,matrice_Distance, int_wanted_x, int_wanted_y);
+            PlayerOnObstacle(p_playerInfo);
             *p_bool_isanObstacle = 1;
             break;
 
         case REP_OBSTACLE2 :
-            PlayerOnObstacle(p_playerInfo,matrice_Distance, int_wanted_x, int_wanted_y);
+            PlayerOnObstacle(p_playerInfo);
               *p_bool_isanObstacle = 1;
             break;
         

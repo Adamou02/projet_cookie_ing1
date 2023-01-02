@@ -272,9 +272,9 @@ void MenuNext()
 int MenuSpeedHistory()
 {
     int input;
-    int position = 3; 
+    int position = 1; //1 = position haute
     ClearTerm();
-    printf("\nChoose the speed for your replay :\n Slow\n Normal\n> Fast\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
+    printf("\nChoose the speed for your replay :\n> Slow\n Normal\n Fast\n\n\n %s : z\t\t%s : x\t\t%s : Enter\n", UP_ARROW, DOWN_ARROW, ENTER_ICON);
     while(1)
     {
         input = ListenKeyboard();

@@ -91,7 +91,7 @@ void Game()
             }
         }
     }
-    //StockCurrentTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.p_listpath, GameInfo.int_mapSize, &GameInfo.s_playerInfo);
+    StockCurrentTurn(GameInfo.matrice_Map, GameInfo.matrice_Distance, GameInfo.p_listpath, GameInfo.int_mapSize, &GameInfo.s_playerInfo);
     GameInfo.bool_victory=bool_victory;
     return;
 }
@@ -216,6 +216,7 @@ void ViewGameHistory()
 {
     int choice = MenuGameHistory();
     if(choice != 0){
+        GameInfo.int_mapSize = TAILLE_BIG_MAP;
         GameInfo.matrice_Map = AllocMatriceMap(TAILLE_BIG_MAP) ;
         ReadHistory(choice, &GameInfo.matrice_Map, MenuSpeedHistory());
         UnallocMatriceMap(GameInfo.matrice_Map, TAILLE_BIG_MAP);
@@ -227,9 +228,12 @@ void ViewGameHistory()
 void ConfirmClearHistory() 
 {
     int choice = MenuConfirmClearHistory();
-    if (choice == 1) 
+    if (choice == 1) {
         ClearHistory();
-    ManageHistory();
+        ClearTerm();
+        printf("History Clean successfully, press Enter to return to previous menu\n");
+        ListenKeyboard();
+    }
 }
 
 void ManageHistory()    
@@ -250,7 +254,7 @@ void ManageHistory()
         break;
     case 2:
         ConfirmClearHistory();
-        ManageHistory();
+        InitGame();
         break;
     case 3:
         InitGame();
