@@ -12,7 +12,7 @@ It is possible to resume a game in progress after leaving the game, if it has be
 ### Prerequisites
 
 OS Linux only.
-Make sure you have installed ```gcc``` and ```make```
+Make sure you have installed ```gcc```, ```make``` and ```git```
 
 ### Installing
 
