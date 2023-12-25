@@ -102,3 +102,6 @@ help :
 	@echo "\t make run : run the target: $(PROG)"
 	@echo "\t\t      ┌ make hardClean\n\t make super : ┤ make\n\t\t      └ make run"
 
+test :
+	@make hardClean
+	@make
