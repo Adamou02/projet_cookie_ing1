@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  # Customize the build type here (Release, Debug, etc.)
-  BUILD_TYPE: Release
-
 jobs:
   build:
     runs-on: ubuntu-latest
