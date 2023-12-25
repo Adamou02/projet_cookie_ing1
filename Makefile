@@ -102,3 +102,10 @@ help :
 	@echo "\t make run : run the target: $(PROG)"
 	@echo "\t\t      ┌ make hardClean\n\t make super : ┤ make\n\t\t      └ make run"
 
+#Run tests for Github Actions
+test:
+    @echo "Running tests..."
+    @$(MKDIR_P) $(Dir_OBJ)
+    @$(CC) $(CFLAGS) -I $(Dir_INCL) -o $(Dir_OBJ)/test_suite $(Dir_SRC)/test_suite.c $(LDLIBS)
+    @$(Dir_OBJ)/test_suite
+    @echo "Tests completed."
