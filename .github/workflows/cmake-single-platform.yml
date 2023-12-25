@@ -17,4 +17,4 @@ jobs:
       run: make -C ${{github.workspace}} $BUILD_TYPE
 
     - name: Test
-      run: make -C ${{github.workspace}} test
+      run: make -C ${{github.workspace}} super
